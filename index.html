@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Longfly</title>
+<meta name="description" content="Longfly designs small, light FPV drone hardware, starting with a 15 g head-tracking gimbal for the DJI O4 Lite.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Martian+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="#top" aria-label="Longfly home">
+      <svg viewBox="0 0 40 16" aria-hidden="true"><path d="M1 12 L17 4 L39 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="4" r="3" fill="var(--accent)"/></svg>
+      <span>Longfly</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#products">Products</a>
+      <a href="#work">Work</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Home view -->
+  <div id="home">
+    <section class="hero wrap" id="hero" data-section="hero" aria-label="Featured product"></section>
+
+    <section class="block wrap" id="products" data-section="products">
+      <div class="block-head">
+        <p class="eyebrow">Products</p>
+        <h2>Hardware</h2>
+      </div>
+      <div class="grid" id="product-grid"></div>
+    </section>
+
+    <section class="block wrap" id="work" data-section="work">
+      <div class="block-head">
+        <p class="eyebrow">Work</p>
+        <h2>Build log</h2>
+      </div>
+      <ol class="log" id="work-log"></ol>
+    </section>
+
+    <section class="block wrap about" id="about" data-section="about">
+      <div class="block-head">
+        <p class="eyebrow">About</p>
+        <h2>Longfly</h2>
+      </div>
+      <div class="about-body" id="about-body"></div>
+    </section>
+  </div>
+
+  <!-- Product view (shown when the address ends in #<product-folder>) -->
+  <article id="product" class="wrap product" hidden></article>
+
+  <!-- Order + payment, shared by both views -->
+  <section class="block wrap" id="order" data-section="order">
+    <div class="block-head">
+      <p class="eyebrow">Order</p>
+      <h2>Buy and download</h2>
+      <p class="lede">These are digital files, so there's nothing to ship. Pay by card and you go straight to the download. Pay with PayPal and the download link is emailed to you once the payment comes through.</p>
+    </div>
+    <div class="order">
+      <form id="order-form" class="panel" novalidate>
+        <div class="field">
+          <label for="o-product">Product</label>
+          <select id="o-product" name="product" required></select>
+        </div>
+        <div class="field">
+          <label for="o-name">Name</label>
+          <input id="o-name" name="name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="o-email">Email <span class="opt">your download link and receipt go here</span></label>
+          <input id="o-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="o-note">Note <span class="opt">optional</span></label>
+          <textarea id="o-note" name="note" rows="3" placeholder="Questions about printing or setup…"></textarea>
+        </div>
+        <fieldset class="field methods">
+          <legend>Pay with</legend>
+          <div id="o-methods" class="method-row"></div>
+        </fieldset>
+        <p class="form-error" id="o-error" role="alert" hidden></p>
+        <button class="btn primary" type="submit">Continue to payment</button>
+      </form>
+
+      <div class="panel receipt" id="receipt" hidden aria-live="polite"></div>
+
+      <div class="pay" id="pay"></div>
+    </div>
+  </section>
+
+  <section class="block wrap contact" id="contact" data-section="contact">
+    <div class="block-head">
+      <p class="eyebrow">Contact</p>
+      <h2>Questions, custom work, wholesale</h2>
+    </div>
+    <div id="contact-body" class="contact-body"></div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <span id="foot-name">Longfly</span>
+  <span class="mono" id="foot-year"></span>
+</footer>
+
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" type="button" aria-label="Close">×</button>
+  <figure><img alt=""><figcaption></figcaption></figure>
+</div>
+
+<!-- Data first, then the page script loads everything listed in products/catalog.js -->
+<script src="assets/js/site.js"></script>
+<script src="assets/js/analytics.js"></script>
+<script src="site.config.js"></script>
+<script src="products/catalog.js"></script>
+<script src="work/work.js"></script>
+<script>Longfly.start();</script>
+</body>
+</html>
