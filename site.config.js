@@ -55,7 +55,7 @@ Longfly.config({
   // Sign up at posthog.com, create a project, and paste its "Project API key" (starts with phc_) below.
   // Use "https://eu.i.posthog.com" as host if you picked the EU region.
   analytics: {
-    key: "",                              // placeholder: paste your phc_... key here
+    key: "phc_xrZjfCAjjvQzvMbFLXzftnwFym4GxyMGmz77iXghikPd",   // PostHog project key (public by design)
     host: "https://us.i.posthog.com",
     cookieless: false,                    // true = no browser storage, but repeat visitors count as new
     debug: false                          // true = also print every event in the browser console

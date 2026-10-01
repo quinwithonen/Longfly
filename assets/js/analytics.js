@@ -110,7 +110,7 @@
         persistence: cfg.cookieless ? "memory" : "localStorage",
         person_profiles: "identified_only",
         capture_pageview: false,   // sent by onRoute so product pages count as their own pages
-        capture_pageleave: false,
+        capture_pageleave: true,   // lets PostHog Web analytics show time on site
         autocapture: true          // also records button and link clicks (Preorder, Copy, etc.)
       });
       ready = true;
