@@ -11,6 +11,7 @@
 <style>html{color-scheme:light} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
 
 
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,600..900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -175,7 +176,11 @@ section.block { padding-block: clamp(56px, 8vw, 96px); }
 .proj .stack span { font-family: var(--mono); font-size: 0.6875rem; background: var(--chip); padding: 3px 7px; border-radius: 4px; color: var(--ink-2); }
 
 /* Sales */
-.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.case.wide { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.case-body { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.clip { position: relative; border-radius: 10px; overflow: hidden; background: #0a0f1d; }
+.clip video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
 .case { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .case h3 { font-size: 1.3rem; font-weight: 800; font-stretch: 112%; line-height: 1.15; }
 .case p { font-size: 0.9375rem; color: var(--ink-2); }
@@ -228,12 +233,15 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
   .hero .wrap, .feature, .two, .contact .wrap, .sec-head, .reels { grid-template-columns: minmax(0, 1fr); }
   .feature .body { order: 2; }
   .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cases .case:last-child { grid-column: 1 / -1; }
   .projects .proj, .projects .proj:nth-child(-n+2) { grid-column: auto; }
   .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
   .bar nav a.opt { display: none; }
-  .projects, .cases { grid-template-columns: minmax(0, 1fr); }
+  .projects, .cases, .case.wide { grid-template-columns: minmax(0, 1fr); }
+  .clip { max-width: 300px; }
   .timeline li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .readout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .funnel .row { grid-template-columns: 7.5em minmax(0, 1fr) 4.5em; }
@@ -450,7 +458,7 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
         <div class="n" style="--c: var(--sky)"><b>60</b><p>flight controllers I designed, now flying at Brown, UMass Lowell and abroad</p></div>
         <div class="n" style="--c: var(--petg)"><b>870K</b><p>views from an influencer campaign and organic Reddit posts</p></div>
         <div class="n" style="--c: var(--mint)"><b>$5,500</b><p>won across two UAV sustainability competitions as team lead</p></div>
-        <div class="n" style="--c: var(--berry)"><b>+10–20%</b><p>per-bike margin from a listing tool I built at M7 Cycling</p></div>
+        <div class="n" style="--c: var(--berry)"><b>$7K</b><p>revenue in 10 days from the first three bikes I sold abroad for M7 Cycling</p></div>
       </div>
 
       <div class="projects">
@@ -494,7 +502,12 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
         <p>I can explain a gear train to an engineer and a price to a founder. These are the times I took a product or an idea to people and closed.</p>
       </div>
       <div class="cases">
-        <article class="case">
+        <article class="case wide">
+          <div class="clip">
+            <video src="img/tiktok.mp4" poster="img/tiktok-poster.webp" controls autoplay muted loop playsinline preload="metadata" aria-label="A Longfly TikTok showing the flight controller being soldered, coded and flown"></video>
+            <span class="badge" style="--c: var(--berry)">My TikTok</span>
+          </div>
+          <div class="case-body">
           <p class="label">Flight controller · 3 months</p>
           <h3>From Reddit posts to a PhD lab</h3>
           <p>I ran an Instagram influencer campaign and built an audience on Reddit, then closed sales directly with university clubs and individual buyers. Brown's drone club now uses the boards for PhD research.</p>
@@ -505,12 +518,15 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
             <div class="row"><span class="k">Boards placed</span><span class="track"><span class="fill" style="width:0.01%; --c: var(--mint)"></span></span><span class="v">60</span></div>
           </div>
           <p class="mono">13 sold · ~$737 revenue · 47 placed with clubs and testers</p>
+          <p><a class="textlink" href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">More on TikTok →</a></p>
+          </div>
         </article>
         <article class="case">
           <p class="label">M7 Cycling · Shanghai · Aug 2026–now</p>
           <h3>Taking a $750K business abroad</h3>
           <p>I proposed and am running the plan to sell M7's refurbished bikes in the US and other markets, aiming for 30–40% margin against 20% at home. I cold-called dozens of overseas bike shops, then built a tool that lists bikes on international platforms automatically.</p>
           <table class="specs">
+            <tr><th>First sales</th><td>3 bikes, $7K revenue in 10 days</td></tr>
             <tr><th>Per-bike margin</th><td>+10–20% from the listing tool</td></tr>
             <tr><th>First 3 days</th><td>320 views, 45 watchlists</td></tr>
           </table>
@@ -540,7 +556,7 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
         <p>Engineering, sales and public-facing roles, newest first.</p>
       </div>
       <ol class="timeline">
-        <li><span class="when">Aug 2026 – now</span><div><h3>International Sales Lead <span>· M7 Cycling, Shanghai</span></h3><p>Building the international sales pipeline and listing workflow for a refurbished-bike business, with customer discovery calls to shops overseas.</p></div></li>
+        <li><span class="when">Aug 2026 – now</span><div><h3>International Sales Lead <span>· M7 Cycling, Shanghai</span></h3><p>Building the international sales pipeline and listing workflow for a refurbished-bike business. The first three bikes sold brought in $7K in 10 days.</p></div></li>
         <li><span class="when">Jan 2026 – now</span><div><h3>Founder <span>· SJTU Drone Club, Shanghai Jiao Tong University</span></h3><p>Asked by a department organizer to start the club after they saw my aircraft work. Recruited members, managed the budget and equipment, and led the build of the head-tracking F4U.</p></div></li>
         <li><span class="when">Feb 2024 – now</span><div><h3>Founder and hardware developer <span>· Longfly</span></h3><p>Designing, selling and supporting drone hardware: the flight-controller platform and the FPV micro gimbal.</p></div></li>
         <li><span class="when">Nov 2024 – May 2025</span><div><h3>Front Desk Assistant <span>· University of Michigan</span></h3><p>Represented the university at the front desks of three campus buildings, answering calls and routing visitors to the right staff.</p></div></li>
