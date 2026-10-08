@@ -10,6 +10,7 @@
 <meta property="og:image" content="https://quinwithonen.github.io/Longfly/quin/img/f4u-poster.webp">
 <style>html{color-scheme:light} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
 
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112..125,600..900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -109,6 +110,8 @@ section.block { padding-block: clamp(56px, 8vw, 96px); }
 .reel-wrap { margin: 0; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .player { position: relative; border-radius: 12px; overflow: hidden; background: #0a0f1d; box-shadow: 0 18px 40px -18px rgba(60, 40, 0, .55); }
 .player video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #0a0f1d; }
+.player.portrait { max-width: 420px; width: 100%; justify-self: center; }
+.player.portrait video { aspect-ratio: 9 / 16; max-height: 640px; object-fit: cover; }
 .badge { position: absolute; top: 12px; left: 12px; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: .08em; text-transform: uppercase; background: var(--c); color: #fff; padding: 4px 8px; border-radius: 4px; pointer-events: none; }
 .reel-wrap h3 { font-size: clamp(1.25rem, 2.4vw, 1.75rem); font-weight: 900; }
 .reel-wrap p { margin-top: 6px; font-size: 0.9375rem; color: #3b2f06; max-width: 36em; }
@@ -161,8 +164,7 @@ section.block { padding-block: clamp(56px, 8vw, 96px); }
 
 /* Projects */
 .projects { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin-top: 48px; }
-.projects .proj { grid-column: span 2; }
-.projects .proj:nth-child(-n+2) { grid-column: span 3; }
+.projects .proj { grid-column: span 3; }
 .proj { padding: 22px; overflow: hidden; border-radius: 10px; background: var(--surface); border: 1px solid var(--rule); border-top: 5px solid var(--c); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .proj-img { display: block; width: calc(100% + 44px); max-width: none; margin: -22px -22px 6px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 6px 6px 0 0; }
 .proj.has-img { border-top-width: 0; border-bottom: 5px solid var(--c); padding-top: 22px; }
@@ -227,13 +229,11 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
   .feature .body { order: 2; }
   .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .projects .proj, .projects .proj:nth-child(-n+2) { grid-column: auto; }
-  .projects .proj:last-child { grid-column: 1 / -1; }
   .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 620px) {
   .bar nav a.opt { display: none; }
   .projects, .cases { grid-template-columns: minmax(0, 1fr); }
-  .projects .proj:last-child { grid-column: auto; }
   .timeline li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .readout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .funnel .row { grid-template-columns: 7.5em minmax(0, 1fr) 4.5em; }
@@ -273,7 +273,7 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
             Watch my builds
           </a>
-          <a class="btn" href="https://quinwithonen.github.io/Longfly/quin/Quin_Long_Liang_Technical_Resume.pdf" target="_blank" rel="noopener" download>
+          <a class="btn" href="Quin_Long_Liang_Technical_Resume.pdf" target="_blank" rel="noopener" download>
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v8.5M4.5 6.5 8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Download resume
           </a>
@@ -421,6 +421,25 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
           <p class="note">I was the link between engineering and the founders, explaining what each design choice would cost to make. I also proposed the folding mechanism for the Nordic Hyper.</p>
         </div>
       </article>
+
+      <article class="feature maglev">
+        <div class="player portrait">
+          <video src="img/maglev.mp4" poster="img/maglev-poster.webp" controls autoplay muted loop playsinline preload="metadata" aria-label="The magnetic levitation rig holding a rod in the air under an electromagnet"></video>
+          <span class="badge" style="--c: var(--mint)">Closed-loop control</span>
+        </div>
+        <div class="body">
+          <p class="label dot" style="--c: var(--mint)">Independent project · Controls</p>
+          <h3>Magnetic levitation rig</h3>
+          <p>A one-axis levitator I designed, assembled and programmed from scratch. Two Hall-effect sensors read where the floating rod is, and an Arduino running my control code keeps adjusting the electromagnet to hold it in the air.</p>
+          <table class="specs">
+            <tr><th>Actuator</th><td>Electromagnet</td></tr>
+            <tr><th>Sensing</th><td>2× Hall-effect sensors</td></tr>
+            <tr><th>Controller</th><td>Arduino, feedback loop in C++</td></tr>
+            <tr><th>Axes</th><td>1, vertical</td></tr>
+          </table>
+          <p class="note">The same feedback-control ideas run my drone flight controllers, applied here to something you can poke with a finger.</p>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -453,12 +472,6 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
           <h3>Programmable flight controller</h3>
           <p>A Teensy 4.0 flight-controller platform. I wrote VTOL flight code in Arduino C++ on dRehmFlight, added PID-gain readouts for tuning, and worked with an electrical engineer on the PCB.</p>
           <div class="stack"><span>C++</span><span>PID</span><span>Teensy</span><span>PCB</span></div>
-        </article>
-        <article class="proj" style="--c: var(--mint)">
-          <div class="meta"><span class="label">Independent</span><span class="label">Controls</span></div>
-          <h3>Magnetic levitation rig</h3>
-          <p>A one-axis levitator built from scratch: an electromagnet, two Hall-effect sensors and an Arduino running control code I wrote.</p>
-          <div class="stack"><span>Arduino</span><span>Feedback control</span><span>Sensors</span></div>
         </article>
         <article class="proj" style="--c: var(--sky)">
           <div class="meta"><span class="label">MIT Fab Lab, SETC</span><span class="label">2020–21</span></div>
@@ -562,7 +575,7 @@ footer .wrap { padding-block: 18px 28px; display: flex; justify-content: space-b
         <p class="label">Contact</p>
         <h2>Let's build<span>,</span> or sell<span>,</span> something.</h2>
         <p>Looking for technical sales, SDR/BDR and hardware roles. Email is the fastest way to reach me. When I'm not at the bench, I'm probably hitchhiking somewhere.</p>
-        <p class="resume-row"><a class="btn resume-btn" href="https://quinwithonen.github.io/Longfly/quin/Quin_Long_Liang_Technical_Resume.pdf" target="_blank" rel="noopener" download>Download my technical resume (PDF)</a></p>
+        <p class="resume-row"><a class="btn resume-btn" href="Quin_Long_Liang_Technical_Resume.pdf" target="_blank" rel="noopener" download>Download my technical resume (PDF)</a></p>
         <div class="email-row">
           <span class="email" id="email">qlongl@umich.edu</span>
           <button class="copy" id="copy" type="button">Copy</button>
