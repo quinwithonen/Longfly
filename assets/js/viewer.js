@@ -95,12 +95,12 @@ export function mount(box, url, opts) {
     var mat = new THREE.MeshStandardMaterial({ color: opts.color || "#d9631c", roughness: 0.55, metalness: 0.05 });
     scene.add(new THREE.Mesh(g, mat));
 
-    var dist = r / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.05;
+    var dist = r / Math.sin(THREE.MathUtils.degToRad(camera.fov / 2)) * (opts.fit || 1.05);
     home = new THREE.Vector3(1, 0.55, 1).normalize().multiplyScalar(dist);
     camera.position.copy(home);
     camera.near = dist / 100; camera.far = dist * 10;
     camera.updateProjectionMatrix();
-    controls.minDistance = r * 1.2;
+    controls.minDistance = r * 0.3;
     controls.maxDistance = dist * 3;
     setStatus("");
   }).catch(function () {

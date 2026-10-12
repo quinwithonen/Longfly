@@ -28,7 +28,7 @@
     section.hidden = false;
     var el = h.el;
     var base = new URL(c.folder.replace(/\/?$/, "/"), document.baseURI).href;
-    var item = { base: base, model: c.model, modelUp: c.modelUp, modelColor: c.modelColor || "#c9ccd2" };
+    var item = { base: base, model: c.model, modelUp: c.modelUp, modelColor: c.modelColor || "#9aa1ab", modelFit: c.modelFit };
 
     // Big picture: the 3D model once there is one, otherwise the render.
     var media = document.getElementById("cockpit-media");

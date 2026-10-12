@@ -53,7 +53,8 @@ Longfly.config({
     folder: "projects/f14-cockpit",
     image: "images/hero_closed.jpg",          // shown until a 3D model is added
     imageAlt: "Render of the F-14 cockpit with the canopy closed",
-    model: "",                                 // e.g. "model/preview.stl" once there's an STL export
+    model: "model/preview.stl",                // reduced-detail copy of F14B_RC_Cockpit.stl, canopy glass left out
+    modelFit: 0.72,                            // camera distance; lower = closer
     video: "video/sample.mp4",
     videoPoster: "video/sample-poster.jpg",
     videoCredit: "Video by 轩_快出来飞飞机 on bilibili, not a Longfly build.",

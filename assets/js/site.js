@@ -173,7 +173,7 @@
     var go = function () {
       box.querySelector(".viewer-status").textContent = "Loading 3D model…";
       import(new URL("assets/js/viewer.js", document.baseURI).href)
-        .then(function (m) { m.mount(box, src(p, p.model), { up: p.modelUp, color: p.modelColor }); })
+        .then(function (m) { m.mount(box, src(p, p.model), { up: p.modelUp, color: p.modelColor, fit: p.modelFit }); })
         .catch(function () { box.querySelector(".viewer-status").textContent = "3D view isn't supported in this browser."; });
     };
     if ("IntersectionObserver" in window) {
