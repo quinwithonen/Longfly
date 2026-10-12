@@ -74,9 +74,15 @@ Longfly.config({
 
   // "Which cockpit first?" poll under the F-14 section. One vote per visitor; results in PostHog (README, "Cockpit poll").
   poll: {
-    question: "Which hyper-realistic cockpit would you buy first?",
-    options: ["F-18 Hornet", "F-14 Tomcat", "F-16 Fighting Falcon"],
-    allowOther: true          // adds "Other" with a box to type their own
+    id: "v2",                 // change this whenever the options change, so everyone can vote again and old votes stay separate
+    question: "Which one would you want?",
+    options: [
+      { label: "F-16 cockpit, 70mm", note: "Flight time ~4-8 minutes depending on battery" },
+      { label: "F-16 cockpit, 90mm" },
+      { label: "P-51 Mustang, 1.2m", note: "WW2-era warbird. Flight time 10-25 minutes depending on battery" },
+      { label: "P-51 Mustang, 1.46m", note: "Flight time 10-25 minutes depending on battery" }
+    ],
+    allowOther: false         // true adds "Other" with a box to type their own
   },
 
   // Press kit section. Files live in press/. Add a Google Drive or Dropbox folder link for full-resolution photos.

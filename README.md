@@ -136,9 +136,11 @@ Each visitor sees one pre-order price picked at random from `preorder.tiers` ($1
 
 ## Cockpit poll
 
-"Which hyper-realistic cockpit would you buy first?" sits under the F-14 section (settings under `poll` in `site.config.js`; change `options` to change the choices). Each visitor votes once. Every vote sends a `cockpit_poll` event with `choice` (the option, or `Other`) and, for Other, `other` with what they typed.
+"Which one would you want?" sits under the F-14 section. Settings are under `poll` in `site.config.js`: each option is `{ label, note }` (note is the small grey line, optional), and `allowOther: true` adds an "Other" box. Each visitor votes once per poll `id`; when you change the options, change `id` (e.g. "v3") so everyone can vote again and old votes stay separate.
+
+Every vote sends a `cockpit_poll` event with `poll` (the id), `choice` (the option's label) and, for Other, `other`.
 
 In PostHog (Product analytics → New insight):
 
-- **Vote split:** Trends, event `cockpit_poll`, count "Unique users", breakdown by `choice`, chart type "Total value" (bar) or pie.
-- **What people typed for Other:** Trends, event `cockpit_poll` filtered to `choice = Other`, breakdown by `other`, shown as a table. (Spelling varies, so "F15" and "F-15 Eagle" show as separate rows.)
+- **Vote split:** Trends, event `cockpit_poll` filtered to `poll = v2`, count "Unique users", breakdown by `choice`, chart type "Total value" (bar) or pie.
+- **Write-ins (if Other is on):** same, filtered to `choice = Other`, breakdown by `other`, shown as a table.

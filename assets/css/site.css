@@ -304,3 +304,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); ou
 .poll-opt { font-weight: 600; cursor: pointer; }
 .poll .btn { justify-self: start; }
 .poll-done { max-width: 48rem; display: grid; gap: 0.4rem; }
+.poll-options.has-notes { grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+.poll-options.has-notes .poll-opt { align-items: flex-start; padding: 0.8rem 0.9rem; min-height: 0; }
+.poll-options.has-notes .poll-opt input { margin-top: 0.15rem; }
+.poll-text { display: grid; gap: 0.3rem; }
+.poll-note { font: 400 var(--s-1)/1.45 var(--f-body); color: var(--muted); }
