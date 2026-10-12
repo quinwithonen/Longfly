@@ -11,6 +11,8 @@
     config: function (c) { state.config = c || {}; },
     onRoute: function () {},
     startAnalytics: function () {},
+    track: function () {},
+    renderCockpit: function () {},
     catalog: function (list) { state.slugs = (list || []).slice(); },
     work: function (list) { state.work = (list || []).slice(); },
     addProduct: function (p) {
@@ -92,6 +94,7 @@
     renderGrid();
     renderWork();
     renderAbout();
+    Longfly.renderCockpit(c.cockpit, { el: el, viewer: viewer });
     renderMethods();
     renderOrder();
     renderPay();

@@ -47,6 +47,20 @@ Longfly.config({
     }
   ],
 
+  // F-14 cockpit idea on the home page, with the Kickstarter price test (see README, "F-14 price test").
+  // Files live in projects/f14-cockpit/. Delete this whole block to hide the section.
+  cockpit: {
+    folder: "projects/f14-cockpit",
+    image: "images/hero_closed.jpg",          // shown until a 3D model is added
+    imageAlt: "Render of the F-14 cockpit with the canopy closed",
+    model: "",                                 // e.g. "model/preview.stl" once there's an STL export
+    video: "video/sample.mp4",
+    videoPoster: "video/sample-poster.jpg",
+    videoCredit: "Video by 轩_快出来飞飞机 on bilibili, not a Longfly build.",
+    reddit: "https://www.reddit.com/r/RCPlanes/comments/1x3s7wa/fpv_headtracker_with_an_ultra_realistic_cockpit/",
+    prices: [100, 200, 300, 400, 500]          // each visitor sees one of these at random
+  },
+
   // Optional: a form service URL (Formspree, Basin, Getform...) that receives orders as JSON.
   // Leave empty and buyers will copy their order summary and email it instead.
   preorderEndpoint: "",

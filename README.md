@@ -76,3 +76,23 @@ Charts to build in PostHog (Product analytics → New insight):
 - **Time per section:** Trends, event `section_time`, aggregate "Property value: sum" of `seconds`, broken down by `section`. Divide by the unique users who reached each section for the average per visitor, or use "Property value: average" for the average per visit.
 
 Set `cookieless: true` to stop PostHog storing anything in the browser. Repeat visitors then count as new visitors.
+
+## F-14 price test
+
+The F-14 cockpit section on the home page (settings under `cockpit` in `site.config.js`, files in `projects/f14-cockpit/`) shows each visitor one price picked at random from `prices`. A visitor keeps the same price on later visits, so nobody is counted at two prices.
+
+Events sent to PostHog, each with a `price` property:
+
+| Event | When |
+|---|---|
+| `cockpit_price_shown` | The button came on screen (once per page view) |
+| `cockpit_interest` | They pressed the Kickstarter button |
+| `cockpit_price_answer` | They answered "would $X be fair?", with `answer` = `yes` or `no` |
+
+Charts to build in PostHog (Product analytics → New insight):
+
+- **Interest per price:** Trends, event `cockpit_interest`, count "Unique users", breakdown by `price`. Set the chart type to "Total value" (bar) to see one bar per price.
+- **Who says the price is fair:** Trends, event `cockpit_price_answer` with filter `answer = yes`, count "Unique users", breakdown by `price`. Add a second series with `answer = no` to compare.
+- **Click rate per price:** Funnels, step 1 `cockpit_price_shown`, step 2 `cockpit_interest`, step 3 `cockpit_price_answer` (filter `answer = yes`), breakdown by `price`. This corrects for one price happening to be shown more often than another.
+
+To add the 3D model, export the assembly from SolidWorks as one STL (File → Save As → STL, "Save all components of an assembly in a single file"), put a reduced-detail copy at `projects/f14-cockpit/model/preview.stl` and set `model: "model/preview.stl"`.

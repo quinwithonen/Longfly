@@ -75,6 +75,13 @@
     sections.forEach(function (s) { observer.observe(s.el); });
   }
 
+  // Custom events from other scripts (e.g. the F-14 price test). Queued until PostHog has loaded.
+  var queue = [];
+  L.track = function (event, props) {
+    if (ready) send(event, props || {});
+    else { if (cfg.debug) console.log("[analytics] queued", event, props); queue.push([event, props || {}]); }
+  };
+
   // Called by site.js every time the view changes (home <-> product page).
   L.onRoute = function (name) {
     latest = name;
@@ -115,6 +122,7 @@
       });
       ready = true;
       page = null;
+      queue.splice(0).forEach(function (q) { send(q[0], q[1]); });
       if (latest) L.onRoute(latest);
     };
     document.head.appendChild(s);

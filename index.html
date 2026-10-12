@@ -19,6 +19,7 @@
     </a>
     <nav class="nav" aria-label="Main">
       <a href="#products">Products</a>
+      <a href="#cockpit">F-14</a>
       <a href="#work">Work</a>
       <a href="#order">Order</a>
       <a href="#contact">Contact</a>
@@ -37,6 +38,26 @@
         <h2>Hardware</h2>
       </div>
       <div class="grid" id="product-grid"></div>
+    </section>
+
+    <section class="block wrap" id="cockpit" data-section="cockpit" hidden>
+      <div class="block-head">
+        <p class="eyebrow">Next idea</p>
+        <h2>An ultra-realistic F-14 cockpit for head-tracking FPV</h2>
+        <p class="lede">A scale F-14 cockpit that sits around a head-tracking FPV camera, so when you look around you see the canopy, the seats and the instrument panels, as if you were in the plane.</p>
+      </div>
+      <div class="cockpit">
+        <div class="cockpit-media" id="cockpit-media"></div>
+        <div class="cockpit-side">
+          <figure class="cockpit-video">
+            <div class="plate video"><video id="cockpit-video" controls muted playsinline preload="metadata"></video></div>
+            <figcaption class="fine">Sample of what the final product will look like.<span id="cockpit-credit"></span><span id="cockpit-reddit-wrap"> <a id="cockpit-reddit" href="#" target="_blank" rel="noopener">See the original post on Reddit</a>.</span></figcaption>
+          </figure>
+          <div class="panel vote" id="vote" aria-live="polite">
+            <button class="btn primary vote-go" type="button" id="vote-go">Click here if you're interested in me starting a Kickstarter to make an ultra-realistic F-14 cockpit for head-tracking FPV, just like this video</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="block wrap" id="work" data-section="work">
@@ -120,6 +141,7 @@
 <!-- Data first, then the page script loads everything listed in products/catalog.js -->
 <script src="assets/js/site.js"></script>
 <script src="assets/js/analytics.js"></script>
+<script src="assets/js/cockpit.js"></script>
 <script src="site.config.js"></script>
 <script src="products/catalog.js"></script>
 <script src="work/work.js"></script>
