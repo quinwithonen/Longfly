@@ -96,3 +96,22 @@ Charts to build in PostHog (Product analytics → New insight):
 - **Click rate per price:** Funnels, step 1 `cockpit_price_shown`, step 2 `cockpit_interest`, step 3 `cockpit_price_answer` (filter `answer = yes`), breakdown by `price`. This corrects for one price happening to be shown more often than another.
 
 To add the 3D model, export the assembly from SolidWorks as one STL (File → Save As → STL, "Save all components of an assembly in a single file"), put a reduced-detail copy at `projects/f14-cockpit/model/preview.stl` and set `model: "model/preview.stl"`.
+
+## Kickstarter launch
+
+Everything is set under `launch`, `press` and `metaPixel` in `site.config.js`.
+
+**Email sign-up.** Works now with no extra account: each sign-up is saved in PostHog (People → filter "email is set" → export CSV) and sends a `launch_signup` event with the price that visitor saw in the price test. Ad blockers hide PostHog from some visitors, so before running ads also connect a form service:
+
+1. Create a free form at formspree.io (or a similar service) and copy its endpoint URL.
+2. Paste it into `launch.signupEndpoint`. Sign-ups then also land in your Formspree inbox and can be exported or sent to Mailchimp/Kit.
+
+**$1 reservation (optional).** Make a live Stripe Payment Link for $1 (name it "F-14 cockpit early-bird reservation") and paste it into `launch.reserveLink`. The button shows after someone signs up and sends a `reserve_click` event. Card details are only ever entered on Stripe's page.
+
+**Launch day.** Paste the campaign URL into `launch.kickstarterUrl`. The top of the page then shows "Back it on Kickstarter", the reservation button hides, and clicks send `kickstarter_click`.
+
+**Meta Pixel.** In Meta Events Manager create a pixel, then paste its ID into `metaPixel`. The site sends PageView, `Lead` on sign-up and `InitiateCheckout` on the reservation button, so ads can optimise for sign-ups.
+
+**Press kit.** Files in `press/` are listed in `press.files`. Put full-resolution photos in a shared Google Drive or Dropbox folder and paste its link into `press.folderLink`.
+
+**Link previews.** `projects/f14-cockpit/images/share.jpg` (1200×630) is the picture shown when the site is shared. The tags at the top of `index.html` point at https://longfly.us; change them if the domain changes.

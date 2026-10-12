@@ -62,6 +62,31 @@ Longfly.config({
     prices: [100, 200, 300, 400, 500]          // each visitor sees one of these at random
   },
 
+  // Kickstarter launch: email sign-up, optional $1 reservation, and the live campaign link (README, "Kickstarter launch").
+  launch: {
+    perk: "Sign up to hear the moment it launches and get the early-bird price on day one.",
+    signupEndpoint: "",      // optional form service URL, e.g. "https://formspree.io/f/xxxxxxx" (sign-ups also go to PostHog)
+    reserveLink: "",         // optional $1 Stripe Payment Link (live, not test) shown after sign-up
+    reserveLabel: "Reserve the early-bird price for $1",
+    reserveText: "Want to lock in the lowest price? A $1 reservation holds your early-bird spot and comes off your pledge.",
+    kickstarterUrl: ""       // paste the campaign link on launch day; the main button then goes straight to Kickstarter
+  },
+
+  // Press kit section. Files live in press/. Add a Google Drive or Dropbox folder link for full-resolution photos.
+  press: {
+    folder: "press",
+    blurb: "Longfly is building an ultra-realistic F-14 cockpit for head-tracking FPV: a scale cockpit with seats, canopy frame and instrument panels that sits around the FPV camera, so the pilot sees the inside of a Tomcat when they look around. Free to use with credit to Longfly.",
+    folderLink: "",
+    files: [
+      { file: "longfly-f14-cockpit-render.png", thumb: "thumbs/render.jpg", label: "Cockpit render", note: "PNG · 1600×1000" },
+      { file: "longfly-f14-cockpit-3d-view.png", thumb: "thumbs/3d-view.jpg", label: "3D view, canopy off", note: "PNG" },
+      { file: "longfly-logo.svg", label: "Longfly logo", note: "SVG" }
+    ]
+  },
+
+  // Meta (Facebook/Instagram) Pixel ID for ad conversion tracking. Leave empty to keep it off.
+  metaPixel: "",
+
   // Optional: a form service URL (Formspree, Basin, Getform...) that receives orders as JSON.
   // Leave empty and buyers will copy their order summary and email it instead.
   preorderEndpoint: "",

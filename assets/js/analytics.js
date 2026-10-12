@@ -82,6 +82,26 @@
     else { if (cfg.debug) console.log("[analytics] queued", event, props); queue.push([event, props || {}]); }
   };
 
+  // Attach an email to this visitor in PostHog (people who sign up). Queued like track().
+  L.identify = function (email, props) {
+    var run = function () { window.posthog.identify(email, Object.assign({ email: email }, props || {})); };
+    if (ready && window.posthog) run(); else queue.push(run);
+  };
+
+  // ---------- Meta (Facebook/Instagram) Pixel ----------
+  // Off until "metaPixel" in site.config.js has a pixel ID. Sends PageView, plus whatever L.pixel() is given
+  // (Lead on sign-up, InitiateCheckout on the $1 reservation button).
+  L.startPixel = function (id) {
+    if (!id) return;
+    /* Standard Meta Pixel loader */
+    !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    window.fbq("init", String(id));
+    window.fbq("track", "PageView");
+  };
+  L.pixel = function (event, props) { if (window.fbq) window.fbq("track", event, props || {}); };
+
   // Called by site.js every time the view changes (home <-> product page).
   L.onRoute = function (name) {
     latest = name;
@@ -122,7 +142,7 @@
       });
       ready = true;
       page = null;
-      queue.splice(0).forEach(function (q) { send(q[0], q[1]); });
+      queue.splice(0).forEach(function (q) { if (typeof q === "function") q(); else send(q[0], q[1]); });
       if (latest) L.onRoute(latest);
     };
     document.head.appendChild(s);

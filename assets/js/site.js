@@ -12,7 +12,11 @@
     onRoute: function () {},
     startAnalytics: function () {},
     track: function () {},
+    identify: function () {},
+    pixel: function () {},
+    startPixel: function () {},
     renderCockpit: function () {},
+    renderLaunch: function () {},
     catalog: function (list) { state.slugs = (list || []).slice(); },
     work: function (list) { state.work = (list || []).slice(); },
     addProduct: function (p) {
@@ -95,11 +99,13 @@
     renderWork();
     renderAbout();
     Longfly.renderCockpit(c.cockpit, { el: el, viewer: viewer });
+    Longfly.renderLaunch(c.launch, c.press, c.contact && c.contact.email && c.contact.email.value);
     renderMethods();
     renderOrder();
     renderPay();
     renderContact();
     Longfly.startAnalytics(c.analytics);
+    Longfly.startPixel(c.metaPixel);
     route();
     window.addEventListener("hashchange", route);
     setupLightbox();
