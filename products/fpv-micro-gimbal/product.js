@@ -6,7 +6,7 @@
 */
 Longfly.addProduct({
   name: "FPV Micro Gimbal",
-  subtitle: "Two-axis head-tracking gimbal for the DJI O4 Lite",
+  subtitle: "Two-axis head-tracking gimbal for DJI O4, O4 Lite and Caddx cameras",
   revision: "Rev B",
   status: "in-stock",           // "prototype", "preorder", "in-stock" or "sold-out"
   statusLabel: "Digital download",
@@ -16,7 +16,7 @@ Longfly.addProduct({
   currency: "USD",
 
   headline: "About 15 grams, 281° of pan, driven by two 1.5 g servos.",
-  summary: "A rack-and-pinion gimbal small enough for a micro quad. Two AGFRC 1.5 g linear servos move the bare DJI O4 Lite camera through ±140° of pan and ±79° of tilt, so your view follows your head.",
+  summary: "A rack-and-pinion gimbal small enough for a micro quad. Two AGFRC 1.5 g linear servos move a bare DJI O4, O4 Lite or Caddx camera through ±140° of pan and ±79° of tilt, so your view follows your head.",
 
   // Big readout under the hero video. Keep it to 3–4 short items.
   readout: [
@@ -51,7 +51,7 @@ Longfly.addProduct({
     ["Signal", "900–2100 µs, 1500 µs = centre"],
     ["Supply", "3.7–6 V (5 V BEC ideal)"],
     ["Gearing", "Module 0.5, 25° pressure angle. Pan 1.5 : 1 step-up, tilt 13T pinion"],
-    ["Camera", "DJI O4 Lite camera module (bare)"],
+    ["Camera", "DJI O4, DJI O4 Lite or Caddx camera module (bare)"],
     ["Base footprint", "26.5 × 27.1 mm"],
     ["Height", "54.2 mm at centre pose"],
     ["Swept envelope", "Ø35.6 mm, from 19.4 to 54.2 mm above the mount"],
@@ -102,5 +102,5 @@ Longfly.addProduct({
     "Print-ready STL files for every printed part"
   ],
 
-  notes: "You're buying the design files, not a printed gimbal. You print the parts and supply the two servos, the O4 Lite camera and M2 screws. Rev B is verified in CAD through every end stop but hasn't been flight-tested yet."
+  notes: "You're buying the design files, not a printed gimbal. You print the parts and supply the two servos, the camera (DJI O4, O4 Lite or Caddx) and M2 screws. Rev B is verified in CAD through every end stop but hasn't been flight-tested yet."
 });

@@ -13,7 +13,7 @@ Longfly.config({
 
   about: [
     "Longfly is Quinlong's drone hardware workshop. Every part starts in CAD, gets checked through its full range of motion before anything is printed, and is sized for micro quads where every gram counts.",
-    "The first product is a two-axis head-tracking gimbal for the DJI O4 Lite camera. More parts and build logs will land here as they come off the printer."
+    "The first product is a two-axis head-tracking gimbal for DJI O4, O4 Lite and Caddx cameras. More parts and build logs will land here as they come off the printer."
   ],
 
   contact: {
