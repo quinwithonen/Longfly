@@ -93,6 +93,9 @@ Longfly.addProduct({
 
   // Honest status shown on the product page.
   // Files the buyer gets. Shown on the product page. The files themselves live in /downloads (see README).
+  // Rotatable 3D view on the product page. Reduced-detail mesh on purpose: anything shown here can be saved.
+  model: "model/preview.stl",
+
   includes: [
     "Design & build guide (PDF, 8 pages)",
     "Full Rev B assembly (STEP)",

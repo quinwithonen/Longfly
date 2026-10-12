@@ -24,6 +24,8 @@ assets/                    site styling and script
 
 **New video.** Replace `products/fpv-micro-gimbal/video/motion-pan-tilt.mp4`, or point `video` in `product.js` at the new file. Use H.264 MP4 so every browser plays it.
 
+**3D model.** Put an STL in the product folder (e.g. `model/preview.stl`) and set `model: "model/preview.stl"` in `product.js`. Visitors can save whatever is shown, so use a reduced-detail mesh, not the print file. Add `modelUp: "y"` if the model shows up lying on its side.
+
 **New revision (Rev C).** Edit `revision`, `specs` and `changes` in `product.js`, and swap the images. To keep the old revision's files, move them into an `images/rev-b/` folder first.
 
 **Set a price.** In `product.js`, change `price: null` to a number, e.g. `price: 89`.
