@@ -255,3 +255,5 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); ou
 .vote-q { margin: 0; font-weight: 600; font-size: var(--s1); }
 .vote-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 @media (max-width: 820px) { .cockpit { grid-template-columns: 1fr; } }
+#home > .block:first-child { border-top: 0; }
+#home > #cockpit { border-bottom: 1px solid var(--line); }
