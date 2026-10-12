@@ -133,16 +133,43 @@
     var grid = $("#product-grid");
     grid.textContent = "";
     list().forEach(function (p) {
+      var body = [
+        el("div", { class: "card-meta" }, [statusPill(p), el("span", { class: "mono", text: p.revision || "" })]),
+        el("h3", { text: p.name }),
+        el("p", { text: p.subtitle }),
+        el("p", { class: "price mono", text: price(p) })
+      ];
+      // With a 3D model the card shows the viewer instead of a still, so it can't be one big link (dragging would open the page).
+      if (p.model) {
+        body.push(el("a", { class: "btn primary", href: "#" + p.slug, text: "See details" }));
+        grid.appendChild(el("div", { class: "card has-model" }, [viewer(p), el("div", { class: "card-body" }, body)]));
+        return;
+      }
       grid.appendChild(el("a", { class: "card", href: "#" + p.slug }, [
         el("div", { class: "plate" }, [el("img", { src: src(p, p.cardImage || p.heroImage), alt: p.name, loading: "lazy" })]),
-        el("div", { class: "card-body" }, [
-          el("div", { class: "card-meta" }, [statusPill(p), el("span", { class: "mono", text: p.revision || "" })]),
-          el("h3", { text: p.name }),
-          el("p", { text: p.subtitle }),
-          el("p", { class: "price mono", text: price(p) })
-        ])
+        el("div", { class: "card-body" }, body)
       ]));
     });
+  }
+
+  // Rotatable 3D view of p.model. three.js and the model load only when it gets close to the screen.
+  function viewer(p) {
+    var box = el("div", { class: "plate viewer" }, [
+      el("p", { class: "viewer-status", role: "status" }),
+      el("p", { class: "viewer-hint", text: "Drag to rotate" }),
+      el("button", { type: "button", class: "viewer-reset", text: "Reset view" })
+    ]);
+    var go = function () {
+      box.querySelector(".viewer-status").textContent = "Loading 3D model…";
+      import(new URL("assets/js/viewer.js", document.baseURI).href)
+        .then(function (m) { m.mount(box, src(p, p.model), { up: p.modelUp, color: p.modelColor }); })
+        .catch(function () { box.querySelector(".viewer-status").textContent = "3D view isn't supported in this browser."; });
+    };
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: "400px" });
+      io.observe(box);
+    } else go();
+    return box;
   }
 
   function renderWork() {
@@ -202,25 +229,11 @@
     );
 
     if (p.model) {
-      var box = el("div", { class: "plate viewer" }, [
-        el("p", { class: "viewer-status", role: "status" }),
-        el("button", { type: "button", class: "viewer-reset", text: "Reset view" })
-      ]);
       a.appendChild(el("section", { class: "p-sec", "data-section": "3d-model" }, [
         el("h2", { text: "Turn it around" }),
         el("p", { class: "fine", text: "Drag to rotate, scroll or pinch to zoom." }),
-        box
+        viewer(p)
       ]));
-      // Load three.js and the model only when the viewer gets close to the screen.
-      var go = function () {
-        import(new URL("assets/js/viewer.js", document.baseURI).href)
-          .then(function (m) { m.mount(box, src(p, p.model), { up: p.modelUp, color: p.modelColor }); })
-          .catch(function () { box.querySelector(".viewer-status").textContent = "3D view isn't supported in this browser."; });
-      };
-      if ("IntersectionObserver" in window) {
-        var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: "400px" });
-        io.observe(box);
-      } else go();
     }
 
     if (p.video) {
