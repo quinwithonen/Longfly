@@ -95,7 +95,8 @@ Longfly.addProduct({
   // Files the buyer gets. Shown on the product page. The files themselves live in /downloads (see README).
   includes: [
     "Design & build guide (PDF, 8 pages)",
-    "Full Rev B assembly (STEP)"
+    "Full Rev B assembly (STEP)",
+    "Print-ready STL files for every printed part"
   ],
 
   notes: "You're buying the design files, not a printed gimbal. You print the parts and supply the two servos, the O4 Lite camera and M2 screws. Rev B is verified in CAD through every end stop but hasn't been flight-tested yet."
