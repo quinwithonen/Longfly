@@ -201,6 +201,28 @@
       ])
     );
 
+    if (p.model) {
+      var box = el("div", { class: "plate viewer" }, [
+        el("p", { class: "viewer-status", role: "status" }),
+        el("button", { type: "button", class: "viewer-reset", text: "Reset view" })
+      ]);
+      a.appendChild(el("section", { class: "p-sec", "data-section": "3d-model" }, [
+        el("h2", { text: "Turn it around" }),
+        el("p", { class: "fine", text: "Drag to rotate, scroll or pinch to zoom." }),
+        box
+      ]));
+      // Load three.js and the model only when the viewer gets close to the screen.
+      var go = function () {
+        import(new URL("assets/js/viewer.js", document.baseURI).href)
+          .then(function (m) { m.mount(box, src(p, p.model), { up: p.modelUp, color: p.modelColor }); })
+          .catch(function () { box.querySelector(".viewer-status").textContent = "3D view isn't supported in this browser."; });
+      };
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: "400px" });
+        io.observe(box);
+      } else go();
+    }
+
     if (p.video) {
       var v = el("video", { src: src(p, p.video), poster: src(p, p.videoPoster), controls: "", muted: "", loop: "", playsinline: "", preload: "metadata" });
       v.muted = true;
