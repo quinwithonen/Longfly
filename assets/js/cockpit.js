@@ -4,7 +4,6 @@
    Price test: each visitor is shown one price picked at random from cockpit.prices, and keeps it on repeat
    visits (stored in the browser) so the counts per price stay honest. Events sent to PostHog:
      cockpit_price_shown     the section came on screen (once per page view)   { price }
-     cockpit_interest        they pressed the Kickstarter button                { price }
      cockpit_price_answer    they answered "is this price fair?"                { price, answer: "yes" | "no" }
    You should not need to edit this file. */
 (function () {
@@ -67,14 +66,14 @@
         : "Good to know. I'll use this to decide what the kit should include and cost." }));
     }
 
-    document.getElementById("vote-go").addEventListener("click", function () {
-      L.track("cockpit_interest", { price: price });
+    // Ask the price question straight away, right below the video.
+    (function ask() {
       vote.textContent = "";
       vote.appendChild(el("p", { class: "vote-q", text: "Would " + label + " be a fair price for the cockpit kit?" }));
       vote.appendChild(el("div", { class: "vote-row" }, [
         el("button", { type: "button", class: "btn primary", text: "Yes, " + label + " is fair", onclick: function () { done("yes"); } }),
         el("button", { type: "button", class: "btn", text: "No, that's too much", onclick: function () { done("no"); } })
       ]));
-    });
+    })();
   };
 })();
