@@ -115,3 +115,21 @@ Everything is set under `launch`, `press` and `metaPixel` in `site.config.js`.
 **Press kit.** Files in `press/` are listed in `press.files`. Put full-resolution photos in a shared Google Drive or Dropbox folder and paste its link into `press.folderLink`.
 
 **Link previews.** `projects/f14-cockpit/images/share.jpg` (1200×630) is the picture shown when the site is shared. The tags at the top of `index.html` point at https://longfly.us; change them if the domain changes.
+
+## Pre-order page
+
+A separate page at https://longfly.us/preorder/ (`preorder/index.html`, `assets/js/preorder.js`, settings under `preorder` in `site.config.js`). It reuses the cockpit model and video from the main page.
+
+Each visitor sees one pre-order price picked at random from `preorder.tiers` ($100, $200, $300 or $400, shown as 50% off double that) and keeps it on later visits. They enter name and email, which are saved in PostHog, then go to that tier's Stripe Payment Link to pay. Until a tier has a link, its visitors see "Pre-orders open soon" and are just added to the list.
+
+**Set up the Stripe links (once per tier, in live mode):**
+
+1. Stripe Dashboard → Product catalog → Add product "F-14 cockpit (pre-order)", one-time price $100. Repeat for $200, $300, $400 (or add four prices to one product).
+2. Payment Links → New, pick the $100 price.
+3. Under **Options**: tick "Collect customers' addresses" → Shipping address, and choose the countries you ship to (US, Canada, Mexico, Central and South America). Tick "Require customers to provide a phone number". Untick "Allow customers to adjust quantity" unless you want multiples.
+4. Under **After payment**: "Don't show confirmation page" → redirect to `https://longfly.us/preorder/?paid=1`.
+5. Create the link, copy it into the matching tier's `link` in `site.config.js`. Repeat for the other prices.
+
+**Your buyer list:** Stripe Dashboard → Payments (or Customers) → Export. The CSV has each buyer's name, email, phone and shipping address. Nothing personal is stored on the site or in this repo.
+
+**Results by price in PostHog:** events `preorder_price_shown`, `preorder_start` (pressed Pre-order) and `preorder_paid` (came back from Stripe), each with `price`. Build a Funnel of those three steps with breakdown by `price`. Stripe's own payment list is the source of truth for who actually paid.

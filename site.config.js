@@ -84,6 +84,26 @@ Longfly.config({
     ]
   },
 
+  // Pre-order page at /preorder/ (README, "Pre-order page"). Each visitor sees one tier at random; the regular
+  // price shown is double. Each tier needs its own live Stripe Payment Link that collects name, phone and shipping
+  // address. Until a tier has a link, its visitors are added to the email list instead of paying.
+  preorder: {
+    tiers: [
+      { price: 100, link: "" },
+      { price: 200, link: "" },
+      { price: 300, link: "" },
+      { price: 400, link: "" }
+    ],
+    availability: "Available for purchase by November 5 in the Americas.",
+    details: [
+      ["When does it ship?", "The cockpit will be available by November 5. Pre-orders are first in line, and you'll get shipping updates by email."],
+      ["Where do you ship?", "Anywhere in the Americas: the US, Canada, Mexico, Central and South America."],
+      ["What if it's late?", "If it can't ship by November 5, you'll be emailed a new date and can cancel for a full refund."],
+      ["Can I cancel?", "Yes. Email quinlongliang@gmail.com any time before it ships for a full refund."],
+      ["How do I pay?", "Checkout is handled by Stripe (card, Apple Pay, Google Pay). Your card details never touch this site."]
+    ]
+  },
+
   // Meta (Facebook/Instagram) Pixel ID for ad conversion tracking. Leave empty to keep it off.
   metaPixel: "",
 

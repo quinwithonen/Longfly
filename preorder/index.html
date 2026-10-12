@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pre-order · Longfly F-14 cockpit for head-tracking FPV</title>
+<meta name="description" content="Pre-order the Longfly F-14 cockpit for head-tracking FPV at 50% off. Available by November 5 in the Americas.">
+<!-- Pre-order test page: keep it out of search results so the main page is what people find. -->
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Longfly">
+<meta property="og:url" content="https://longfly.us/preorder/">
+<meta property="og:title" content="Pre-order the F-14 cockpit for head-tracking FPV">
+<meta property="og:description" content="50% off for pre-orders. Available by November 5 in the Americas.">
+<meta property="og:image" content="https://longfly.us/projects/f14-cockpit/images/share.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Martian+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <a class="mark" href="../" aria-label="Longfly home">
+      <svg viewBox="0 0 40 16" aria-hidden="true"><path d="M1 12 L17 4 L39 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="4" r="3" fill="var(--accent)"/></svg>
+      <span>Longfly</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#preorder">Pre-order</a>
+      <a href="#faq">Details</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="block wrap" id="preorder" data-section="preorder">
+    <div class="block-head">
+      <p class="eyebrow">Pre-order · 50% off</p>
+      <h1>An ultra-realistic F-14 cockpit for head-tracking FPV</h1>
+      <p class="lede">A scale F-14 cockpit that sits around a head-tracking FPV camera, so when you look around you see the canopy, the seats and the instrument panels, as if you were in the plane.</p>
+    </div>
+    <div class="cockpit">
+      <div class="cockpit-media">
+        <div class="plate viewer" id="po-viewer">
+          <p class="viewer-status" role="status"></p>
+          <p class="viewer-hint">Drag to rotate</p>
+          <button type="button" class="viewer-reset">Reset view</button>
+        </div>
+      </div>
+
+      <div class="cockpit-side">
+        <div class="panel signup po-panel" id="po-panel">
+          <div class="po-price">
+            <span class="po-now mono" id="po-now">$—</span>
+            <span class="po-was mono" id="po-was"></span>
+            <span class="po-tag">50% off pre-order price</span>
+          </div>
+          <p class="po-ship" id="po-ship"></p>
+
+          <form id="po-form" novalidate>
+            <div class="field">
+              <label for="po-name">Name</label>
+              <input id="po-name" name="name" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="po-email">Email</label>
+              <input id="po-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <p class="form-error" id="po-error" role="alert" hidden></p>
+            <button class="btn primary po-go" type="submit" id="po-go">Pre-order</button>
+            <p class="fine s-note" id="po-note">Secure checkout by Stripe. You'll enter your card and shipping address there; nothing is charged on this page.</p>
+          </form>
+
+          <div class="signup-done" id="po-closed" hidden>
+            <p class="signup-h">Pre-orders open soon.</p>
+            <p class="fine">You're on the list at this price. I'll email you a link to pay as soon as checkout opens.</p>
+          </div>
+
+          <div class="signup-done" id="po-thanks" hidden aria-live="polite">
+            <p class="signup-h">Thank you, your pre-order is in.</p>
+            <p class="fine">Stripe has emailed you a receipt. I'll email you with shipping updates before November 5.</p>
+          </div>
+        </div>
+
+        <figure class="cockpit-video">
+          <div class="plate video"><video id="po-video" controls muted playsinline preload="metadata"></video></div>
+          <figcaption class="fine">Sample of what the final product will look like. <span id="po-credit"></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="faq" data-section="faq">
+    <div class="block-head">
+      <p class="eyebrow">Details</p>
+      <h2>Before you pre-order</h2>
+    </div>
+    <dl class="po-faq" id="po-faq"></dl>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <span>Longfly · Small, light hardware for FPV pilots.</span>
+  <span class="mono" id="foot-year"></span>
+</footer>
+
+<script>
+  /* Minimal hooks so the shared analytics script and site.config.js work on this page. */
+  window.Longfly = { config: function (c) { window.Longfly._config = c || {}; }, catalog: function () {}, work: function () {}, addProduct: function () {} };
+</script>
+<script src="../assets/js/analytics.js"></script>
+<script src="../site.config.js"></script>
+<script src="../assets/js/preorder.js"></script>
+</body>
+</html>
