@@ -78,7 +78,7 @@ Longfly.config({
     question: "Which one would you want?",
     options: [
       { label: "F-16 cockpit, 70mm", note: "Flight time ~4-8 minutes depending on battery" },
-      { label: "F-16 cockpit, 90mm" },
+      { label: "F-16 cockpit, 90mm", note: "Flight time ~4-8 minutes depending on battery" },
       { label: "P-51 Mustang, 1.2m", note: "WW2-era warbird. Flight time 10-25 minutes depending on battery" },
       { label: "P-51 Mustang, 1.46m", note: "Flight time 10-25 minutes depending on battery" }
     ],
