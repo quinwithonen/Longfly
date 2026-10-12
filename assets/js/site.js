@@ -132,9 +132,17 @@
     );
   }
 
+  // Hides a home section and its menu link (e.g. no products listed, nothing for sale).
+  function hideSection(id) {
+    var s = $("#" + id), a = $('.nav a[href="#' + id + '"]');
+    if (s) s.hidden = true;
+    if (a) a.hidden = true;
+  }
+
   function renderGrid() {
     var grid = $("#product-grid");
     grid.textContent = "";
+    if (!list().length) hideSection("products");
     list().forEach(function (p) {
       var body = [
         el("div", { class: "card-meta" }, [statusPill(p), el("span", { class: "mono", text: p.revision || "" })]),
@@ -178,7 +186,9 @@
   function renderWork() {
     var ol = $("#work-log");
     ol.textContent = "";
-    state.work.forEach(function (w) {
+    // Entries tied to a product that isn't listed in catalog.js are hidden with it.
+    var items = state.work.filter(function (w) { return !w.product || state.products[w.product]; });
+    items.forEach(function (w) {
       var link = w.product && state.products[w.product] ? el("a", { href: "#" + w.product, text: "View " + state.products[w.product].name }) : null;
       ol.appendChild(el("li", null, [
         el("time", { class: "mono", datetime: w.date, text: w.date }),
@@ -186,7 +196,7 @@
         w.image ? el("button", { type: "button", class: "log-img plate", "data-zoom": w.image, "data-caption": w.title, "aria-label": "Enlarge image: " + w.title }, [el("img", { src: w.image, alt: "", loading: "lazy" })]) : null
       ]));
     });
-    if (!state.work.length) $("#work").hidden = true;
+    if (!items.length) hideSection("work");
   }
 
   function renderAbout() {
@@ -301,7 +311,7 @@
     list().filter(forSale).forEach(function (p) {
       sel.appendChild(el("option", { value: p.slug, text: p.name + " " + (p.revision || "") + " · " + price(p) }));
     });
-    if (!sel.options.length) { $("#order-form").hidden = true; return; }
+    if (!sel.options.length) { hideSection("order"); return; }
 
     $("#order-form").addEventListener("submit", function (e) {
       e.preventDefault();

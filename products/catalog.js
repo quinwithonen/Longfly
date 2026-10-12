@@ -5,5 +5,5 @@
   To hide one: remove it from this list (the folder can stay).
 */
 Longfly.catalog([
-  "fpv-micro-gimbal"
+  // "fpv-micro-gimbal"   hidden 2026-10-12 while the F-14 cockpit is the main thing; uncomment to bring it back
 ]);

@@ -12,8 +12,8 @@ Longfly.config({
   featured: "fpv-micro-gimbal",
 
   about: [
-    "Longfly is Quinlong's drone hardware workshop. Every part starts in CAD, gets checked through its full range of motion before anything is printed, and is sized for micro quads where every gram counts.",
-    "The first product is a two-axis head-tracking gimbal for DJI O4, O4 Lite and Caddx cameras. More parts and build logs will land here as they come off the printer."
+    "Longfly is Quinlong's FPV hardware workshop. Every part starts in CAD and gets checked through its full range of motion before anything is printed.",
+    "Right now I'm finding out whether there's enough interest to launch a Kickstarter for an ultra-realistic F-14 cockpit for head-tracking FPV. If you'd want one, press the button at the top of the page."
   ],
 
   contact: {
