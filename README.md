@@ -133,3 +133,12 @@ Each visitor sees one pre-order price picked at random from `preorder.tiers` ($1
 **Your buyer list:** Stripe Dashboard → Payments (or Customers) → Export. The CSV has each buyer's name, email, phone and shipping address. Nothing personal is stored on the site or in this repo.
 
 **Results by price in PostHog:** events `preorder_price_shown`, `preorder_start` (pressed Pre-order) and `preorder_paid` (came back from Stripe), each with `price`. Build a Funnel of those three steps with breakdown by `price`. Stripe's own payment list is the source of truth for who actually paid.
+
+## Cockpit poll
+
+"Which hyper-realistic cockpit would you buy first?" sits under the F-14 section (settings under `poll` in `site.config.js`; change `options` to change the choices). Each visitor votes once. Every vote sends a `cockpit_poll` event with `choice` (the option, or `Other`) and, for Other, `other` with what they typed.
+
+In PostHog (Product analytics → New insight):
+
+- **Vote split:** Trends, event `cockpit_poll`, count "Unique users", breakdown by `choice`, chart type "Total value" (bar) or pie.
+- **What people typed for Other:** Trends, event `cockpit_poll` filtered to `choice = Other`, breakdown by `other`, shown as a table. (Spelling varies, so "F15" and "F-15 Eagle" show as separate rows.)

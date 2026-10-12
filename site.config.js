@@ -13,16 +13,14 @@ Longfly.config({
 
   about: [
     "Longfly is Quinlong's FPV hardware workshop. Every part starts in CAD and gets checked through its full range of motion before anything is printed.",
-    "Right now I'm finding out whether there's enough interest to launch a Kickstarter for an ultra-realistic F-14 cockpit for head-tracking FPV. If you'd want one, answer the price question at the top of the page."
+    "Right now I'm finding out whether there's enough interest to launch a Kickstarter for an ultra-realistic F-14 cockpit for head-tracking FPV. If you'd want one, press the button at the top of the page."
   ],
 
   contact: {
     email: { value: "quinlongliang@gmail.com", placeholder: false },
     // Optional. Leave value empty ("") to hide a link.
-    instagram: { value: "https://www.instagram.com/longfly.shop/", label: "@longfly.shop", placeholder: false },
-    tiktok: { value: "https://www.tiktok.com/@longfly.us", label: "@longfly.us", placeholder: false },
-    youtube: { value: "https://www.youtube.com/@Thedeepblu2", label: "@Thedeepblu2", placeholder: false },
-    reddit: { value: "https://www.reddit.com/user/ThaDeepBlu/", label: "u/ThaDeepBlu", placeholder: false }
+    instagram: { value: "", placeholder: true },
+    youtube: { value: "", placeholder: true }
   },
 
   // How buyers pay. Swap the values, drop a QR image into /payments, and set placeholder: false.
@@ -61,7 +59,7 @@ Longfly.config({
     videoPoster: "video/sample-poster.jpg",
     videoCredit: "Video by 轩_快出来飞飞机 on bilibili, not a Longfly build.",
     reddit: "https://www.reddit.com/r/RCPlanes/comments/1x3s7wa/fpv_headtracker_with_an_ultra_realistic_cockpit/",
-    prices: [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]          // each visitor sees one of these at random
+    prices: [100, 200, 300, 400, 500]          // each visitor sees one of these at random
   },
 
   // Kickstarter launch: email sign-up, optional $1 reservation, and the live campaign link (README, "Kickstarter launch").
@@ -72,6 +70,13 @@ Longfly.config({
     reserveLabel: "Reserve the early-bird price for $1",
     reserveText: "Want to lock in the lowest price? A $1 reservation holds your early-bird spot and comes off your pledge.",
     kickstarterUrl: ""       // paste the campaign link on launch day; the main button then goes straight to Kickstarter
+  },
+
+  // "Which cockpit first?" poll under the F-14 section. One vote per visitor; results in PostHog (README, "Cockpit poll").
+  poll: {
+    question: "Which hyper-realistic cockpit would you buy first?",
+    options: ["F-18 Hornet", "F-14 Tomcat", "F-16 Fighting Falcon"],
+    allowOther: true          // adds "Other" with a box to type their own
   },
 
   // Press kit section. Files live in press/. Add a Google Drive or Dropbox folder link for full-resolution photos.

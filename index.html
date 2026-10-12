@@ -54,13 +54,56 @@
       <div class="cockpit">
         <div class="cockpit-media" id="cockpit-media"></div>
         <div class="cockpit-side">
+          <div class="panel signup" id="signup" data-section="signup">
+            <a class="btn primary ks-live" id="ks-live" href="#" target="_blank" rel="noopener" hidden>Back it on Kickstarter</a>
+            <form id="signup-form" novalidate>
+              <h2 class="signup-h" id="signup-title">Get notified when it launches</h2>
+              <p class="fine" id="signup-perk"></p>
+              <div class="signup-row">
+                <label class="sr" for="s-email">Email</label>
+                <input id="s-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                <button class="btn primary" type="submit" id="s-go">Notify me</button>
+              </div>
+              <p class="form-error" id="s-error" role="alert" hidden></p>
+              <p class="fine s-note">Only emails about this Kickstarter. Unsubscribe any time.</p>
+            </form>
+            <div class="signup-done" id="signup-done" hidden aria-live="polite">
+              <p class="signup-h">You're on the list.</p>
+              <p class="fine">I'll email you the moment the Kickstarter goes live.</p>
+              <div class="reserve" id="reserve" hidden>
+                <p class="fine" id="reserve-text"></p>
+                <a class="btn primary" id="reserve-go" href="#" target="_blank" rel="noopener"></a>
+              </div>
+            </div>
+          </div>
           <figure class="cockpit-video">
             <div class="plate video"><video id="cockpit-video" controls muted playsinline preload="metadata"></video></div>
             <figcaption class="fine">Sample of what the final product will look like.<span id="cockpit-credit"></span><span id="cockpit-reddit-wrap"> <a id="cockpit-reddit" href="#" target="_blank" rel="noopener">See the original post on Reddit</a>.</span></figcaption>
           </figure>
           <div class="panel vote" id="vote" aria-live="polite">
+            <button class="btn primary vote-go" type="button" id="vote-go">Click here to let me know if I should make a Kickstarter</button>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="block wrap" id="poll" data-section="poll" hidden>
+      <div class="block-head">
+        <p class="eyebrow">Help me choose</p>
+        <h2 id="poll-q">Which hyper-realistic cockpit would you buy first?</h2>
+      </div>
+      <form class="poll" id="poll-form" novalidate>
+        <fieldset class="poll-options" id="poll-options"><legend class="sr">Pick one</legend></fieldset>
+        <div class="field poll-other" id="poll-other-wrap" hidden>
+          <label for="poll-other">Which one?</label>
+          <input id="poll-other" name="other" maxlength="80" placeholder="e.g. F-15 Eagle, P-51 Mustang, Su-27">
+        </div>
+        <p class="form-error" id="poll-error" role="alert" hidden></p>
+        <button class="btn primary" type="submit">Submit my vote</button>
+      </form>
+      <div class="panel poll-done" id="poll-done" hidden aria-live="polite">
+        <p class="signup-h" id="poll-thanks"></p>
+        <p class="fine">Thanks, the votes decide which cockpit I build first.</p>
       </div>
     </section>
 
@@ -155,31 +198,6 @@
     </div>
     <div id="contact-body" class="contact-body"></div>
   </section>
-
-  <section class="block wrap" id="notify" aria-label="Get notified when it launches">
-      <div class="panel signup" id="signup" style="max-width: 36rem" data-section="signup">
-        <a class="btn primary ks-live" id="ks-live" href="#" target="_blank" rel="noopener" hidden>Back it on Kickstarter</a>
-        <form id="signup-form" novalidate>
-          <h2 class="signup-h" id="signup-title">Get notified when it launches</h2>
-          <p class="fine" id="signup-perk"></p>
-          <div class="signup-row">
-            <label class="sr" for="s-email">Email</label>
-            <input id="s-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
-            <button class="btn primary" type="submit" id="s-go">Notify me</button>
-          </div>
-          <p class="form-error" id="s-error" role="alert" hidden></p>
-          <p class="fine s-note">Only emails about this Kickstarter. Unsubscribe any time.</p>
-        </form>
-        <div class="signup-done" id="signup-done" hidden aria-live="polite">
-          <p class="signup-h">You're on the list.</p>
-          <p class="fine">I'll email you the moment the Kickstarter goes live.</p>
-          <div class="reserve" id="reserve" hidden>
-            <p class="fine" id="reserve-text"></p>
-            <a class="btn primary" id="reserve-go" href="#" target="_blank" rel="noopener"></a>
-          </div>
-        </div>
-      </div>
-  </section>
 </main>
 
 <footer class="foot wrap">
@@ -197,6 +215,7 @@
 <script src="assets/js/analytics.js"></script>
 <script src="assets/js/cockpit.js"></script>
 <script src="assets/js/launch.js"></script>
+<script src="assets/js/poll.js"></script>
 <script src="site.config.js"></script>
 <script src="products/catalog.js"></script>
 <script src="work/work.js"></script>

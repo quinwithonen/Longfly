@@ -17,6 +17,7 @@
     startPixel: function () {},
     renderCockpit: function () {},
     renderLaunch: function () {},
+    renderPoll: function () {},
     catalog: function (list) { state.slugs = (list || []).slice(); },
     work: function (list) { state.work = (list || []).slice(); },
     addProduct: function (p) {
@@ -99,6 +100,7 @@
     renderWork();
     renderAbout();
     Longfly.renderCockpit(c.cockpit, { el: el, viewer: viewer });
+    Longfly.renderPoll(c.poll);
     Longfly.renderLaunch(c.launch, c.press, c.contact && c.contact.email && c.contact.email.value);
     renderMethods();
     renderOrder();
@@ -430,13 +432,13 @@
   function renderContact() {
     var c = state.config.contact || {}, body = $("#contact-body");
     body.textContent = "";
-    var rows = [["Email", c.email], ["Instagram", c.instagram], ["TikTok", c.tiktok], ["YouTube", c.youtube], ["Reddit", c.reddit]].filter(function (r) { return r[1] && r[1].value; });
+    var rows = [["Email", c.email], ["Instagram", c.instagram], ["YouTube", c.youtube]].filter(function (r) { return r[1] && r[1].value; });
     body.appendChild(el("dl", { class: "contact-list" }, rows.map(function (r) {
       var v = r[1].value;
       var isUrl = /^https?:\/\//.test(v);
       return el("div", null, [
         el("dt", { text: r[0] }),
-        el("dd", null, [isUrl ? el("a", { href: v, target: "_blank", rel: "noopener", text: r[1].label || v.replace(/^https?:\/\/(www\.)?/, "") }) : el("span", { class: "mono sel", text: v }), " ", r[0] === "Email" ? copyButton(v) : null, " ", placeholderTag(r[1].placeholder)])
+        el("dd", null, [isUrl ? el("a", { href: v, target: "_blank", rel: "noopener", text: v.replace(/^https?:\/\/(www\.)?/, "") }) : el("span", { class: "mono sel", text: v }), " ", r[0] === "Email" ? copyButton(v) : null, " ", placeholderTag(r[1].placeholder)])
       ]);
     })));
   }
