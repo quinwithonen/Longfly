@@ -117,6 +117,29 @@ Longfly.config({
     ]
   },
 
+  // Free downloads section (#downloads). Files live in downloads/micro-gimbal/.
+  // "tip" is the PayPal link the "Tip me" button opens. Remove this whole block to hide the section.
+  downloads: {
+    title: "FPV head-tracking micro gimbal",
+    folder: "downloads/micro-gimbal",
+    model: "model/assembly.stl",
+    modelFit: 0.9,
+    description: [
+      "A tiny 2-axis head-tracking gimbal designed for the DJI and Caddx FPV cameras.",
+      "Weighs 24 grams. The only parts besides the prints are two 4.3\u00a0g servos.",
+      "Assembles in about 1 minute with no screws: superglue plus a pinch of baking soda cures instantly."
+    ],
+    zip: { file: "longfly-micro-gimbal-stl.zip", label: "Download all STL files (.zip)" },
+    files: [
+      { file: "files/camera_cradle.stl", label: "Camera cradle" },
+      { file: "files/servo_base.stl", label: "Servo base" },
+      { file: "files/servo_yoke.stl", label: "Servo yoke" },
+      { file: "files/cradle_gear_35T.stl", label: "Cradle gear (35T)" },
+      { file: "files/pitch_servo_gear_51T.stl", label: "Pitch servo gear (51T)" }
+    ],
+    tip: { label: "Tip me", text: "Free to download and print. If it helped you, a tip keeps the designs coming.", link: "https://www.paypal.com/qrcodes/p2pqrc/7BPLWG644ETC4" }
+  },
+
   // Meta (Facebook/Instagram) Pixel ID for ad conversion tracking. Leave empty to keep it off.
   metaPixel: "",
 

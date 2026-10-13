@@ -18,6 +18,7 @@
     renderCockpit: function () {},
     renderLaunch: function () {},
     renderPoll: function () {},
+    renderDownloads: function () {},
     catalog: function (list) { state.slugs = (list || []).slice(); },
     work: function (list) { state.work = (list || []).slice(); },
     addProduct: function (p) {
@@ -101,6 +102,7 @@
     renderAbout();
     Longfly.renderCockpit(c.cockpit, { el: el, viewer: viewer });
     Longfly.renderPoll(c.poll);
+    Longfly.renderDownloads(c.downloads, { el: el, viewer: viewer });
     Longfly.renderLaunch(c.launch, c.press, c.contact && c.contact.email && c.contact.email.value);
     renderMethods();
     renderOrder();

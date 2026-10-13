@@ -144,3 +144,9 @@ In PostHog (Product analytics → New insight):
 
 - **Vote split:** Trends, event `cockpit_poll` filtered to `poll = v2`, count "Unique users", breakdown by `choice`, chart type "Total value" (bar) or pie.
 - **Write-ins (if Other is on):** same, filtered to `choice = Other`, breakdown by `other`, shown as a table.
+
+## Free downloads (gimbal STLs)
+
+The `#downloads` section on the home page shows the micro gimbal as a rotatable 3D model, a short description, the STL files and a "Tip me" PayPal button. Everything is set under `downloads` in `site.config.js`; the files live in `downloads/micro-gimbal/` (`files/` for the STLs, `model/assembly.stl` for the 3D view, plus a zip of all STLs). To add or replace a file, drop it in `files/`, add a line to `downloads.files`, and rebuild the zip. Delete the `downloads` block to hide the section.
+
+PostHog events: `download_file` (property `file`) and `tip_click`. For a chart, create a Trends insight on `download_file` broken down by `file`.

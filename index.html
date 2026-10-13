@@ -33,6 +33,7 @@
     </a>
     <nav class="nav" aria-label="Main">
       <a href="#cockpit">F-14</a>
+      <a href="#downloads">Downloads</a>
       <a href="#products">Products</a>
       <a href="#work">Work</a>
       <a href="#order">Order</a>
@@ -104,6 +105,28 @@
       <div class="panel poll-done" id="poll-done" hidden aria-live="polite">
         <p class="signup-h" id="poll-thanks"></p>
         <p class="fine">Thanks, the votes decide what I build first.</p>
+      </div>
+    </section>
+
+    <section class="block wrap" id="downloads" data-section="downloads" hidden>
+      <div class="block-head">
+        <p class="eyebrow">Free downloads</p>
+        <h2 id="dl-title">FPV head-tracking micro gimbal</h2>
+      </div>
+      <div class="dl">
+        <div class="dl-media" id="dl-media"></div>
+        <div class="dl-side">
+          <ul class="dl-desc" id="dl-desc"></ul>
+          <div class="panel dl-files">
+            <p class="signup-h">STL files</p>
+            <a class="btn primary dl-zip" id="dl-zip" href="#" download hidden></a>
+            <ul class="dl-list" id="dl-list"></ul>
+          </div>
+          <div class="dl-tip" id="dl-tip" hidden>
+            <a class="btn dl-tip-btn" id="dl-tip-go" href="#" target="_blank" rel="noopener"></a>
+            <p class="fine" id="dl-tip-text"></p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -216,6 +239,7 @@
 <script src="assets/js/cockpit.js"></script>
 <script src="assets/js/launch.js"></script>
 <script src="assets/js/poll.js"></script>
+<script src="assets/js/downloads.js"></script>
 <script src="site.config.js"></script>
 <script src="products/catalog.js"></script>
 <script src="work/work.js"></script>
