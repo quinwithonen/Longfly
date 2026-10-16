@@ -118,7 +118,7 @@ Longfly.config({
   },
 
   // Free downloads section (#downloads). Files live in downloads/micro-gimbal/.
-  // "tip" is the PayPal link the "Tip me" button opens. Remove this whole block to hide the section.
+  // "tip" shows your PayPal QR code (qr); tapping it opens the PayPal link. Remove this whole block to hide the section.
   downloads: {
     title: "FPV head-tracking micro gimbal",
     folder: "downloads/micro-gimbal",
@@ -137,7 +137,7 @@ Longfly.config({
       { file: "files/cradle_gear_35T.stl", label: "Cradle gear (35T)" },
       { file: "files/pitch_servo_gear_51T.stl", label: "Pitch servo gear (51T)" }
     ],
-    tip: { label: "Tip me", text: "Free to download and print. If it helped you, a tip keeps the designs coming.", link: "https://www.paypal.com/qrcodes/p2pqrc/7BPLWG644ETC4" }
+    tip: { label: "Tip me", text: "Free to download and print. If it helped you, scan the QR code with your phone to tip me on PayPal.", qr: "payments/paypal-qr.png", link: "https://www.paypal.com/qrcodes/p2pqrc/7BPLWG644ETC4" }
   },
 
   // Meta (Facebook/Instagram) Pixel ID for ad conversion tracking. Leave empty to keep it off.

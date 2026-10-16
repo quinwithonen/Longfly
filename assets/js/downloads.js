@@ -1,5 +1,5 @@
 /* Free downloads section (#downloads). Settings under "downloads" in site.config.js.
-   Shows a rotatable 3D model, a short description, the STL files and a "Tip me" PayPal button.
+   Shows a rotatable 3D model, a short description, the STL files and a "Tip me" PayPal QR code (tapping it opens PayPal).
    PostHog events: download_file { file }, tip_click.
    You should not need to edit this file. */
 (function () {
@@ -41,7 +41,9 @@
     });
 
     if (c.tip && c.tip.link) {
-      var t = $("dl-tip-go"); t.href = c.tip.link; t.textContent = c.tip.label || "Tip me";
+      var t = $("dl-tip-go"); t.href = c.tip.link;
+      $("dl-tip-qr").src = c.tip.qr || "payments/paypal-qr.png";
+      $("dl-tip-label").textContent = c.tip.label || "Tip me";
       $("dl-tip-text").textContent = c.tip.text || "";
       t.addEventListener("click", function () { L.track("tip_click", {}); });
       $("dl-tip").hidden = false;
