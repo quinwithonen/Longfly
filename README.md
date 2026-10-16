@@ -150,3 +150,15 @@ In PostHog (Product analytics → New insight):
 The `#downloads` section on the home page shows the micro gimbal as a rotatable 3D model, a short description, the STL files and a "Tip me" PayPal QR code (from `payments/paypal-qr.png`; tapping it opens PayPal). Everything is set under `downloads` in `site.config.js`; the files live in `downloads/micro-gimbal/` (`files/` for the STLs, `model/assembly.stl` for the 3D view, plus a zip of all STLs). To add or replace a file, drop it in `files/`, add a line to `downloads.files`, and rebuild the zip. Delete the `downloads` block to hide the section.
 
 PostHog events: `download_file` (property `file`) and `tip_click`. For a chart, create a Trends insight on `download_file` broken down by `file`.
+
+## Social bio links (traffic by platform)
+
+Put one link in each bio:
+
+| Platform | Short link | Same thing, long form |
+|---|---|---|
+| Instagram | https://longfly.us/instagram | https://longfly.us/?utm_source=instagram&utm_medium=social&utm_campaign=bio |
+| TikTok | https://longfly.us/tiktok | https://longfly.us/?utm_source=tiktok&utm_medium=social&utm_campaign=bio |
+| YouTube | https://longfly.us/youtube | https://longfly.us/?utm_source=youtube&utm_medium=social&utm_campaign=bio |
+
+The short links are the `instagram/`, `tiktok/` and `youtube/` folders; each just forwards to the long form. PostHog reads `utm_source` automatically. To see the split: Web analytics → Channels/Sources card → switch to "UTM source". Or make a Trends insight on Pageview, breakdown by "UTM source" (or "Session entry UTM source" to credit the whole visit). For a video description, swap `utm_campaign=bio` for a name like `utm_campaign=f14-video1` to compare individual posts.
