@@ -160,5 +160,6 @@ Put one link in each bio:
 | Instagram | https://longfly.us/instagram | https://longfly.us/?utm_source=instagram&utm_medium=social&utm_campaign=bio |
 | TikTok | https://longfly.us/tiktok | https://longfly.us/?utm_source=tiktok&utm_medium=social&utm_campaign=bio |
 | YouTube | https://longfly.us/youtube | https://longfly.us/?utm_source=youtube&utm_medium=social&utm_campaign=bio |
+| Reddit | https://longfly.us/reddit | https://longfly.us/?utm_source=reddit&utm_medium=social&utm_campaign=bio |
 
-The short links are the `instagram/`, `tiktok/` and `youtube/` folders; each just forwards to the long form. PostHog reads `utm_source` automatically. To see the split: Web analytics → Channels/Sources card → switch to "UTM source". Or make a Trends insight on Pageview, breakdown by "UTM source" (or "Session entry UTM source" to credit the whole visit). For a video description, swap `utm_campaign=bio` for a name like `utm_campaign=f14-video1` to compare individual posts.
+The short links are the `instagram/`, `tiktok/`, `youtube/` and `reddit/` folders; each just forwards to the long form. PostHog reads `utm_source` automatically. To see the split: Web analytics → Channels/Sources card → switch to "UTM source". Or make a Trends insight on Pageview, breakdown by "UTM source" (or "Session entry UTM source" to credit the whole visit). For a video description, swap `utm_campaign=bio` for a name like `utm_campaign=f14-video1` to compare individual posts.
