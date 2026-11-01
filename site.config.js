@@ -59,17 +59,33 @@ Longfly.config({
     videoPoster: "video/sample-poster.jpg",
     videoCredit: "Video by 轩_快出来飞飞机 on bilibili, not a Longfly build.",
     reddit: "https://www.reddit.com/r/RCPlanes/comments/1x3s7wa/fpv_headtracker_with_an_ultra_realistic_cockpit/",
-    prices: [100, 200, 300, 400, 500]          // each visitor sees one of these at random
+    prices: [400]                              // each visitor sees one of these at random (was 100-500; now matches the ~$400 expected price)
   },
 
   // Kickstarter launch: email sign-up, optional $1 reservation, and the live campaign link (README, "Kickstarter launch").
   launch: {
-    perk: "Sign up to hear the moment it launches and get the early-bird price on day one.",
+    eyebrow: "Pre-orders opening soon",
+    title: "Get an email when pre-orders go live",
+    offer: { earlyPrice: 200, earlyLabel: "first 10 units, with a $100 deposit", finalPrice: 400 },
+    perk: "The final product is expected to cost about $400. The first 10 people who pre-order and put down a $100 deposit get theirs for $200.",
+    doneText: "I'll email you the moment pre-orders go live, so you can grab one of the first 10 at $200.",
     signupEndpoint: "",      // optional form service URL, e.g. "https://formspree.io/f/xxxxxxx" (sign-ups also go to PostHog)
     reserveLink: "",         // optional $1 Stripe Payment Link (live, not test) shown after sign-up
     reserveLabel: "Reserve the early-bird price for $1",
     reserveText: "Want to lock in the lowest price? A $1 reservation holds your early-bird spot and comes off your pledge.",
     kickstarterUrl: ""       // paste the campaign link on launch day; the main button then goes straight to Kickstarter
+  },
+
+  // Artwork section (#art) above the poll. Files live in projects/f16-cockpit/art/. Remove this block to hide it.
+  art: {
+    eyebrow: "In the works",
+    title: "F-16 cockpit",
+    lede: "Concept art for the F-16 cockpit: what you'd see through the FPV goggles, and how the cockpit fits around the head-tracking camera.",
+    folder: "projects/f16-cockpit/art",
+    images: [
+      { file: "f16-cockpit-view.svg", alt: "Illustration of the view from an F-16 cockpit at sunset: head-up display, two screens, keypad, side-stick and throttle", caption: "The view from the seat. Illustration, not a photo of the product." },
+      { file: "f16-cockpit-cutaway.svg", alt: "Side cutaway illustration of an F-16 nose with an FPV camera on a gimbal where the pilot's head would be", caption: "The camera sits where the pilot's head would be, so looking around shows the cockpit." }
+    ]
   },
 
   // "Which cockpit first?" poll under the F-14 section. One vote per visitor; results in PostHog (README, "Cockpit poll").
@@ -97,22 +113,24 @@ Longfly.config({
     ]
   },
 
-  // Pre-order page at /preorder/ (README, "Pre-order page"). Each visitor sees one tier at random; the regular
-  // price shown is double. Each tier needs its own live Stripe Payment Link that collects name, phone and shipping
-  // address. Until a tier has a link, its visitors are added to the email list instead of paying.
+  // Pre-order page at /preorder/ (README, "Pre-order page"). One offer for everyone: the first `units` pre-orders
+  // pay `earlyPrice` instead of the expected `finalPrice`, reserved with a `deposit` paid now through a live Stripe
+  // Payment Link (`link`) that collects name, phone and shipping address. Until `link` is set, visitors are added
+  // to the email list and told pre-orders open soon.
   preorder: {
-    tiers: [
-      { price: 100, link: "" },
-      { price: 200, link: "" },
-      { price: 300, link: "" },
-      { price: 400, link: "" }
-    ],
+    earlyPrice: 200,
+    finalPrice: 400,
+    deposit: 100,
+    units: 10,
+    link: "",                // live Stripe Payment Link for the $100 deposit (limit it to 10 payments in Stripe)
     availability: "Available for purchase by November 5 in the Americas.",
     details: [
+      ["How does the deposit work?", "Pay a $100 deposit now to hold one of the first 10 cockpits at $200 instead of the expected $400. The other $100 is due when it's ready to ship, and I'll email you before charging anything else."],
+      ["What if the 10 are gone?", "After the first 10, the cockpit is expected to cost about $400. Sign up on the main page and I'll email you when more are available."],
       ["When does it ship?", "The cockpit will be available by November 5. Pre-orders are first in line, and you'll get shipping updates by email."],
       ["Where do you ship?", "Anywhere in the Americas: the US, Canada, Mexico, Central and South America."],
       ["What if it's late?", "If it can't ship by November 5, you'll be emailed a new date and can cancel for a full refund."],
-      ["Can I cancel?", "Yes. Email quinlongliang@gmail.com any time before it ships for a full refund."],
+      ["Can I cancel?", "Yes. Email quinlongliang@gmail.com any time before it ships and your deposit is refunded in full."],
       ["How do I pay?", "Checkout is handled by Stripe (card, Apple Pay, Google Pay). Your card details never touch this site."]
     ]
   },

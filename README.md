@@ -79,7 +79,7 @@ Set `cookieless: true` to stop PostHog storing anything in the browser. Repeat v
 
 ## F-14 price test
 
-The F-14 cockpit section on the home page (settings under `cockpit` in `site.config.js`, files in `projects/f14-cockpit/`) shows each visitor one price picked at random from `prices`. A visitor keeps the same price on later visits, so nobody is counted at two prices.
+The F-14 cockpit section on the home page (settings under `cockpit` in `site.config.js`, files in `projects/f14-cockpit/`) shows each visitor one price picked at random from `prices`. A visitor keeps the same price on later visits, so nobody is counted at two prices. Right now `prices` is just `[400]`, so everyone is asked about the expected ~$400 price that the pre-order offer mentions.
 
 Events sent to PostHog, each with a `price` property:
 
@@ -120,19 +120,25 @@ Everything is set under `launch`, `press` and `metaPixel` in `site.config.js`.
 
 A separate page at https://longfly.us/preorder/ (`preorder/index.html`, `assets/js/preorder.js`, settings under `preorder` in `site.config.js`). It reuses the cockpit model and video from the main page.
 
-Each visitor sees one pre-order price picked at random from `preorder.tiers` ($100, $200, $300 or $400, shown as 50% off double that) and keeps it on later visits. They enter name and email, which are saved in PostHog, then go to that tier's Stripe Payment Link to pay. Until a tier has a link, its visitors see "Pre-orders open soon" and are just added to the list.
+Everyone sees the same offer, set under `preorder` in `site.config.js`: the expected final price (`finalPrice`, $400) crossed out next to the early price (`earlyPrice`, $200) for the first `units` (10) people who pay a `deposit` ($100). They enter name and email, which are saved in PostHog, then go to the Stripe Payment Link in `preorder.link` to pay the deposit. Until that link is set, visitors see "Pre-orders open soon" and are just added to the list. The same offer is shown in the sign-up box on the main page (`launch.offer`).
 
-**Set up the Stripe links (once per tier, in live mode):**
+**Set up the Stripe deposit link (once, in live mode):**
 
-1. Stripe Dashboard → Product catalog → Add product "F-14 cockpit (pre-order)", one-time price $100. Repeat for $200, $300, $400 (or add four prices to one product).
-2. Payment Links → New, pick the $100 price.
-3. Under **Options**: tick "Collect customers' addresses" → Shipping address, and choose the countries you ship to (US, Canada, Mexico, Central and South America). Tick "Require customers to provide a phone number". Untick "Allow customers to adjust quantity" unless you want multiples.
+1. Stripe Dashboard → Product catalog → Add product "F-14 cockpit pre-order deposit", one-time price $100.
+2. Payment Links → New, pick that price.
+3. Under **Options**: tick "Collect customers' addresses" → Shipping address, and choose the countries you ship to (US, Canada, Mexico, Central and South America). Tick "Require customers to provide a phone number". Untick "Allow customers to adjust quantity". Tick **"Limit the number of payments"** and set it to 10, so the link stops working once the first 10 are taken.
 4. Under **After payment**: "Don't show confirmation page" → redirect to `https://longfly.us/preorder/?paid=1`.
-5. Create the link, copy it into the matching tier's `link` in `site.config.js`. Repeat for the other prices.
+5. Create the link and paste it into `preorder.link` in `site.config.js`. Then email the people on your sign-up list that pre-orders are live.
+
+The remaining $100 per unit is collected later (for example with a Stripe invoice to each buyer when it's ready to ship).
 
 **Your buyer list:** Stripe Dashboard → Payments (or Customers) → Export. The CSV has each buyer's name, email, phone and shipping address. Nothing personal is stored on the site or in this repo.
 
-**Results by price in PostHog:** events `preorder_price_shown`, `preorder_start` (pressed Pre-order) and `preorder_paid` (came back from Stripe), each with `price`. Build a Funnel of those three steps with breakdown by `price`. Stripe's own payment list is the source of truth for who actually paid.
+**Results in PostHog:** events `preorder_price_shown`, `preorder_start` (pressed the deposit button) and `preorder_paid` (came back from Stripe), each with `price` and `deposit`. Build a Funnel of those three steps. Stripe's own payment list is the source of truth for who actually paid.
+
+## Artwork
+
+The "F-16 cockpit" section above the poll shows the pictures listed under `art` in `site.config.js` (files in `projects/f16-cockpit/art/`). To add or swap a picture, drop the file in that folder and add `{ file, alt, caption }` to `art.images`; the first one is shown larger. Remove the `art` block to hide the section.
 
 ## Cockpit poll
 

@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pre-order · Longfly F-14 cockpit for head-tracking FPV</title>
-<meta name="description" content="Pre-order the Longfly F-14 cockpit for head-tracking FPV at 50% off. Available by November 5 in the Americas.">
+<meta name="description" content="Pre-order the Longfly F-14 cockpit for head-tracking FPV. Expected price about $400; the first 10 units are $200 with a $100 deposit.">
 <!-- Pre-order test page: keep it out of search results so the main page is what people find. -->
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Longfly">
 <meta property="og:url" content="https://longfly.us/preorder/">
 <meta property="og:title" content="Pre-order the F-14 cockpit for head-tracking FPV">
-<meta property="og:description" content="50% off for pre-orders. Available by November 5 in the Americas.">
+<meta property="og:description" content="Expected price about $400. The first 10 pre-orders are $200 with a $100 deposit.">
 <meta property="og:image" content="https://longfly.us/projects/f14-cockpit/images/share.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
 <main id="top">
   <section class="block wrap" id="preorder" data-section="preorder">
     <div class="block-head">
-      <p class="eyebrow">Pre-order · 50% off</p>
+      <p class="eyebrow" id="po-eyebrow">Pre-order · first 10 units $200</p>
       <h1>An ultra-realistic F-14 cockpit for head-tracking FPV</h1>
       <p class="lede">A scale F-14 cockpit that sits around a head-tracking FPV camera, so when you look around you see the canopy, the seats and the instrument panels, as if you were in the plane.</p>
     </div>
@@ -54,9 +54,10 @@
           <div class="po-price">
             <span class="po-now mono" id="po-now">$—</span>
             <span class="po-was mono" id="po-was"></span>
-            <span class="po-tag">50% off pre-order price</span>
+            <span class="po-tag" id="po-tag"></span>
           </div>
           <p class="po-ship" id="po-ship"></p>
+          <p class="fine" id="po-deposit"></p>
 
           <form id="po-form" novalidate>
             <div class="field">
@@ -74,12 +75,12 @@
 
           <div class="signup-done" id="po-closed" hidden>
             <p class="signup-h">Pre-orders open soon.</p>
-            <p class="fine">You're on the list at this price. I'll email you a link to pay as soon as checkout opens.</p>
+            <p class="fine" id="po-closed-text">You're on the list. I'll email you the moment pre-orders go live, so you can grab one of the first 10.</p>
           </div>
 
           <div class="signup-done" id="po-thanks" hidden aria-live="polite">
             <p class="signup-h">Thank you, your pre-order is in.</p>
-            <p class="fine">Stripe has emailed you a receipt. I'll email you with shipping updates before November 5.</p>
+            <p class="fine" id="po-thanks-text">Stripe has emailed you a receipt for your deposit. I'll email you about the rest of the payment and shipping.</p>
           </div>
         </div>
 

@@ -34,6 +34,18 @@
       $("signup-title").textContent = "Or get updates by email";
     }
     if (c.perk) $("signup-perk").textContent = c.perk; else $("signup-perk").hidden = true;
+    if (c.eyebrow && !c.kickstarterUrl) $("launch-eyebrow").textContent = c.eyebrow;
+    if (c.title && !c.kickstarterUrl) $("signup-title").textContent = c.title;
+    if (c.doneText) $("signup-done-text").textContent = c.doneText;
+    // Price offer box: early price for the first few units next to the expected final price.
+    var o = c.offer;
+    if (o && o.earlyPrice) {
+      $("signup-offer").hidden = false;
+      $("offer-early").textContent = "$" + o.earlyPrice;
+      $("offer-early-lbl").textContent = o.earlyLabel || "";
+      if (o.finalPrice) $("offer-final").textContent = "~$" + o.finalPrice;
+      else $("offer-final").parentNode.hidden = true;
+    }
 
     var form = $("signup-form"), err = $("s-error"), btn = $("s-go");
     if (store(DONE)) showDone();

@@ -1,35 +1,39 @@
 /* Pre-order page (/preorder/). Settings live under "preorder" in site.config.js.
 
-   Each visitor is shown one pre-order price picked at random from preorder.tiers and keeps it on return
-   visits. The regular price shown is double. Pressing Pre-order saves their name and email in PostHog,
-   then sends them to that tier's Stripe Payment Link, where Stripe collects payment, phone and shipping
-   address. The buyer list (names, addresses) lives in Stripe, never on this site.
+   One fixed offer for everyone: the expected final price (finalPrice, about $400) is shown crossed out next to
+   the early price (earlyPrice, $200) for the first few units (units, 10), reserved with a deposit (deposit, $100).
+   Pressing the button saves their name and email in PostHog, then sends them to the Stripe Payment Link for the
+   deposit (link), where Stripe collects payment, phone and shipping address. Set that link to stop after 10
+   payments in Stripe so nobody can pay once the 10 are gone. The buyer list lives in Stripe, never on this site.
 
-   Events (all with "price"): preorder_price_shown, preorder_start, preorder_paid.
-   Meta Pixel (if set): InitiateCheckout on Pre-order, Purchase when Stripe sends them back paid.
+   Events (all with "price" = earlyPrice and "deposit"): preorder_price_shown, preorder_start, preorder_paid.
+   Meta Pixel (if set): InitiateCheckout on the button, Purchase when Stripe sends them back paid.
    You should not need to edit this file. */
 (function () {
   "use strict";
   var L = window.Longfly;
   var c = L._config || {};
   var po = c.preorder || {};
-  var KEY = "longfly.preorderPrice";
 
   function $(id) { return document.getElementById(id); }
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
   function money(n) { return "$" + Number(n).toLocaleString("en-US"); }
 
-  var tiers = (po.tiers || []).map(function (t) { return { price: Number(t.price), link: t.link || "" }; });
-  if (!tiers.length) tiers = [100, 200, 300, 400].map(function (p) { return { price: p, link: "" }; });
-  var saved = parseInt(store(KEY), 10);
-  var tier = tiers.filter(function (t) { return t.price === saved; })[0] || tiers[Math.floor(Math.random() * tiers.length)];
-  store(KEY, String(tier.price));
+  var early = Number(po.earlyPrice || 200), finalP = Number(po.finalPrice || 400);
+  var deposit = Number(po.deposit || 100), units = Number(po.units || 10);
+  var link = po.link || "";
+  var props = { price: early, deposit: deposit };
 
   // Price block.
-  $("po-now").textContent = money(tier.price);
-  $("po-was").textContent = money(tier.price * 2);
-  $("po-go").textContent = "Pre-order for " + money(tier.price);
-  $("po-ship").textContent = po.availability || "Available for purchase by November 5 in the Americas.";
+  $("po-now").textContent = money(early);
+  $("po-was").textContent = money(finalP);
+  $("po-tag").textContent = "First " + units + " units · expected price ~" + money(finalP);
+  $("po-eyebrow").textContent = "Pre-order · first " + units + " units " + money(early);
+  $("po-deposit").textContent = po.depositText || ("Put down a " + money(deposit) + " deposit now to hold one of the first " + units +
+    " at " + money(early) + ". The other " + money(early - deposit) + " is due when it's ready to ship.");
+  $("po-go").textContent = "Pay " + money(deposit) + " deposit";
+  $("po-ship").textContent = po.availability || "";
+  if (!po.availability) $("po-ship").hidden = true;
   $("foot-year").textContent = "© " + new Date().getFullYear();
 
   // Details list.
@@ -64,15 +68,15 @@
   L.startAnalytics(c.analytics);
   L.startPixel(c.metaPixel);
   L.onRoute("preorder");
-  L.track("preorder_price_shown", { price: tier.price });
+  L.track("preorder_price_shown", props);
 
   // Back from Stripe after paying (set the Payment Link's after-payment redirect to /preorder/?paid=1).
   if (/[?&]paid=1\b/.test(location.search)) {
     $("po-form").hidden = true; $("po-thanks").hidden = false;
     if (!store("longfly.preorderPaid")) {
       store("longfly.preorderPaid", "1");
-      L.track("preorder_paid", { price: tier.price });
-      L.pixel("Purchase", { value: tier.price, currency: "USD", content_name: "F-14 cockpit pre-order" });
+      L.track("preorder_paid", props);
+      L.pixel("Purchase", { value: deposit, currency: "USD", content_name: "F-14 cockpit pre-order" });
     }
     history.replaceState(null, "", location.pathname);
   }
@@ -83,13 +87,13 @@
     if (!name) { err.textContent = "Please enter your name."; err.hidden = false; return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = "Please enter a valid email address."; err.hidden = false; return; }
     err.hidden = true;
-    L.identify(email, { name: name, preorder_price: tier.price });
-    L.track("preorder_start", { price: tier.price, checkout_open: !!tier.link });
+    L.identify(email, { name: name, preorder_price: early });
+    L.track("preorder_start", { price: early, deposit: deposit, checkout_open: !!link });
 
-    if (!tier.link) { $("po-form").hidden = true; $("po-closed").hidden = false; return; }
-    L.pixel("InitiateCheckout", { value: tier.price, currency: "USD", content_name: "F-14 cockpit pre-order" });
+    if (!link) { $("po-form").hidden = true; $("po-closed").hidden = false; return; }
+    L.pixel("InitiateCheckout", { value: deposit, currency: "USD", content_name: "F-14 cockpit pre-order" });
     // Stripe Payment Links accept a pre-filled email; give the analytics call a moment to send first.
-    var url = tier.link + (tier.link.indexOf("?") === -1 ? "?" : "&") + "prefilled_email=" + encodeURIComponent(email);
+    var url = link + (link.indexOf("?") === -1 ? "?" : "&") + "prefilled_email=" + encodeURIComponent(email);
     $("po-go").disabled = true; $("po-go").textContent = "Opening secure checkout…";
     setTimeout(function () { location.href = url; }, 350);
   });

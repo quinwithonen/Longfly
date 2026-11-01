@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Longfly · F-14 cockpit for head-tracking FPV</title>
-<meta name="description" content="An ultra-realistic F-14 cockpit for head-tracking FPV, coming to Kickstarter. Sign up to hear when it launches.">
+<meta name="description" content="An ultra-realistic F-14 cockpit for head-tracking FPV. Sign up to get an email when pre-orders go live: the first 10 units are $200 with a $100 deposit.">
 <!-- Link previews (iMessage, Discord, Facebook, X). Image URLs must be absolute. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Longfly">
 <meta property="og:url" content="https://longfly.us/">
 <meta property="og:title" content="An ultra-realistic F-14 cockpit for head-tracking FPV">
-<meta property="og:description" content="Coming to Kickstarter. Sign up to hear when it launches and get the early-bird price.">
+<meta property="og:description" content="Pre-orders open soon. Expected price about $400; the first 10 units are $200 with a $100 deposit.">
 <meta property="og:image" content="https://longfly.us/projects/f14-cockpit/images/share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Render of the Longfly F-14 cockpit">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="An ultra-realistic F-14 cockpit for head-tracking FPV">
-<meta name="twitter:description" content="Coming to Kickstarter. Sign up to hear when it launches.">
+<meta name="twitter:description" content="Pre-orders open soon. The first 10 units are $200 with a $100 deposit.">
 <meta name="twitter:image" content="https://longfly.us/projects/f14-cockpit/images/share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@
     </a>
     <nav class="nav" aria-label="Main">
       <a href="#cockpit">F-14</a>
+      <a href="#art">F-16</a>
       <a href="#downloads">Downloads</a>
       <a href="#products">Products</a>
       <a href="#work">Work</a>
@@ -48,7 +49,7 @@
   <div id="home">
     <section class="block wrap" id="cockpit" data-section="cockpit" hidden>
       <div class="block-head">
-        <p class="eyebrow" id="launch-eyebrow">Coming to Kickstarter</p>
+        <p class="eyebrow" id="launch-eyebrow">Pre-orders opening soon</p>
         <h1>An ultra-realistic F-14 cockpit for head-tracking FPV</h1>
         <p class="lede">A scale F-14 cockpit that sits around a head-tracking FPV camera, so when you look around you see the canopy, the seats and the instrument panels, as if you were in the plane.</p>
       </div>
@@ -58,7 +59,17 @@
           <div class="panel signup" id="signup" data-section="signup">
             <a class="btn primary ks-live" id="ks-live" href="#" target="_blank" rel="noopener" hidden>Back it on Kickstarter</a>
             <form id="signup-form" novalidate>
-              <h2 class="signup-h" id="signup-title">Get notified when it launches</h2>
+              <h2 class="signup-h" id="signup-title">Get an email when pre-orders go live</h2>
+              <div class="offer" id="signup-offer" hidden>
+                <div class="offer-cell offer-early">
+                  <span class="offer-num mono" id="offer-early"></span>
+                  <span class="offer-lbl" id="offer-early-lbl"></span>
+                </div>
+                <div class="offer-cell">
+                  <span class="offer-num mono offer-final" id="offer-final"></span>
+                  <span class="offer-lbl">expected final price</span>
+                </div>
+              </div>
               <p class="fine" id="signup-perk"></p>
               <div class="signup-row">
                 <label class="sr" for="s-email">Email</label>
@@ -66,11 +77,11 @@
                 <button class="btn primary" type="submit" id="s-go">Notify me</button>
               </div>
               <p class="form-error" id="s-error" role="alert" hidden></p>
-              <p class="fine s-note">Only emails about this Kickstarter. Unsubscribe any time.</p>
+              <p class="fine s-note">Only emails about the pre-order. Unsubscribe any time.</p>
             </form>
             <div class="signup-done" id="signup-done" hidden aria-live="polite">
               <p class="signup-h">You're on the list.</p>
-              <p class="fine">I'll email you the moment the Kickstarter goes live.</p>
+              <p class="fine" id="signup-done-text">I'll email you the moment pre-orders go live.</p>
               <div class="reserve" id="reserve" hidden>
                 <p class="fine" id="reserve-text"></p>
                 <a class="btn primary" id="reserve-go" href="#" target="_blank" rel="noopener"></a>
@@ -86,6 +97,15 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="block wrap" id="art" data-section="art" hidden>
+      <div class="block-head">
+        <p class="eyebrow" id="art-eyebrow">In the works</p>
+        <h2 id="art-title">F-16 cockpit</h2>
+        <p class="lede" id="art-lede"></p>
+      </div>
+      <div class="art-grid" id="art-grid"></div>
     </section>
 
     <section class="block wrap" id="poll" data-section="poll" hidden>
@@ -241,6 +261,7 @@
 <script src="assets/js/analytics.js"></script>
 <script src="assets/js/cockpit.js"></script>
 <script src="assets/js/launch.js"></script>
+<script src="assets/js/art.js"></script>
 <script src="assets/js/poll.js"></script>
 <script src="assets/js/downloads.js"></script>
 <script src="site.config.js"></script>
