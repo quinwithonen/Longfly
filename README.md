@@ -4,7 +4,7 @@ Quinlong's single-file F-16 cockpit pre-order page (`index.html` + `assets/*.web
 
 ## To go live
 Open `index.html` and find the `CONFIG` block near the bottom:
-- `STRIPE_LINK`: the live Stripe Payment Link for the $100 deposit (product name "$100 refundable deposit — Longfly F-16 Cockpit, Batch 1 Founders"; collect shipping address + phone; limit to 10 payments; optionally redirect after payment to `https://longfly.us/?paid=1`).
+- `STRIPE_LINK`: the live Stripe Payment Link for the $100 deposit (product name "$100 refundable deposit — Longfly F-16 Cockpit, Batch 1 Supporters"; collect shipping address + phone; limit to 10 payments; optionally redirect after payment to `https://longfly.us/?paid=1`).
 - `WAITLIST_ENDPOINT`: optional Formspree (or similar) URL. Sign-ups are saved in PostHog either way.
 - `SPOTS_CLAIMED`: the real number of deposits taken. Update after each one.
 

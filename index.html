@@ -71,6 +71,10 @@
   .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:#000}
   .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
   .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,19,.42) 0%,rgba(10,14,19,.05) 38%,rgba(10,14,19,.94) 88%)}
+  section.has-bg{position:relative;overflow:hidden}
+  section.has-bg .sec-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+  section.has-bg::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,14,19,.55) 0%,rgba(10,14,19,.78) 45%,rgba(10,14,19,.95) 100%)}
+  section.has-bg > .wrap{position:relative;z-index:2}
   .hero .inner{position:relative;padding:110px 0 44px;width:100%}
   .kicker{font-family:"IBM Plex Mono",monospace;color:var(--amber);letter-spacing:2.5px;font-size:12px;text-transform:uppercase}
   h1{font-size:clamp(38px,6vw,64px);line-height:1.05;font-weight:900;margin:10px 0 14px;letter-spacing:-.5px}
@@ -150,7 +154,7 @@
 
 <!-- ══════════ HERO ══════════ -->
 <div class="hero" id="top">
-  <img class="bg" src="assets/hero.webp" alt="F-16 cockpit at dusk, instruments lit">
+  <img class="bg" src="assets/jet.webp" alt="F-16 at golden hour">
   <div class="shade"></div>
   <div class="wrap inner">
     <div class="kicker">Batch 1 · Handmade · 10 units only</div>
@@ -173,11 +177,12 @@
 </div>
 
 <!-- ══════════ THE OFFER ══════════ -->
-<section id="reserve" data-section="offer">
+<section id="reserve" class="has-bg" data-section="offer">
+  <img class="sec-bg" src="assets/hero.webp" alt="" aria-hidden="true">
   <div class="wrap">
     <div class="kicker">Pre-orders open</div>
     <h2>Believe early, <span class="g">pay half.</span></h2>
-    <p class="lede">Batch 1 is ten cockpits, handmade one at a time. The half price is a reward for the people generous enough to give this project a chance to live — call it the Great Faith discount.</p>
+    <p class="lede">Batch 1 is ten cockpits, handmade one at a time. The half price is a reward for the people generous enough to give this project a chance to live — call it the Supporters discount.</p>
 
     <div class="cards">
       <!-- Waitlist -->
@@ -208,7 +213,7 @@
       <!-- Founders -->
       <div class="card hot">
         <span class="tag hot">Batch 1 · Founders</span>
-        <h3>The "Great Faith" edition</h3>
+        <h3>The "Supporters" edition</h3>
         <div class="price"><s>$400</s> $200 <small>total</small></div>
         <p><b style="color:#fff;">$100 today</b> holds your spot. <b style="color:#fff;">$100 more</b> only when your unit is ready to ship. That's it.</p>
         <ul>
@@ -288,7 +293,7 @@
       <p><b>Is the deposit really refundable?</b><br><span>Yes. Any time until your unit ships — one email to me, refund goes back to your card. No forms, no phone call, no hard feelings.</span></p>
       <p><b>What if it doesn't ship in time for Christmas?</b><br><span>Your choice: full deposit back, or keep your founders price and be first in Batch 2. I won't hold your money hostage to my schedule.</span></p>
       <p><b>What exactly do I get?</b><br><span>The cockpit unit for your F-16 RC jet — displays, HUD, backlit panels, controls — ready to install. The jet and FPV goggles aren't included; the cockpit works with the DJI FPV setup.</span></p>
-      <p><b>Why is Batch 1 half price?</b><br><span>As a reward for being so generous as to give my project a chance to live. That's what the Great Faith discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</span></p>
+      <p><b>Why is Batch 1 half price?</b><br><span>As a reward for being so generous as to give my project a chance to live. That's what the Supporters discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</span></p>
       <p><b>Waitlist vs deposit — what's the difference?</b><br><span>The waitlist is a queue for news and Batch 2. The deposit is a held unit, a locked $200 price, and a Christmas ship date. Only the deposit holds a cockpit.</span></p>
     </div>
   </div>
