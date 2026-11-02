@@ -15,9 +15,9 @@
       return;
     }
     section.hidden = false;
-    if (c.eyebrow) $("art-eyebrow").textContent = c.eyebrow;
-    if (c.title) $("art-title").textContent = c.title;
-    if (c.lede) $("art-lede").textContent = c.lede; else $("art-lede").hidden = true;
+    // The F-16 page shows the art without its own heading, so these are optional.
+    var set = function (id, t) { var n = $(id); if (!n) return; if (t) n.textContent = t; else if (id === "art-lede") n.hidden = true; };
+    set("art-eyebrow", c.eyebrow); set("art-title", c.title); set("art-lede", c.lede);
     var base = (c.folder || "").replace(/\/?$/, "/");
     var grid = $("art-grid");
     c.images.forEach(function (im, i) {

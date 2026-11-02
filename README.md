@@ -77,68 +77,35 @@ Charts to build in PostHog (Product analytics → New insight):
 
 Set `cookieless: true` to stop PostHog storing anything in the browser. Repeat visitors then count as new visitors.
 
-## F-14 price test
+## Home page: F-16 cockpit (November 2026 redesign)
 
-The F-14 cockpit section on the home page (settings under `cockpit` in `site.config.js`, files in `projects/f14-cockpit/`) shows each visitor one price picked at random from `prices`. A visitor keeps the same price on later visits, so nobody is counted at two prices. Right now `prices` is just `[400]`, so everyone is asked about the expected ~$400 price that the pre-order offer mentions.
+`index.html` is now a single page for the F-16 cockpit, built from the redesign mockup, in this order: hero, the offer (`#reserve`), the product (`#cockpit`), the story (`#story`), how it works, FAQ (`#faq`). The older pieces sit below the FAQ: the cockpit poll, free gimbal downloads and the press kit. The copy is final wording from the mockup and lives directly in `index.html`; the refund and Christmas lines are promises, so change them only on purpose. Styles: `assets/css/cockpit.css` (palette and type at the top). Script: `assets/js/home.js`.
 
-Events sent to PostHog, each with a `price` property:
+**Founders deposit ("Hold my spot — $100").** Settings under `preorder` in `site.config.js`.
 
-| Event | When |
-|---|---|
-| `cockpit_price_shown` | The button came on screen (once per page view) |
-| `cockpit_interest` | They pressed the Kickstarter button |
-| `cockpit_price_answer` | They answered "would $X be fair?", with `answer` = `yes` or `no` |
+1. Stripe Dashboard (live mode) → Product catalog → Add product named exactly "$100 refundable deposit — Longfly F-16 Cockpit, Batch 1 Founders", one-time price $100. In the description: "Batch 1 "Great Faith" Founders Edition. Total price $200 (regular $400): $100 today, $100 when your unit is ready to ship. Deposit refundable until your unit ships. Ships in time for Christmas, or deposit refunded."
+2. Payment Links → New, pick that price. Options: collect shipping address and phone number, turn off quantity changes, and tick **Limit the number of payments** = 10.
+3. After payment → redirect to `https://longfly.us/?paid=1` (the old `/preorder/?paid=1` also still works). Visitors coming back see "Spot held". Stripe's own confirmation email is the receipt.
+4. Paste the link into `preorder.link`. Until then, the button sends people to the waitlist.
+5. **After each deposit, raise `preorder.claimed` by one.** The counter on the founders card shows this number; it must be real, never a made-up "7 claimed". At 10 the button switches to the waitlist.
 
-Charts to build in PostHog (Product analytics → New insight):
+The remaining $100 is collected when each unit is ready (e.g. a Stripe invoice). Buyer names and addresses: Stripe → Payments → Export. Nothing personal is stored on the site.
 
-- **Interest per price:** Trends, event `cockpit_interest`, count "Unique users", breakdown by `price`. Set the chart type to "Total value" (bar) to see one bar per price.
-- **Who says the price is fair:** Trends, event `cockpit_price_answer` with filter `answer = yes`, count "Unique users", breakdown by `price`. Add a second series with `answer = no` to compare.
-- **Click rate per price:** Funnels, step 1 `cockpit_price_shown`, step 2 `cockpit_interest`, step 3 `cockpit_price_answer` (filter `answer = yes`), breakdown by `price`. This corrects for one price happening to be shown more often than another.
+**Waitlist (free).** Email, first name and jet. Each sign-up is saved in PostHog (People → filter "email is set" → export CSV; `first_name` and `jet` are person properties) and sends `launch_signup` with `list = waitlist`. Ad blockers hide PostHog from some visitors, so before running ads also create a free form at formspree.io and paste its URL into `launch.signupEndpoint`.
 
-To add the 3D model, export the assembly from SolidWorks as one STL (File → Save As → STL, "Save all components of an assembly in a single file"), put a reduced-detail copy at `projects/f14-cockpit/model/preview.stl` and set `model: "model/preview.stl"`.
+**Story photo.** Put a real photo of you at the bench in `projects/f16-cockpit/images/` and set `story.photo` to its path. Until then the story section has no photo.
 
-## Kickstarter launch
+**Product pictures.** The two F-16 illustrations at the top of "Inside the cockpit" come from `art` in `site.config.js`. Swap them for real photos of the unit when you have them (the first one is shown large).
 
-Everything is set under `launch`, `press` and `metaPixel` in `site.config.js`.
+**Hero picture.** `projects/f16-cockpit/images/hero.jpg` (plus `hero-960.jpg` for phones) is the AI-generated atmosphere shot from the mockup. `share.jpg` (1200×630) is the link preview.
 
-**Email sign-up.** Works now with no extra account: each sign-up is saved in PostHog (People → filter "email is set" → export CSV) and sends a `launch_signup` event with the price that visitor saw in the price test. Ad blockers hide PostHog from some visitors, so before running ads also connect a form service:
+**Mobile.** On phones a "Reserve yours — $100" bar slides up once the hero scrolls away and hides over the offer section.
 
-1. Create a free form at formspree.io (or a similar service) and copy its endpoint URL.
-2. Paste it into `launch.signupEndpoint`. Sign-ups then also land in your Formspree inbox and can be exported or sent to Mailchimp/Kit.
+**Events in PostHog:** `launch_signup` (waitlist), `reserve_click` (`link` = whether the Stripe link was set), `deposit_paid` (back from Stripe), plus the usual `section_reached` / `section_time` for sections `hero`, `offer`, `waitlist`, `founders`, `product`, `story`, `how`, `faq`, `poll`, `downloads`, `press`, `contact`. Meta Pixel (if `metaPixel` is set): `Lead` on waitlist, `InitiateCheckout` on the deposit button, `Purchase` on return from Stripe.
 
-**$1 reservation (optional).** Make a live Stripe Payment Link for $1 (name it "F-14 cockpit early-bird reservation") and paste it into `launch.reserveLink`. The button shows after someone signs up and sends a `reserve_click` event. Card details are only ever entered on Stripe's page.
+**Link previews.** The tags at the top of `index.html` point at https://longfly.us; change them if the domain changes.
 
-**Launch day.** Paste the campaign URL into `launch.kickstarterUrl`. The top of the page then shows "Back it on Kickstarter", the reservation button hides, and clicks send `kickstarter_click`.
-
-**Meta Pixel.** In Meta Events Manager create a pixel, then paste its ID into `metaPixel`. The site sends PageView, `Lead` on sign-up and `InitiateCheckout` on the reservation button, so ads can optimise for sign-ups.
-
-**Press kit.** Files in `press/` are listed in `press.files`. Put full-resolution photos in a shared Google Drive or Dropbox folder and paste its link into `press.folderLink`.
-
-**Link previews.** `projects/f14-cockpit/images/share.jpg` (1200×630) is the picture shown when the site is shared. The tags at the top of `index.html` point at https://longfly.us; change them if the domain changes.
-
-## Pre-order page
-
-A separate page at https://longfly.us/preorder/ (`preorder/index.html`, `assets/js/preorder.js`, settings under `preorder` in `site.config.js`). It reuses the cockpit model and video from the main page.
-
-Everyone sees the same offer, set under `preorder` in `site.config.js`: the expected final price (`finalPrice`, $400) crossed out next to the early price (`earlyPrice`, $200) for the first `units` (10) people who pay a `deposit` ($100). They enter name and email, which are saved in PostHog, then go to the Stripe Payment Link in `preorder.link` to pay the deposit. Until that link is set, visitors see "Pre-orders open soon" and are just added to the list. The same offer is shown in the sign-up box on the main page (`launch.offer`).
-
-**Set up the Stripe deposit link (once, in live mode):**
-
-1. Stripe Dashboard → Product catalog → Add product "F-14 cockpit pre-order deposit", one-time price $100.
-2. Payment Links → New, pick that price.
-3. Under **Options**: tick "Collect customers' addresses" → Shipping address, and choose the countries you ship to (US, Canada, Mexico, Central and South America). Tick "Require customers to provide a phone number". Untick "Allow customers to adjust quantity". Tick **"Limit the number of payments"** and set it to 10, so the link stops working once the first 10 are taken.
-4. Under **After payment**: "Don't show confirmation page" → redirect to `https://longfly.us/preorder/?paid=1`.
-5. Create the link and paste it into `preorder.link` in `site.config.js`. Then email the people on your sign-up list that pre-orders are live.
-
-The remaining $100 per unit is collected later (for example with a Stripe invoice to each buyer when it's ready to ship).
-
-**Your buyer list:** Stripe Dashboard → Payments (or Customers) → Export. The CSV has each buyer's name, email, phone and shipping address. Nothing personal is stored on the site or in this repo.
-
-**Results in PostHog:** events `preorder_price_shown`, `preorder_start` (pressed the deposit button) and `preorder_paid` (came back from Stripe), each with `price` and `deposit`. Build a Funnel of those three steps. Stripe's own payment list is the source of truth for who actually paid.
-
-## Artwork
-
-The "F-16 cockpit" section above the poll shows the pictures listed under `art` in `site.config.js` (files in `projects/f16-cockpit/art/`). To add or swap a picture, drop the file in that folder and add `{ file, alt, caption }` to `art.images`; the first one is shown larger. Remove the `art` block to hide the section.
+`/preorder/` now just forwards to `/#reserve`. The old F-14 section (`cockpit` in `site.config.js`, `assets/js/cockpit.js`, `assets/js/launch.js`) is no longer on the page; its files are kept in case it comes back.
 
 ## Cockpit poll
 

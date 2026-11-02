@@ -47,7 +47,8 @@ Longfly.config({
     }
   ],
 
-  // F-14 cockpit idea on the home page, with the Kickstarter price test (see README, "F-14 price test").
+  // F-14 cockpit section: NOT shown since the November 2026 redesign (the page is now the F-16 cockpit).
+  // Kept here in case it comes back., with the Kickstarter price test (see README, "F-14 price test").
   // Files live in projects/f14-cockpit/. Delete this whole block to hide the section.
   cockpit: {
     folder: "projects/f14-cockpit",
@@ -62,21 +63,14 @@ Longfly.config({
     prices: [400]                              // each visitor sees one of these at random (was 100-500; now matches the ~$400 expected price)
   },
 
-  // Kickstarter launch: email sign-up, optional $1 reservation, and the live campaign link (README, "Kickstarter launch").
+  // Waitlist form (Form A on the home page). Sign-ups go to PostHog People (event launch_signup) and, if set,
+  // to a form service such as Formspree, which keeps working for visitors whose ad blocker blocks PostHog.
   launch: {
-    eyebrow: "Pre-orders opening soon",
-    title: "Get an email when pre-orders go live",
-    offer: { earlyPrice: 200, earlyLabel: "first 10 units, with a $100 deposit", finalPrice: 400 },
-    perk: "The final product is expected to cost about $400. The first 10 people who pre-order and put down a $100 deposit get theirs for $200.",
-    doneText: "I'll email you the moment pre-orders go live, so you can grab one of the first 10 at $200.",
-    signupEndpoint: "",      // optional form service URL, e.g. "https://formspree.io/f/xxxxxxx" (sign-ups also go to PostHog)
-    reserveLink: "",         // optional $1 Stripe Payment Link (live, not test) shown after sign-up
-    reserveLabel: "Reserve the early-bird price for $1",
-    reserveText: "Want to lock in the lowest price? A $1 reservation holds your early-bird spot and comes off your pledge.",
-    kickstarterUrl: ""       // paste the campaign link on launch day; the main button then goes straight to Kickstarter
+    signupEndpoint: ""       // optional form service URL, e.g. "https://formspree.io/f/xxxxxxx"
   },
 
-  // Artwork section (#art) above the poll. Files live in projects/f16-cockpit/art/. Remove this block to hide it.
+  // F-16 artwork shown at the top of "Inside the cockpit". Files live in projects/f16-cockpit/art/.
+  // Replace with real photos of the unit when you have them (the first image is the big one).
   art: {
     eyebrow: "In the works",
     title: "F-16 cockpit",
@@ -88,7 +82,7 @@ Longfly.config({
     ]
   },
 
-  // "Which cockpit first?" poll under the F-14 section. One vote per visitor; results in PostHog (README, "Cockpit poll").
+  // "Which cockpit next?" poll below the FAQ. One vote per visitor; results in PostHog (README, "Cockpit poll").
   poll: {
     id: "v2",                 // change this whenever the options change, so everyone can vote again and old votes stay separate
     question: "Which one would you want?",
@@ -113,27 +107,32 @@ Longfly.config({
     ]
   },
 
-  // Pre-order page at /preorder/ (README, "Pre-order page"). One offer for everyone: the first `units` pre-orders
-  // pay `earlyPrice` instead of the expected `finalPrice`, reserved with a `deposit` paid now through a live Stripe
-  // Payment Link (`link`) that collects name, phone and shipping address. Until `link` is set, visitors are added
-  // to the email list and told pre-orders open soon.
+  // Founders deposit (the "Great Faith" card in the offer section, longfly.us/#reserve).
+  // link: the live Stripe Payment Link for the $100 deposit. Name the product exactly
+  //   "$100 refundable deposit — Longfly F-16 Cockpit, Batch 1 Founders", limit it to 10 payments,
+  //   collect shipping address + phone, and set "After payment" to redirect to https://longfly.us/?paid=1
+  //   Until it's set, the "Hold my spot" button sends people to the waitlist.
+  // claimed: how many founder spots are paid. Update this by hand after each deposit; it must be a real number.
   preorder: {
     earlyPrice: 200,
     finalPrice: 400,
     deposit: 100,
     units: 10,
-    link: "",                // live Stripe Payment Link for the $100 deposit (limit it to 10 payments in Stripe)
-    availability: "Available for purchase by November 5 in the Americas.",
-    details: [
-      ["How does the deposit work?", "Pay a $100 deposit now to hold one of the first 10 cockpits at $200 instead of the expected $400. The other $100 is due when it's ready to ship, and I'll email you before charging anything else."],
-      ["What if the 10 are gone?", "After the first 10, the cockpit is expected to cost about $400. Sign up on the main page and I'll email you when more are available."],
-      ["When does it ship?", "The cockpit will be available by November 5. Pre-orders are first in line, and you'll get shipping updates by email."],
-      ["Where do you ship?", "Anywhere in the Americas: the US, Canada, Mexico, Central and South America."],
-      ["What if it's late?", "If it can't ship by November 5, you'll be emailed a new date and can cancel for a full refund."],
-      ["Can I cancel?", "Yes. Email quinlongliang@gmail.com any time before it ships and your deposit is refunded in full."],
-      ["How do I pay?", "Checkout is handled by Stripe (card, Apple Pay, Google Pay). Your card details never touch this site."]
-    ]
+    claimed: 0,
+    link: ""
   },
+
+  // Story section. Drop a real photo of you at the bench into projects/f16-cockpit/images/ and put its path here.
+  story: {
+    photo: "",               // e.g. "projects/f16-cockpit/images/bench.jpg"
+    photoAlt: "Quinlong soldering the cockpit at his desk"
+  },
+
+  // Footer links.
+  social: [
+    { label: "TikTok", handle: "@longfly.shop", url: "https://www.tiktok.com/@longfly.shop" },
+    { label: "Instagram", handle: "@quin_long_", url: "https://www.instagram.com/quin_long_/" }
+  ],
 
   // Free downloads section (#downloads). Files live in downloads/micro-gimbal/.
   // "tip" shows your PayPal QR code (qr); tapping it opens the PayPal link. Remove this whole block to hide the section.
