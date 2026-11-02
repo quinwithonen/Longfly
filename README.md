@@ -12,6 +12,7 @@ Buyer names, emails, phones and addresses live in Stripe → Payments / Customer
 
 ## Kept from the old site
 - `CNAME` (keeps longfly.us), `assets/js/analytics.js` (PostHog, same project as before, so old data is kept; hooked up at the bottom of `index.html`), the bio-link redirects `/instagram /tiktok /youtube /reddit`, the `/quinlong` portfolio, and `projects/f16-cockpit/images/share.jpg` (link preview image).
+- `assets/video/in-action.mp4` (720p, ~21 MB, from longvideoq7 (2).mp4; footage by 轩_快出来飞飞机 on bilibili, credited on the page) plays muted in the "In action" section while on screen.
 - PostHog events: `$pageview`, `section_reached` / `section_time` (sections `offer`, `product`, `story`, `how`, `faq`), `launch_signup` (waitlist; person gets `email`, `first_name`, `jet`), `reserve_click`, `deposit_paid`.
 
 Everything older (F-14 section, poll, gimbal downloads, press kit, pre-order page) is in git history.
