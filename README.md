@@ -12,7 +12,7 @@ Buyer names, emails, phones and addresses live in Stripe → Payments / Customer
 
 ## Kept from the old site
 - `CNAME` (keeps longfly.us), `assets/js/analytics.js` (PostHog, same project as before, so old data is kept; hooked up at the bottom of `index.html`), the bio-link redirects `/instagram /tiktok /youtube /reddit`, the `/quinlong` portfolio, and `projects/f16-cockpit/images/share.jpg` (link preview image).
-- Real media (2026-11-02 trust update): `assets/cockpit-real.jpg` (V1 on the bench), `assets/quinlong-field.jpg`, `assets/comments/` (four real comment screenshots), `assets/video/v1-prototype.mp4` + `v1-poster.jpg` (the 19 s V1 clip). `hero.webp` and `jet.webp` are AI atmosphere only. `assets/video/in-action.mp4` is the reference clip by 轩_快出来飞飞机 (kept at Quinlong's request in #example, credited "Not a Longfly unit").
+- Real media (2026-11-02 trust update): `assets/cockpit-real.jpg` (V1 on the bench), `assets/quinlong-field.jpg`, `assets/comments/` (four real comment screenshots), `assets/video/v1-prototype.mp4` + `v1-poster.jpg` (the 19 s V1 clip). `hero.webp` and `jet.webp` are AI atmosphere only. `assets/video/in-action.mp4` is the reference clip by 轩_快出来飞飞机 (kept at Quinlong's request in #example, credited "Referenced footage by 轩_快出来飞飞机").
 - PostHog events: `$pageview`, `section_reached` / `section_time` (sections `offer`, `reception`, `product`, `prototype`, `story`, `how`, `faq`, `contact`), `launch_signup` (waitlist; person gets `email`, `first_name`, `jet`), `reserve_click`, `deposit_paid`.
 
 Everything older (F-14 section, poll, gimbal downloads, press kit, pre-order page) is in git history.
