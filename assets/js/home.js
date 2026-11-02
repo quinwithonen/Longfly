@@ -1,7 +1,6 @@
 /* Longfly F-16 cockpit page (index.html). Reads site.config.js and runs the page:
    waitlist form, founders deposit button and spots counter, sticky mobile reserve bar, footer links,
-   plus the older sections kept below the FAQ (art, poll, downloads, press kit).
-   Settings to change live in site.config.js ("preorder", "launch", "story", "contact"). You should not need to edit this file.
+   Settings to change live in site.config.js ("preorder", "launch", "analytics"). You should not need to edit this file.
 
    PostHog events:
      launch_signup  { list: "waitlist", jet }   someone joined the waitlist (they are also identified by email)
@@ -19,8 +18,6 @@
     config: function (c) { state.config = c || {}; },
     onRoute: function () {}, startAnalytics: function () {}, track: function () {}, identify: function () {},
     pixel: function () {}, startPixel: function () {},
-    renderPoll: function () {}, renderArt: function () {}, renderDownloads: function () {},
-    catalog: function () {}, work: function () {}, addProduct: function () {},
     start: start
   });
 
@@ -39,37 +36,11 @@
   }
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 
-  // Rotatable 3D view (used by the downloads section). three.js loads only when it gets near the screen.
-  function viewer(p) {
-    var box = el("div", { class: "plate viewer" }, [
-      el("p", { class: "viewer-status", role: "status" }),
-      el("p", { class: "viewer-hint", text: "Drag to rotate" }),
-      el("button", { type: "button", class: "viewer-reset", text: "Reset view" })
-    ]);
-    var go = function () {
-      box.querySelector(".viewer-status").textContent = "Loading 3D model…";
-      import(new URL("assets/js/viewer.js", document.baseURI).href)
-        .then(function (m) { m.mount(box, p.base + p.model, { up: p.modelUp, color: p.modelColor, fit: p.modelFit }); })
-        .catch(function () { box.querySelector(".viewer-status").textContent = "3D view isn't supported in this browser."; });
-    };
-    if ("IntersectionObserver" in window) {
-      var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { io.disconnect(); go(); } }, { rootMargin: "400px" });
-      io.observe(box);
-    } else go();
-    return box;
-  }
-
   // ---------- page ----------
   function start() {
     var c = state.config;
-    L.renderArt(c.art, { el: el });
-    L.renderPoll(c.poll);
-    L.renderDownloads(c.downloads, { el: el, viewer: viewer });
-    renderPress(c.press, c.contact && c.contact.email && c.contact.email.value);
     renderWaitlist(c.launch || {}, c.contact && c.contact.email && c.contact.email.value);
     renderFounders(c.preorder || {});
-    renderStory(c.story || {});
-    renderFooter(c);
     stickyBar();
     L.startAnalytics(c.analytics);
     L.startPixel(c.metaPixel);
@@ -147,28 +118,6 @@
     }
   }
 
-  function renderStory(s) {
-    if (!s.photo) return;
-    var f = $("story-photo"), img = f.querySelector("img");
-    img.src = s.photo; img.alt = s.photoAlt || "";
-    f.hidden = false;
-  }
-
-  function renderFooter(c) {
-    var ul = $("foot-links"), con = c.contact || {};
-    (c.social || []).forEach(function (s) {
-      ul.appendChild(el("li", null, [el("a", { href: s.url, target: "_blank", rel: "noopener" }, [el("span", { class: "ck-micro", text: s.label }), " " + s.handle])]));
-    });
-    if (con.email && con.email.value) {
-      ul.appendChild(el("li", null, [el("a", { href: "mailto:" + con.email.value }, [el("span", { class: "ck-micro", text: "Email" }), " " + con.email.value])]));
-    }
-    [["#downloads", "Free gimbal STLs"], ["#poll", "Vote on the next cockpit"]].forEach(function (l) {
-      var s = document.querySelector(l[0]);
-      if (s && !s.hidden) ul.appendChild(el("li", null, [el("a", { href: l[0], text: l[1] })]));
-    });
-    $("foot-year").textContent = "© " + new Date().getFullYear() + " Longfly · longfly.us";
-  }
-
   // Phones: a reserve bar slides up once the hero has scrolled away, and hides again over the offer.
   function stickyBar() {
     var bar = $("sticky");
@@ -185,21 +134,4 @@
     new IntersectionObserver(function (e) { offerOn = e[0].isIntersecting; set(); }, { threshold: 0.15 }).observe($("reserve"));
   }
 
-  function renderPress(p, contactEmail) {
-    var section = $("press");
-    if (!section || !p) return;
-    section.hidden = false;
-    $("press-blurb").textContent = p.blurb || "";
-    var base = (p.folder || "").replace(/\/?$/, "/");
-    var list = $("press-files");
-    (p.files || []).forEach(function (f) {
-      var a = el("a", { href: base + f.file, download: "", class: "press-file" });
-      if (/\.(jpe?g|png|webp|svg)$/i.test(f.file)) a.appendChild(el("span", { class: "plate" }, [el("img", { src: base + (f.thumb || f.file), alt: "", loading: "lazy" })]));
-      a.appendChild(el("span", { class: "press-label", text: f.label }));
-      if (f.note) a.appendChild(el("span", { class: "ck-fine", text: f.note }));
-      list.appendChild(el("li", null, [a]));
-    });
-    if (p.folderLink) { var fl = $("press-folder"); fl.href = p.folderLink; fl.hidden = false; }
-    $("press-contact").textContent = "Press and creator enquiries: " + (p.email || contactEmail || "");
-  }
 })();

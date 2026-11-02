@@ -1,7 +1,5 @@
-/* F-16 cockpit page (Nov 2026 redesign). Instrument-panel look: cockpit black, HUD green for actions,
-   amber for kickers. Loaded after site.css; the token overrides below re-skin the older sections
-   (poll, downloads, press) in the same palette. */
-:root:root:root {
+/* Longfly F-16 cockpit page. Instrument-panel look: cockpit black, HUD green for actions, amber for kickers. */
+:root {
   --hud: #3DFF7A;
   --hud-dim: #2bd963;
   --amber: #FFB454;
@@ -12,17 +10,20 @@
   --text: #E8EDF2;
   --muted-2: #93A1B0;
 
-  /* older site.css tokens */
-  --bg: var(--ck-bg); --surface: var(--panel); --ink: var(--text); --muted: var(--muted-2); --line: var(--border);
-  --accent: var(--hud); --accent-ink: var(--hud); --on-accent: #04130a; --plate: #e9edf2; --plate-line: var(--border);
-  --ok: var(--hud); --err: #ff7b72;
   --f-display: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Archivo", "Inter", "Helvetica Neue", Arial, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  --radius: 10px;
   color-scheme: dark;
 }
 
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; display: block; }
+h1, h2, h3, p, figure { margin: 0; }
+.ck h1, .ck h2 { text-wrap: balance; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[hidden] { display: none !important; }
 body.ck { background: var(--ck-bg); color: var(--text); font: 400 1rem/1.5 var(--f-body); }
 .ck ::selection { background: var(--hud); color: #04130a; }
 html { scroll-padding-top: 4.75rem; }
@@ -125,9 +126,8 @@ html { scroll-padding-top: 4.75rem; }
 .ck-paid p:last-child { color: #c3ccd6; }
 
 /* 03 product */
-.ck-art { margin-bottom: 2.5rem; }
-.ck-art .art-item .plate { border-radius: 12px; border: 1px solid var(--border); }
-.ck-art figcaption { color: var(--muted-2); font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.06em; }
+.ck-photo.ck-photo-wide { margin: 0 0 2.5rem; aspect-ratio: 2 / 1; }
+#story .ck-photo.ck-photo-wide { margin: 1.75rem 0 0; aspect-ratio: 2.4 / 1; }
 .ck-grid3 { margin-top: 1.8rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .ck-grid2 { margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 .ck-feat, .ck-steps .ck-card, .ck-grid2 .ck-card { display: grid; gap: 0.45rem; align-content: start; }
@@ -152,29 +152,12 @@ html { scroll-padding-top: 4.75rem; }
 .ck-faq dt { font: 700 1.08rem/1.35 var(--f-display); color: var(--text); }
 .ck-faq dd { margin: 0; color: var(--muted-2); max-width: 44rem; }
 
-/* older sections, re-skinned */
-.ck .poll-opt, .ck .method { background: var(--panel); border-color: var(--border); color: var(--text); border-radius: 8px; }
-.ck .method:has(input:checked) { border-color: var(--hud); box-shadow: 0 0 0 1px var(--hud); }
-.ck .poll { margin-top: 1.5rem; }
-.ck .poll-done { margin-top: 1.5rem; }
-.ck .dl { margin-top: 1.8rem; }
-.ck .dl-desc { color: #c3ccd6; }
-.ck .dl-list a { border-color: var(--border); }
-.ck .dl-list a:hover { color: var(--hud); }
-.ck .viewer { border-radius: 12px; }
-.ck .press { margin-top: 1.8rem; }
-.ck .press-file .plate { border-radius: 10px; background: #e9edf2; }
-.ck .press-file:hover .press-label { color: var(--hud); }
-.ck .press-file { gap: 0.5rem; }
-
 /* footer */
 .ck-foot { border-top: 1px solid var(--border); padding: 2.5rem 0 3rem; background: #070a0e; }
 .ck-foot-in { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
 .ck-foot-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem 1.75rem; }
 .ck-foot-links a { color: #c3ccd6; text-decoration: none; font-size: 0.92rem; }
 .ck-foot-links a:hover { color: var(--hud); }
-.ck-foot-links .ck-micro { margin-right: 0.3rem; }
-.ck-foot-in > .ck-micro { margin-left: auto; }
 
 /* sticky mobile reserve bar */
 .ck-sticky { display: none; }
@@ -199,7 +182,7 @@ html { scroll-padding-top: 4.75rem; }
   .ck-stats > div, .ck-stats > div + div { padding: 0.9rem 0; border-left: 0; }
   .ck-stats > div + div { border-top: 1px solid var(--border); }
   .ck-grid3 { grid-template-columns: 1fr; }
-  .ck-foot-in > .ck-micro { margin-left: 0; width: 100%; }
+  .ck-photo.ck-photo-wide, #story .ck-photo.ck-photo-wide { aspect-ratio: 3 / 2; }
   .ck-sticky {
     display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
     padding: 0.7rem 1rem calc(0.7rem + env(safe-area-inset-bottom, 0px));

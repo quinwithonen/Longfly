@@ -23,7 +23,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="assets/css/site.css">
 <link rel="stylesheet" href="assets/css/cockpit.css">
 </head>
 <body class="ck">
@@ -130,7 +129,7 @@
 
   <!-- 03 · The product -->
   <section class="ck-sec ck-wrap" id="cockpit" data-section="product">
-    <div id="art" class="ck-art"><div class="art-grid" id="art-grid"></div></div>
+    <figure class="ck-photo ck-photo-wide"><img src="projects/f16-cockpit/images/bench.jpg" srcset="projects/f16-cockpit/images/bench-960.jpg 960w, projects/f16-cockpit/images/bench.jpg 1920w" sizes="(max-width: 72rem) 100vw, 68rem" alt="F-16 cockpit unit on the workbench with glowing displays and HUD" loading="lazy"></figure>
     <p class="ck-kicker">Inside the cockpit</p>
     <h2>Not a sticker. <em>A cockpit.</em></h2>
     <div class="ck-grid3">
@@ -152,7 +151,7 @@
     <p class="ck-kicker">The story</p>
     <h2>Built at a desk in Boston,<br>at <em>3 a.m.</em>, by one student.</h2>
     <p class="ck-lede">I'm Quinlong — lifelong FPV hobbyist, and a dude who's crazy about one day flying a real fighter jet. Every cockpit is designed, printed, wired and tested by me at my desk in Boston. Thanks for supporting my project.</p>
-    <figure class="ck-photo" id="story-photo" hidden><img alt="" loading="lazy"></figure>
+    <figure class="ck-photo ck-photo-wide"><img src="projects/f16-cockpit/images/builder.jpg" srcset="projects/f16-cockpit/images/builder-960.jpg 960w, projects/f16-cockpit/images/builder.jpg 1920w" sizes="(max-width: 72rem) 100vw, 68rem" alt="Soldering the cockpit electronics at the desk, 3D printer running" loading="lazy"></figure>
     <div class="ck-grid2">
       <div class="ck-card"><h3 class="ck-card-h">Handmade, every one</h3><p class="ck-muted">Each and every unit is handmade by me, with hours of work in every single one. Backing early does not mean sub-par quality — you get excellent, handmade quality. It's just a huge pain in my ass to make, because it's all by hand.</p></div>
       <div class="ck-card"><h3 class="ck-card-h">What founders fund</h3><p class="ck-muted">Your deposit pays for the custom circuit board that replaces the hand-wiring — the step from ten handmade units to a real product. You're not buying a toy; you're starting a company with me. And honestly? You're gonna save my back and help me reclaim my social life — the boards mean I don't have to spend so many hours wiring and soldering in the future. For that, I'm deeply grateful.</p></div>
@@ -181,67 +180,16 @@
     </dl>
   </section>
 
-  <!-- From the workshop: earlier features kept below the cockpit page -->
-  <section class="ck-sec ck-wrap" id="poll" data-section="poll" hidden>
-    <p class="ck-kicker">Help me choose</p>
-    <h2 id="poll-q">Which one would you want?</h2>
-    <form class="poll" id="poll-form" novalidate>
-      <fieldset class="poll-options" id="poll-options"><legend class="sr">Pick one</legend></fieldset>
-      <div class="field poll-other" id="poll-other-wrap" hidden>
-        <label for="poll-other">Which one?</label>
-        <input id="poll-other" name="other" maxlength="80" placeholder="e.g. F-15 Eagle, P-51 Mustang, Su-27">
-      </div>
-      <p class="form-error" id="poll-error" role="alert" hidden></p>
-      <button class="ck-btn ck-btn-ghost" type="submit">Submit my vote</button>
-    </form>
-    <div class="ck-card poll-done" id="poll-done" hidden aria-live="polite">
-      <p class="ck-card-h" id="poll-thanks"></p>
-      <p class="ck-muted">Thanks, the votes decide what I build next.</p>
-    </div>
-  </section>
-
-  <section class="ck-sec ck-wrap" id="downloads" data-section="downloads" hidden>
-    <p class="ck-kicker">Free downloads</p>
-    <h2 id="dl-title">FPV head-tracking micro gimbal</h2>
-    <div class="dl">
-      <div class="dl-media" id="dl-media"></div>
-      <div class="dl-side">
-        <ul class="dl-desc" id="dl-desc"></ul>
-        <div class="ck-card dl-files">
-          <p class="ck-card-h">STL files</p>
-          <a class="ck-btn ck-btn-go dl-zip" id="dl-zip" href="#" download hidden></a>
-          <ul class="dl-list" id="dl-list"></ul>
-        </div>
-        <div class="ck-card dl-tip" id="dl-tip" hidden>
-          <a class="dl-qr" id="dl-tip-go" href="#" target="_blank" rel="noopener"><img id="dl-tip-qr" alt="PayPal QR code for tips" width="480" height="480" loading="lazy"></a>
-          <div class="dl-tip-copy">
-            <p class="ck-card-h" id="dl-tip-label">Tip me</p>
-            <p class="ck-fine" id="dl-tip-text"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ck-sec ck-wrap" id="press" data-section="press" hidden>
-    <p class="ck-kicker">Press kit</p>
-    <h2>For writers and creators</h2>
-    <p class="ck-lede" id="press-blurb"></p>
-    <div class="press">
-      <ul class="press-files" id="press-files"></ul>
-      <div class="press-side">
-        <a class="ck-btn ck-btn-ghost" id="press-folder" href="#" target="_blank" rel="noopener" hidden>Full press folder (high-res photos)</a>
-        <p class="ck-fine" id="press-contact"></p>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="ck-foot" id="contact" data-section="contact">
   <div class="ck-wrap ck-foot-in">
     <a class="ck-logo" href="#top">LONG<span>FLY</span></a>
-    <ul class="ck-foot-links" id="foot-links"></ul>
-    <p class="ck-micro" id="foot-year"></p>
+    <ul class="ck-foot-links">
+      <li><a href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">TikTok @longfly.shop</a></li>
+      <li><a href="https://www.instagram.com/quin_long_/" target="_blank" rel="noopener">Instagram @quin_long_</a></li>
+      <li><a href="https://longfly.us/">longfly.us</a></li>
+    </ul>
   </div>
 </footer>
 
@@ -251,9 +199,6 @@
 
 <script src="assets/js/home.js"></script>
 <script src="assets/js/analytics.js"></script>
-<script src="assets/js/art.js"></script>
-<script src="assets/js/poll.js"></script>
-<script src="assets/js/downloads.js"></script>
 <script src="site.config.js"></script>
 <script>Longfly.start();</script>
 </body>
