@@ -1,12 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
+<!--
+  ══════════════════════════════════════════════════════════════════════════
+  LONGFLY — F-16 COCKPIT PRE-ORDER PAGE  (single-file build)
+  ══════════════════════════════════════════════════════════════════════════
+  TO GO LIVE, only 3 things need wiring — all in the CONFIG block at the
+  bottom of this file (search for "CONFIG"):
+
+    1. STRIPE_LINK .......... paste Quinlong's Stripe Payment Link.
+                              Every "Reserve / Hold my spot" button uses it.
+    2. WAITLIST_ENDPOINT .... URL the waitlist form POSTs to (Formspree,
+                              ConvertKit, a Google Apps Script, etc.).
+                              Leave "" and the form shows the success
+                              message without sending (demo mode).
+    3. SPOTS_CLAIMED ........ real number of founder deposits taken.
+                              Update it as deposits land — the progress
+                              bar and "x of 10 claimed" text read from it.
+                              NEVER put a fake number here.
+
+  Deploy: upload this file + the assets/ folder as-is (GitHub Pages,
+  Netlify, the existing longfly.us host — anywhere static).
+  Images: assets/hero.webp, jet.webp, bench.webp, builder.webp are
+  AI-generated placeholders — swap bench.webp (the product shot) for a
+  real photo of the unit before launch.
+  ══════════════════════════════════════════════════════════════════════════
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0A0E13">
-<title>Longfly · A fighter-jet cockpit for your RC F-16</title>
-<meta name="description" content="Four live instrument displays, a working HUD and backlit panels for your RC F-16. Batch 1: ten handmade founders units at $200 (regular $400), held with a $100 refundable deposit.">
-<!-- Link previews (iMessage, Discord, Facebook, X). Image URLs must be absolute. -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Longfly — F-16 Cockpit for your RC F-16 | Batch 1 Founders Pre-Order</title>
+<meta name="description" content="A handmade, hyper-realistic F-16 cockpit for the Motion RC 70mm F-16. Live displays, working HUD. Batch 1 founders: $200 (reg. $400) — $100 refundable deposit holds your spot.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Longfly">
 <meta property="og:url" content="https://longfly.us/">
@@ -15,191 +38,390 @@
 <meta property="og:image" content="https://longfly.us/projects/f16-cockpit/images/share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="F-16 cockpit at dusk with glowing displays and HUD">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="A fighter-jet cockpit for your RC F-16">
-<meta name="twitter:description" content="Ten handmade founders units at $200 (regular $400). $100 refundable deposit holds yours.">
 <meta name="twitter:image" content="https://longfly.us/projects/f16-cockpit/images/share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="assets/css/cockpit.css">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e13; --panel:#0d141c; --panel2:#111922; --line:#22303f;
+    --green:#3dff7a; --amber:#ffb454; --text:#e8edf2; --muted:#aeb9c4; --dim:#8fa0b1;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  a{color:inherit}
+  /* ── nav ─────────────────────────── */
+  header{position:sticky;top:0;z-index:50;background:rgba(10,14,19,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:13px 0}
+  .logo{font-weight:900;letter-spacing:2.5px;font-size:19px;text-decoration:none}
+  .logo span{color:var(--green)}
+  .nav nav{display:flex;gap:22px;align-items:center;font-size:14px;color:var(--muted)}
+  .nav nav a{text-decoration:none}
+  .nav nav a:hover{color:var(--text)}
+  .btn{display:inline-block;font-weight:800;font-size:15px;padding:12px 20px;border-radius:8px;text-decoration:none;cursor:pointer;border:none;text-align:center}
+  .btn-p{background:var(--green);color:#06130a}
+  .btn-p:hover{filter:brightness(1.08)}
+  .btn-s{border:1px solid #3a4c5f;color:var(--text);background:transparent}
+  .btn-s:hover{border-color:var(--dim)}
+  .btn-sm{padding:8px 14px;font-size:13.5px}
+  /* ── hero ────────────────────────── */
+  .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:#000}
+  .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+  .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,19,.42) 0%,rgba(10,14,19,.05) 38%,rgba(10,14,19,.94) 88%)}
+  .hero .inner{position:relative;padding:110px 0 44px;width:100%}
+  .kicker{font-family:"IBM Plex Mono",monospace;color:var(--amber);letter-spacing:2.5px;font-size:12px;text-transform:uppercase}
+  h1{font-size:clamp(38px,6vw,64px);line-height:1.05;font-weight:900;margin:10px 0 14px;letter-spacing:-.5px}
+  h1 .g, h2 .g{color:var(--green)}
+  .sub{color:#cdd7e0;font-size:clamp(16px,2vw,19px);max-width:640px}
+  .cta-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .micro{margin-top:16px;font-size:11.5px;color:var(--dim);font-family:"IBM Plex Mono",monospace;letter-spacing:.3px}
+  /* ── stats ───────────────────────── */
+  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
+  .stats .wrap{display:flex}
+  .stat{flex:1;padding:20px 18px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{font-size:30px;font-weight:900}
+  .stat .l{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;margin-top:3px}
+  /* ── sections ────────────────────── */
+  section{padding:72px 0}
+  h2{font-size:clamp(28px,4vw,40px);font-weight:900;line-height:1.12;letter-spacing:-.3px}
+  .lede{color:var(--muted);font-size:17px;margin-top:10px;max-width:720px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+  .cards3{grid-template-columns:repeat(3,1fr)}
+  .card{border:1px solid #263646;border-radius:12px;padding:22px;background:var(--panel)}
+  .card.hot{border:1.5px solid var(--green);background:linear-gradient(180deg,#0d1a12,var(--panel))}
+  .tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;background:#1b2836;color:var(--muted);text-transform:uppercase}
+  .tag.hot{background:var(--green);color:#06130a;font-weight:600}
+  .card h3{font-size:20px;font-weight:800;margin:12px 0 4px}
+  .card p,.card li{font-size:15px;color:var(--muted)}
+  .card ul{list-style:none;margin-top:12px}
+  .card li{padding-left:18px;position:relative;margin-bottom:6px}
+  .card li:before{content:"▸";position:absolute;left:0;color:var(--green)}
+  .price{font-size:38px;font-weight:900;margin:6px 0}
+  .price s{color:#67788a;font-size:22px;font-weight:600}
+  .price small{font-size:14px;color:var(--dim);font-weight:600}
+  .bar{height:8px;background:#1b2836;border-radius:6px;margin-top:16px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--green);width:0%}
+  .bar-note{font-size:12px;color:var(--dim);margin-top:7px;font-family:"IBM Plex Mono",monospace}
+  .fineprint{margin-top:22px;font-size:14.5px;color:var(--dim);border-top:1px dashed #263646;padding-top:16px;max-width:820px}
+  /* ── forms ───────────────────────── */
+  label{display:block;font-size:12.5px;color:var(--dim);font-family:"IBM Plex Mono",monospace;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 5px}
+  input{width:100%;background:#070b10;border:1px solid #2c3e50;border-radius:7px;color:var(--text);font-size:15px;padding:11px 12px;font-family:inherit}
+  input:focus{outline:none;border-color:var(--green)}
+  .form-ok{display:none;margin-top:14px;border:1px solid var(--green);background:#0d1a12;color:var(--text);border-radius:8px;padding:12px 14px;font-size:14.5px}
+  /* ── product ─────────────────────── */
+  .full-img{width:100%;height:min(58vh,520px);object-fit:cover;border-radius:12px;display:block}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+  /* ── faq ─────────────────────────── */
+  .faq{max-width:820px;margin-top:26px}
+  .faq p{font-size:16px;line-height:1.55;margin-bottom:18px}
+  .faq b{color:var(--text)}
+  .faq span{color:var(--muted)}
+  /* ── footer / sticky bar ─────────── */
+  footer{border-top:1px solid var(--line);padding:34px 0 90px;color:var(--dim);font-size:14px;background:var(--panel)}
+  footer .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  #stickybar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--green);color:#06130a;font-weight:800;text-align:center;padding:13px;font-size:15.5px;text-decoration:none;display:none}
+  @media (max-width:760px){
+    .cards,.cards3{grid-template-columns:1fr}
+    .nav nav a:not(.btn){display:none}
+    .stats .wrap{flex-direction:column}
+    .stat{border-right:none;border-bottom:1px solid var(--line)}
+    .stat:last-child{border-bottom:none}
+    section{padding:52px 0}
+  }
+</style>
 </head>
-<body class="ck">
-<header class="ck-top">
-  <div class="ck-top-in">
-    <a class="ck-logo" href="#top" aria-label="Longfly home">LONG<span>FLY</span></a>
-    <nav class="ck-nav" aria-label="Main">
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">LONG<span>FLY</span></a>
+    <nav>
       <a href="#cockpit">The Cockpit</a>
       <a href="#story">The Story</a>
       <a href="#faq">FAQ</a>
+      <a class="btn btn-p btn-sm reserve-btn" href="#">Reserve — $100</a>
     </nav>
-    <a class="ck-btn ck-btn-go ck-btn-sm" href="#reserve" data-reserve-nav>Reserve — $100</a>
   </div>
 </header>
 
-<main id="top">
-  <!-- 01 · Hero -->
-  <section class="ck-hero" id="hero" data-section="hero">
-    <div class="ck-hero-img">
-      <img src="projects/f16-cockpit/images/hero.jpg" srcset="projects/f16-cockpit/images/hero-960.jpg 960w, projects/f16-cockpit/images/hero.jpg 1920w" sizes="100vw" alt="F-16 cockpit at dusk: glowing displays, a green HUD and backlit panels" fetchpriority="high">
+<!-- ══════════ HERO ══════════ -->
+<div class="hero" id="top">
+  <img class="bg" src="assets/hero.webp" alt="F-16 cockpit at dusk, instruments lit">
+  <div class="shade"></div>
+  <div class="wrap inner">
+    <div class="kicker">Batch 1 · Handmade · 10 units only</div>
+    <h1>A fighter-jet cockpit<br>for your <span class="g">RC F-16.</span></h1>
+    <p class="sub">Four live instrument displays. A working HUD. Backlit panels that glow at dusk. Drop it into your jet, put the goggles on, and every flight feels like the real thing.</p>
+    <div class="cta-row">
+      <a class="btn btn-p reserve-btn" href="#">Reserve yours — $100 deposit</a>
+      <a class="btn btn-s" href="#reserve">Join the waitlist (free)</a>
     </div>
-    <div class="ck-wrap ck-hero-copy">
-      <p class="ck-kicker">Batch 1 · Handmade · 10 units only</p>
-      <h1>A fighter-jet cockpit<br>for your <em>RC F-16.</em></h1>
-      <p class="ck-lede ck-desk">Four live instrument displays. A working HUD. Backlit panels that glow at dusk. Drop it into your jet, put the goggles on, and every flight feels like the real thing.</p>
-      <p class="ck-lede ck-phone">Live displays. Working HUD. The dusk glow. Founders: $200 (reg. $400) — $100 refundable deposit holds yours.</p>
-      <div class="ck-actions">
-        <a class="ck-btn ck-btn-go" href="#reserve"><span class="ck-desk">Reserve yours — $100 deposit</span><span class="ck-phone">Reserve — $100 deposit</span></a>
-        <a class="ck-btn ck-btn-ghost" href="#waitlist">Join the waitlist (free)</a>
-      </div>
-      <p class="ck-micro ck-desk">Deposit refundable until your unit ships · Ships for Christmas — or your deposit back · Built in Boston</p>
-      <p class="ck-micro ck-phone">Refundable until it ships · Christmas or your deposit back</p>
-    </div>
-    <div class="ck-wrap">
-      <dl class="ck-stats">
-        <div><dt>1</dt><dd>Builder — every unit by hand</dd></div>
-        <div><dt>4 + HUD</dt><dd>Live displays, real flight data</dd></div>
-        <div><dt>10</dt><dd>Handmade founder spots, ever</dd></div>
-      </dl>
-    </div>
-  </section>
+    <div class="micro">DEPOSIT REFUNDABLE UNTIL YOUR UNIT SHIPS &nbsp;·&nbsp; SHIPS FOR CHRISTMAS — OR YOUR DEPOSIT BACK &nbsp;·&nbsp; BUILT IN BOSTON</div>
+  </div>
+</div>
 
-  <!-- 02 · The offer -->
-  <section class="ck-sec ck-wrap" id="reserve" data-section="offer">
-    <p class="ck-kicker">Pre-orders open</p>
-    <h2>Believe early, <em>pay half.</em></h2>
-    <p class="ck-lede">Batch 1 is ten cockpits, handmade one at a time. The half price is a reward for the people generous enough to give this project a chance to live — call it the Great Faith discount.</p>
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="n">1</div><div class="l">Builder — every unit by hand</div></div>
+    <div class="stat"><div class="n">4 + HUD</div><div class="l">Live displays, real flight data</div></div>
+    <div class="stat"><div class="n">10</div><div class="l">Handmade founder spots, ever</div></div>
+  </div>
+</div>
 
-    <div class="ck-paid" id="paid" hidden role="status">
-      <p class="ck-card-h">Spot held — you're one of the ten founders.</p>
-      <p>Receipt is in your email. The balance ($100) is due only when your unit is ready to ship.</p>
-    </div>
+<!-- ══════════ THE OFFER ══════════ -->
+<section id="reserve" data-section="offer">
+  <div class="wrap">
+    <div class="kicker">Pre-orders open</div>
+    <h2>Believe early, <span class="g">pay half.</span></h2>
+    <p class="lede">Batch 1 is ten cockpits, handmade one at a time. The half price is a reward for the people generous enough to give this project a chance to live — call it the Great Faith discount.</p>
 
-    <div class="ck-offer">
-      <article class="ck-card ck-wait" id="waitlist" data-section="waitlist">
-        <span class="ck-tag">Waitlist · Free</span>
-        <h3 class="ck-card-h">Keep me posted</h3>
-        <p class="ck-price"><span class="ck-price-now">$0</span></p>
-        <p class="ck-muted">Not ready to commit? Leave an email and you're in line behind the founders.</p>
-        <ul class="ck-ticks">
+    <div class="cards">
+      <!-- Waitlist -->
+      <div class="card">
+        <span class="tag">Waitlist · Free</span>
+        <h3>Keep me posted</h3>
+        <div class="price">$0</div>
+        <p>Not ready to commit? Leave an email and you're in line behind the founders.</p>
+        <ul>
           <li>First access when Batch 2 opens (regular $400)</li>
           <li>First claim if a founder spot opens up</li>
           <li>Build updates — the real ones, failures included</li>
         </ul>
-        <form id="wl-form" class="ck-form" novalidate>
-          <label class="sr" for="wl-email">Email address</label>
-          <input id="wl-email" name="email" type="email" autocomplete="email" placeholder="Email address *" required>
-          <label class="sr" for="wl-name">First name (optional)</label>
-          <input id="wl-name" name="first_name" autocomplete="given-name" placeholder="First name (optional)" maxlength="60">
-          <label class="sr" for="wl-jet">Your jet (optional)</label>
-          <input id="wl-jet" name="jet" placeholder="Your jet — e.g. Freewing F-16 70mm (optional)" maxlength="80">
-          <p class="ck-err" id="wl-error" role="alert" hidden></p>
-          <button class="ck-btn ck-btn-ghost ck-btn-block" type="submit" id="wl-go">Join the waitlist</button>
-          <p class="ck-fine">No payment. No spam — build emails only.</p>
+        <form id="waitlist-form" novalidate>
+          <label for="wl-email">Email address *</label>
+          <input id="wl-email" name="email" type="email" required placeholder="you@email.com" autocomplete="email">
+          <label for="wl-name">First name (optional)</label>
+          <input id="wl-name" name="name" type="text" placeholder="First name" autocomplete="given-name">
+          <label for="wl-jet">Your jet (optional)</label>
+          <input id="wl-jet" name="jet" type="text" placeholder="e.g. Motion RC / Freewing F-16 70mm">
+          <button class="btn btn-s" type="submit" style="width:100%;margin-top:18px;">Join the waitlist</button>
+          <div class="form-ok" id="waitlist-ok">You're on the list. Build update #1 lands in your inbox this week — cockpit footage included.</div>
+          <p id="waitlist-err" style="display:none;color:#ff7a7a;font-size:13.5px;margin-top:10px;">Please enter a valid email address.</p>
         </form>
-        <div class="ck-done" id="wl-done" hidden aria-live="polite">
-          <p class="ck-card-h">You're on the list.</p>
-          <p class="ck-muted">Build update #1 lands in your inbox this week — cockpit footage included.</p>
-        </div>
-      </article>
+        <p style="margin-top:12px;font-size:13px;color:#67788a;">No payment. No spam — build emails only.</p>
+      </div>
 
-      <article class="ck-card ck-founders" data-section="founders">
-        <span class="ck-tag ck-tag-go">Batch 1 · Founders</span>
-        <h3 class="ck-card-h">The "Great Faith" edition</h3>
-        <p class="ck-price"><s>$400</s> <span class="ck-price-now">$200</span> <span class="ck-price-unit">total</span></p>
-        <p class="ck-muted"><strong>$100 today</strong> holds your spot. <strong>$100 more</strong> only when your unit is ready to ship. That's it.</p>
-        <ul class="ck-ticks">
+      <!-- Founders -->
+      <div class="card hot">
+        <span class="tag hot">Batch 1 · Founders</span>
+        <h3>The "Great Faith" edition</h3>
+        <div class="price"><s>$400</s> $200 <small>total</small></div>
+        <p><b style="color:#fff;">$100 today</b> holds your spot. <b style="color:#fff;">$100 more</b> only when your unit is ready to ship. That's it.</p>
+        <ul>
           <li>Handmade by the builder — numbered Batch-1 unit</li>
           <li>Founder price locked: $200 vs $400 regular</li>
           <li>Refundable until your unit ships — one email, no forms</li>
           <li>Ships in time for Christmas, or your deposit back</li>
         </ul>
-        <div class="ck-spots" id="spots">
-          <div class="ck-bar"><span id="spots-bar"></span></div>
-          <p class="ck-micro" id="spots-text">0 of 10 founder spots claimed</p>
-        </div>
-        <a class="ck-btn ck-btn-go ck-btn-block" id="reserve-go" href="#reserve">Hold my spot — $100</a>
-        <p class="ck-fine" id="reserve-soon" hidden role="status">Deposits open in the next few days. Join the waitlist and you'll be the first to know.</p>
-      </article>
+        <div class="bar"><i id="spots-bar"></i></div>
+        <div class="bar-note" id="spots-note">10 FOUNDER SPOTS</div>
+        <a class="btn btn-p reserve-btn" href="#" style="display:block;margin-top:16px;">Hold my spot — $100</a>
+        <p style="margin-top:10px;font-size:13px;color:#67788a;">Secure checkout by Stripe. Deposit refundable until your unit ships.</p>
+      </div>
     </div>
 
-    <p class="ck-why"><strong>Why cheaper?</strong> Batch 1 is the first run — handmade, with hours of work in every unit — and the feedback from these ten owners designs Batch 2. The discount is the thank-you for the faith. Later batches are $400 and worth it; founders just never pay it.</p>
-  </section>
+    <p class="fineprint">Why cheaper? Batch 1 is the first run — handmade, with hours of work in every unit — and the feedback from these ten owners designs Batch 2. The discount is the thank-you for the faith. Later batches are $400 and worth it; founders just never pay it.</p>
+  </div>
+</section>
 
-  <!-- 03 · The product -->
-  <section class="ck-sec ck-wrap" id="cockpit" data-section="product">
-    <figure class="ck-photo ck-photo-wide"><img src="projects/f16-cockpit/images/bench.jpg" srcset="projects/f16-cockpit/images/bench-960.jpg 960w, projects/f16-cockpit/images/bench.jpg 1920w" sizes="(max-width: 72rem) 100vw, 68rem" alt="F-16 cockpit unit on the workbench with glowing displays and HUD" loading="lazy"></figure>
-    <p class="ck-kicker">Inside the cockpit</p>
-    <h2>Not a sticker. <em>A cockpit.</em></h2>
-    <div class="ck-grid3">
-      <div class="ck-card ck-feat"><h3>Live instruments</h3><p>Four real colour displays — airspeed, altitude, heading, engine and GPS — driven by live flight data, not a looping video.</p></div>
-      <div class="ck-card ck-feat"><h3>Working HUD</h3><p>A real heads-up display floating flight symbology in front of you, the way the jet was meant to be flown.</p></div>
-      <div class="ck-card ck-feat"><h3>The dusk glow</h3><p>Warm backlit panels and indicator lights. At golden hour it stops looking like a model and starts looking like a jet.</p></div>
-      <div class="ck-card ck-feat"><h3>Controls that move</h3><p>Stick and throttle move with your inputs as you fly — the cockpit is alive, not a photograph.</p></div>
-      <div class="ck-card ck-feat"><h3>Head-tracked view</h3><p>The camera lives in the pilot's seat and follows your head through your FPV goggles. Look left, see the wing.</p></div>
-      <div class="ck-card ck-feat"><h3>Plug and play</h3><p>Built to be seamlessly integrated into any jet. No wiring, no soldering — just plug and play.</p></div>
+<!-- ══════════ THE PRODUCT ══════════ -->
+<section id="cockpit" data-section="product" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <img class="full-img" src="assets/bench.webp" alt="The Longfly cockpit on the workbench, displays lit">
+    <div class="kicker" style="margin-top:30px;">Inside the cockpit</div>
+    <h2>Not a sticker. <span class="g">A cockpit.</span></h2>
+    <div class="cards cards3">
+      <div class="card"><h3 style="margin-top:0;">Live instruments</h3><p>Four real colour displays — airspeed, altitude, heading, engine and GPS — driven by live flight data, not a looping video.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Working HUD</h3><p>A real heads-up display floating flight symbology in front of you, the way the jet was meant to be flown.</p></div>
+      <div class="card"><h3 style="margin-top:0;">The dusk glow</h3><p>Warm backlit panels and indicator lights. At golden hour it stops looking like a model and starts looking like a jet.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Controls that move</h3><p>Stick and throttle move with your inputs as you fly — the cockpit is alive, not a photograph.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Head-tracked view</h3><p>The camera lives in the pilot's seat and follows your head through your FPV goggles. Look left, see the wing.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Plug and play</h3><p>Built to be seamlessly integrated into any jet. No wiring, no soldering — just plug and play.</p></div>
     </div>
-    <ul class="ck-chips">
-      <li>4× IPS displays</li><li>HUD with symbology</li><li>Warm-white backlight</li><li>For the Motion RC 70mm F-16</li><li>Batch 1: handmade</li>
-    </ul>
-    <p class="ck-fit"><strong>Fit note:</strong> please make sure your jet can hold a cockpit of this size. Designed to fit the Motion RC 70mm F-16 ($249); it might require some physical modification to fit other platforms. Questions — DM @longfly.us.</p>
-  </section>
-
-  <!-- 04 · The story -->
-  <section class="ck-sec ck-wrap" id="story" data-section="story">
-    <p class="ck-kicker">The story</p>
-    <h2>Built at a desk in Boston,<br>at <em>3 a.m.</em>, by one student.</h2>
-    <p class="ck-lede">I'm Quinlong — lifelong FPV hobbyist, and a dude who's crazy about one day flying a real fighter jet. Every cockpit is designed, printed, wired and tested by me at my desk in Boston. Thanks for supporting my project.</p>
-    <figure class="ck-photo ck-photo-wide"><img src="projects/f16-cockpit/images/builder.jpg" srcset="projects/f16-cockpit/images/builder-960.jpg 960w, projects/f16-cockpit/images/builder.jpg 1920w" sizes="(max-width: 72rem) 100vw, 68rem" alt="Soldering the cockpit electronics at the desk, 3D printer running" loading="lazy"></figure>
-    <div class="ck-grid2">
-      <div class="ck-card"><h3 class="ck-card-h">Handmade, every one</h3><p class="ck-muted">Each and every unit is handmade by me, with hours of work in every single one. Backing early does not mean sub-par quality — you get excellent, handmade quality. It's just a huge pain in my ass to make, because it's all by hand.</p></div>
-      <div class="ck-card"><h3 class="ck-card-h">What founders fund</h3><p class="ck-muted">Your deposit pays for the custom circuit board that replaces the hand-wiring — the step from ten handmade units to a real product. You're not buying a toy; you're starting a company with me. And honestly? You're gonna save my back and help me reclaim my social life — the boards mean I don't have to spend so many hours wiring and soldering in the future. For that, I'm deeply grateful.</p></div>
+    <div class="chips">
+      <span class="tag">4× IPS displays</span>
+      <span class="tag">HUD with symbology</span>
+      <span class="tag">Warm-white backlight</span>
+      <span class="tag">For the Motion RC 70mm F-16</span>
+      <span class="tag">Batch 1: handmade</span>
     </div>
-  </section>
+    <p class="fineprint">Fit note: please make sure your jet can hold a cockpit of this size. Designed to fit the Motion RC 70mm F-16 ($249); it might require some physical modification to fit other platforms. Questions — DM @longfly.us.</p>
+  </div>
+</section>
 
-  <!-- 05 · How it works -->
-  <section class="ck-sec ck-wrap" id="how" data-section="how">
-    <p class="ck-kicker">How it works</p>
-    <ol class="ck-grid3 ck-steps">
-      <li class="ck-card"><span class="ck-micro">Step 1</span><h3>Reserve or join</h3><p>$100 refundable deposit holds a founder unit. Free waitlist if you're still deciding.</p></li>
-      <li class="ck-card"><span class="ck-micro">Step 2</span><h3>Watch it get built</h3><p>Build updates by email and TikTok — your unit taking shape, tests, the first flight.</p></li>
-      <li class="ck-card"><span class="ck-micro">Step 3</span><h3>Balance &amp; ship</h3><p>$100 balance only when your unit is ready. It ships tracked — in time for Christmas.</p></li>
-    </ol>
-  </section>
+<!-- ══════════ THE STORY ══════════ -->
+<section id="story" data-section="story">
+  <div class="wrap">
+    <div class="kicker">The story</div>
+    <h2>Built at a desk in Boston,<br>at <span class="g">3 a.m.</span>, by one student.</h2>
+    <p class="lede">I'm Quinlong — lifelong FPV hobbyist, and a dude who's crazy about one day flying a real fighter jet. Every cockpit is designed, printed, wired and tested by me at my desk in Boston. Thanks for supporting my project.</p>
+    <img class="full-img" src="assets/builder.webp" alt="Building the cockpit electronics late at night" style="margin-top:26px;">
+    <div class="cards">
+      <div class="card"><h3 style="margin-top:0;">Handmade, every one</h3><p>Each and every unit is handmade by me, with hours of work in every single one. Backing early does not mean sub-par quality — you get excellent, handmade quality. It's just a huge pain in my ass to make, because it's all by hand.</p></div>
+      <div class="card"><h3 style="margin-top:0;">What founders fund</h3><p>Your deposit pays for the custom circuit board that replaces the hand-wiring — the step from ten handmade units to a real product. You're not buying a toy; you're starting a company with me. And honestly? You're gonna save my back and help me reclaim my social life — the boards mean I don't have to spend so many hours wiring and soldering in the future. For that, I'm deeply grateful.</p></div>
+    </div>
+  </div>
+</section>
 
-  <!-- 06 · FAQ (order fixed: refund → Christmas → contents → price → waitlist) -->
-  <section class="ck-sec ck-wrap" id="faq" data-section="faq">
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section data-section="how" style="padding-top:0;">
+  <div class="wrap">
+    <div class="kicker">How it works</div>
+    <div class="cards cards3">
+      <div class="card"><span class="tag">Step 1</span><h3>Reserve or join</h3><p>$100 refundable deposit holds a founder unit. Free waitlist if you're still deciding.</p></div>
+      <div class="card"><span class="tag">Step 2</span><h3>Watch it get built</h3><p>Build updates by email and TikTok — your unit taking shape, tests, the first flight.</p></div>
+      <div class="card"><span class="tag">Step 3</span><h3>Balance &amp; ship</h3><p>$100 balance only when your unit is ready. It ships tracked — in time for Christmas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section id="faq" data-section="faq" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-top:56px;">
+  <div class="wrap">
+    <div class="kicker">FAQ</div>
     <h2>Questions, answered straight</h2>
-    <dl class="ck-faq">
-      <div><dt>Is the deposit really refundable?</dt><dd>Yes. Any time until your unit ships — one email to me, refund goes back to your card. No forms, no phone call, no hard feelings.</dd></div>
-      <div><dt>What if it doesn't ship in time for Christmas?</dt><dd>Your choice: full deposit back, or keep your founders price and be first in Batch 2. I won't hold your money hostage to my schedule.</dd></div>
-      <div><dt>What exactly do I get?</dt><dd>The cockpit unit for your F-16 RC jet — displays, HUD, backlit panels, controls — ready to install. The jet and FPV goggles aren't included; the cockpit works with the DJI FPV setup.</dd></div>
-      <div><dt>Why is Batch 1 half price?</dt><dd>As a reward for being so generous as to give my project a chance to live. That's what the Great Faith discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</dd></div>
-      <div><dt>Waitlist vs deposit — what's the difference?</dt><dd>The waitlist is a queue for news and Batch 2. The deposit is a held unit, a locked $200 price, and a Christmas ship date. Only the deposit holds a cockpit.</dd></div>
-    </dl>
-  </section>
+    <div class="faq">
+      <p><b>Is the deposit really refundable?</b><br><span>Yes. Any time until your unit ships — one email to me, refund goes back to your card. No forms, no phone call, no hard feelings.</span></p>
+      <p><b>What if it doesn't ship in time for Christmas?</b><br><span>Your choice: full deposit back, or keep your founders price and be first in Batch 2. I won't hold your money hostage to my schedule.</span></p>
+      <p><b>What exactly do I get?</b><br><span>The cockpit unit for your F-16 RC jet — displays, HUD, backlit panels, controls — ready to install. The jet and FPV goggles aren't included; the cockpit works with the DJI FPV setup.</span></p>
+      <p><b>Why is Batch 1 half price?</b><br><span>As a reward for being so generous as to give my project a chance to live. That's what the Great Faith discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</span></p>
+      <p><b>Waitlist vs deposit — what's the difference?</b><br><span>The waitlist is a queue for news and Batch 2. The deposit is a held unit, a locked $200 price, and a Christmas ship date. Only the deposit holds a cockpit.</span></p>
+    </div>
+  </div>
+</section>
 
-</main>
+<!-- ══════════ CLOSING CTA ══════════ -->
+<div class="hero" style="min-height:52vh;">
+  <img class="bg" src="assets/jet.webp" alt="F-16 at golden hour">
+  <div class="shade"></div>
+  <div class="wrap inner" style="padding:80px 0 40px;">
+    <h2 style="font-size:clamp(26px,4vw,38px);">Ten handmade cockpits.<br>Then they're <span class="g">gone.</span></h2>
+    <div class="cta-row">
+      <a class="btn btn-p reserve-btn" href="#">Hold my spot — $100</a>
+      <a class="btn btn-s" href="#reserve">Join the waitlist (free)</a>
+    </div>
+    <div class="micro">REFUNDABLE UNTIL IT SHIPS · CHRISTMAS OR YOUR DEPOSIT BACK</div>
+  </div>
+</div>
 
-<footer class="ck-foot" id="contact" data-section="contact">
-  <div class="ck-wrap ck-foot-in">
-    <a class="ck-logo" href="#top">LONG<span>FLY</span></a>
-    <ul class="ck-foot-links">
-      <li><a href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">TikTok @longfly.shop</a></li>
-      <li><a href="https://www.instagram.com/quin_long_/" target="_blank" rel="noopener">Instagram @quin_long_</a></li>
-      <li><a href="https://longfly.us/">longfly.us</a></li>
-    </ul>
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <div><span class="logo" style="font-size:16px;">LONG<span>FLY</span></span><br>
+      <span style="font-size:13px;">Handmade RC cockpits · Boston, MA</span></div>
+      <div>TikTok <b style="color:var(--muted);">@longfly.shop</b> &nbsp;·&nbsp; Instagram <b style="color:var(--muted);">@quin_long_</b> &nbsp;·&nbsp; DM <b style="color:var(--muted);">@longfly.us</b></div>
+    </div>
+    <p style="margin-top:18px;font-size:12.5px;">Batch 1 deposit terms: $100 deposit, refundable until your unit ships. $100 balance due when your unit is ready to ship. Ships in time for Christmas — if it slips, your choice of a full refund or first spot in Batch 2 at the founders price.</p>
   </div>
 </footer>
 
-<div class="ck-sticky" id="sticky" aria-hidden="true">
-  <a class="ck-btn ck-btn-go ck-btn-block" href="#reserve" tabindex="-1">Reserve yours — $100</a>
-</div>
+<a id="stickybar" href="#reserve">Reserve yours — $100 deposit</a>
 
-<script src="assets/js/home.js"></script>
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   CONFIG — the only block that needs editing to go live.
+   ════════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  // 1) Quinlong's Stripe Payment Link for the $100 deposit.
+  //    Create it in Stripe: product name exactly
+  //    "$100 refundable deposit — Longfly F-16 Cockpit, Batch 1 Founders"
+  STRIPE_LINK: "PASTE_STRIPE_PAYMENT_LINK_HERE",
+
+  // 2) Waitlist form endpoint (Formspree / ConvertKit / Apps Script URL).
+  //    Leave "" for demo mode: the success message shows, nothing is sent.
+  WAITLIST_ENDPOINT: "",
+
+  // 3) REAL number of founder deposits taken so far (0–10).
+  //    Update as deposits land. Never a fake number.
+  SPOTS_CLAIMED: 0,
+  SPOTS_TOTAL: 10
+};
+/* ════════════════════════════════════════════════════════════════════ */
+
+// Reserve buttons → Stripe
+document.querySelectorAll(".reserve-btn").forEach(function (b) {
+  b.setAttribute("href", CONFIG.STRIPE_LINK);
+  b.addEventListener("click", function (e) {
+    if (CONFIG.STRIPE_LINK.indexOf("http") !== 0) {
+      e.preventDefault();
+      alert("Deposits open the moment the payment link is live — join the free waitlist below and you'll be first to know.");
+      document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
+    }
+  });
+});
+// Sticky bar → Stripe too
+var sticky = document.getElementById("stickybar");
+sticky.setAttribute("href", CONFIG.STRIPE_LINK);
+sticky.addEventListener("click", function (e) {
+  if (CONFIG.STRIPE_LINK.indexOf("http") !== 0) {
+    e.preventDefault();
+    document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
+  }
+});
+
+// Spots counter (real numbers only)
+(function () {
+  var pct = Math.max(0, Math.min(100, (CONFIG.SPOTS_CLAIMED / CONFIG.SPOTS_TOTAL) * 100));
+  document.getElementById("spots-bar").style.width = pct + "%";
+  document.getElementById("spots-note").textContent =
+    CONFIG.SPOTS_TOTAL + " FOUNDER SPOTS · " + CONFIG.SPOTS_CLAIMED + " CLAIMED";
+})();
+
+// Waitlist form
+document.getElementById("waitlist-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var email = document.getElementById("wl-email").value.trim();
+  var err = document.getElementById("waitlist-err");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.style.display = "block"; return; }
+  err.style.display = "none";
+  var done = function () {
+    document.getElementById("waitlist-ok").style.display = "block";
+    e.target.querySelector("button[type=submit]").textContent = "You're on the list ✓";
+  };
+  if (CONFIG.WAITLIST_ENDPOINT) {
+    var data = new FormData(e.target);
+    fetch(CONFIG.WAITLIST_ENDPOINT, { method: "POST", body: data, headers: { "Accept": "application/json" } })
+      .then(done).catch(done);
+  } else { done(); }
+});
+
+// Sticky bar appears once the hero scrolls off (mobile especially)
+(function () {
+  var hero = document.getElementById("top");
+  if (!("IntersectionObserver" in window) || !hero) return;
+  new IntersectionObserver(function (entries) {
+    sticky.style.display = entries[0].isIntersecting ? "none" : "block";
+  }, { threshold: 0.15 }).observe(hero);
+})();
+</script>
+<!-- Longfly: PostHog analytics (same project as every earlier version of the site) -->
+<script>window.Longfly = window.Longfly || {};</script>
 <script src="assets/js/analytics.js"></script>
-<script src="site.config.js"></script>
-<script>Longfly.start();</script>
+<script>
+(function () {
+  var L = window.Longfly;
+  L.startAnalytics({ key: "phc_xrZjfCAjjvQzvMbFLXzftnwFym4GxyMGmz77iXghikPd", host: "https://us.i.posthog.com" });
+  L.onRoute("home");
+  // Waitlist sign-ups are saved in PostHog People (email, first_name, jet) with a launch_signup event.
+  document.getElementById("waitlist-form").addEventListener("submit", function () {
+    var email = document.getElementById("wl-email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    var name = document.getElementById("wl-name").value.trim(), jet = document.getElementById("wl-jet").value.trim();
+    var props = { signed_up_for: "f16-cockpit", list: "waitlist" };
+    if (name) props.first_name = name;
+    if (jet) props.jet = jet;
+    L.identify(email, props);
+    L.track("launch_signup", { list: "waitlist", jet: jet || null });
+  });
+  document.querySelectorAll(".reserve-btn, #stickybar").forEach(function (b) {
+    b.addEventListener("click", function () { L.track("reserve_click", { link: /^http/.test(b.getAttribute("href") || "") }); });
+  });
+  if (/[?&]paid=1\b/.test(location.search)) L.track("deposit_paid", {});
+})();
+</script>
 </body>
 </html>
