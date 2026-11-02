@@ -19,9 +19,9 @@
 
   Deploy: upload this file + the assets/ folder as-is (GitHub Pages,
   Netlify, the existing longfly.us host — anywhere static).
-  Images: assets/hero.webp, jet.webp, bench.webp, builder.webp are
-  AI-generated placeholders — swap bench.webp (the product shot) for a
-  real photo of the unit before launch.
+  Images: assets/hero.webp and jet.webp are AI-generated background
+  atmosphere only. cockpit-real.jpg and quinlong-field.jpg are real photos;
+  assets/comments/ holds the four real comment screenshots.
   ══════════════════════════════════════════════════════════════════════════
 -->
 <html lang="en">
@@ -117,27 +117,33 @@
   input:focus{outline:none;border-color:var(--green)}
   .form-ok{display:none;margin-top:14px;border:1px solid var(--green);background:#0d1a12;color:var(--text);border-radius:8px;padding:12px 14px;font-size:14.5px}
   /* ── product ─────────────────────── */
-  /* ── in action (video) ─────────────── */
-  .action{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(70% 90% at 78% 50%,rgba(61,255,122,.07),transparent 70%),var(--bg)}
-  .action-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:center}
-  .action-list{list-style:none;margin-top:22px;display:grid;gap:10px;font-size:12.5px;letter-spacing:.6px;color:var(--muted);text-transform:uppercase}
-  .action-list li{padding-left:18px;position:relative}
-  .action-list li::before{content:"▸";position:absolute;left:0;color:var(--green)}
-  .action-media{margin:0}
-  .action-bar{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:2px;color:var(--dim);padding:0 4px 10px}
-  .action-bar .rec{width:8px;height:8px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 8px #ff4d4d;animation:blink 1.6s infinite}
-  .action-time{margin-left:auto;color:var(--green)}
-  @keyframes blink{50%{opacity:.25}}
-  .action-frame{position:relative;border-radius:14px;padding:6px;background:linear-gradient(160deg,#1a2735,#0d141c);border:1px solid #2b3d50;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(61,255,122,.10)}
-  .action-frame video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#000}
+  /* ── V1 prototype video ─────────────── */
+  .action{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(60% 90% at 22% 50%,rgba(61,255,122,.07),transparent 70%),var(--bg)}
+  .action-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:56px;align-items:center}
+  .action-media{margin:0;width:340px;max-width:100%}
+  .action-frame{position:relative;border-radius:16px;padding:6px;background:linear-gradient(160deg,#1a2735,#0d141c);border:1px solid #2b3d50;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(61,255,122,.10)}
+  .action-frame video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:11px;background:#000}
   .hud{position:absolute;width:22px;height:22px;border:2px solid var(--green);opacity:.8;pointer-events:none}
   .hud.tl{top:-6px;left:-6px;border-right:0;border-bottom:0;border-radius:6px 0 0 0}
   .hud.tr{top:-6px;right:-6px;border-left:0;border-bottom:0;border-radius:0 6px 0 0}
   .hud.bl{bottom:-6px;left:-6px;border-right:0;border-top:0;border-radius:0 0 0 6px}
   .hud.br{bottom:-6px;right:-6px;border-left:0;border-top:0;border-radius:0 0 6px 0}
-  .action-cap{margin-top:12px;font-size:12.5px;color:var(--dim)}
-  @media (max-width:900px){.action-grid{grid-template-columns:1fr;gap:28px}}
-  @media (prefers-reduced-motion:reduce){.action-bar .rec{animation:none}}
+  @media (max-width:760px){.action-grid{grid-template-columns:1fr;gap:28px;justify-items:center}.action-copy{justify-self:stretch}}
+  /* ── real photos ─────────────── */
+  .real-photo{margin:0 auto;max-width:460px}
+  .real-photo img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+  .real-photo.real-wide{max-width:none}
+  .real-photo.real-wide img{max-height:620px;object-fit:cover}
+  .real-photo figcaption{margin-top:10px;font-size:13.5px;color:var(--muted);text-align:center}
+  .real-photo.real-wide figcaption{text-align:left}
+  /* ── reception (comment screenshots) ─────────────── */
+  .quotes{display:grid;grid-template-columns:1fr;gap:14px;margin-top:26px}
+  .quote{margin:0}
+  .quote img{display:block;width:100%;height:auto;background:#fff;border-radius:14px;padding:8px 10px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .quote figcaption{margin-top:8px;font-size:14px;color:var(--text);line-height:1.45}
+  @media (min-width:761px){.quotes{grid-template-columns:1fr 1fr;gap:18px}.quote{display:flex;align-items:center;background:#fff;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.35);padding:10px 12px;justify-content:center}.quote img{width:auto;max-width:100%;padding:0;border:0;box-shadow:none;border-radius:0}.quote figcaption{display:none}}
+  /* ── trust line under Reserve ─────────────── */
+  .trust-line{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--text)}
   .full-img{width:100%;height:min(58vh,520px);object-fit:cover;border-radius:12px;display:block}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
   /* ── faq ─────────────────────────── */
@@ -247,7 +253,7 @@
         <div class="bar"><i id="spots-bar"></i></div>
         <div class="bar-note" id="spots-note">10 FOUNDER SPOTS</div>
         <a class="btn btn-p reserve-btn" href="#" style="display:block;margin-top:16px;">Hold my spot — $100</a>
-        <p style="margin-top:10px;font-size:13px;color:#67788a;">Secure checkout by Stripe. Deposit refundable until your unit ships.</p>
+        <p class="trust-line">Secure checkout by Stripe. Your $100 is refundable until your unit ships — and if it can't ship in time for Christmas, you get it back. — Quinlong</p>
       </div>
     </div>
 
@@ -255,10 +261,24 @@
   </div>
 </section>
 
+<!-- ══════════ RECEPTION (real comments) ══════════ -->
+<section id="reception" data-section="reception">
+  <div class="wrap">
+    <div class="kicker">Reception</div>
+    <h2>People are noticing.</h2>
+    <div class="quotes" role="list">
+      <figure class="quote" role="listitem"><img src="assets/comments/comment-1-howlingwolven-reddit.png" width="660" height="178" loading="lazy" alt="Reddit comment by HowlingWolven: &quot;Working hud? Holy shit.&quot;"><figcaption aria-hidden="true">“Working hud? Holy shit.” — HowlingWolven, Reddit</figcaption></figure>
+      <figure class="quote" role="listitem"><img src="assets/comments/comment-2-erde555-reddit.png" width="688" height="114" loading="lazy" alt="Reddit comment by Erde555: &quot;imagine attaching this in front of the fpv camera on a drone 🤯&quot;"><figcaption aria-hidden="true">“imagine attaching this in front of the fpv camera on a drone 🤯” — Erde555, Reddit</figcaption></figure>
+      <figure class="quote" role="listitem"><img src="assets/comments/comment-3-iamelectrichead-reddit.png" width="678" height="98" loading="lazy" alt="Reddit comment by IAmElectricHead: &quot;Beautifully done.&quot;"><figcaption aria-hidden="true">“Beautifully done.” — IAmElectricHead, Reddit</figcaption></figure>
+      <figure class="quote" role="listitem"><img src="assets/comments/comment-4-slimez-tiktok.png" width="918" height="126" loading="lazy" alt="TikTok comment by Slimez Fishing: &quot;bro, this is so fucking cool, I hope you get your bag for this&quot;"><figcaption aria-hidden="true">“bro, this is so fucking cool, I hope you get your bag for this” — Slimez Fishing, TikTok</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ THE PRODUCT ══════════ -->
 <section id="cockpit" data-section="product" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
-    <img class="full-img" src="assets/bench.webp" alt="The Longfly cockpit on the workbench, displays lit">
+    <figure class="real-photo"><img src="assets/cockpit-real.jpg" width="900" height="1200" alt="The actual V1 Longfly F-16 cockpit on the workbench, all four displays and the HUD lit"><figcaption>The actual V1, photographed on my bench — not a render.</figcaption></figure>
     <div class="kicker" style="margin-top:30px;">Inside the cockpit</div>
     <h2>Not a sticker. <span class="g">A cockpit.</span></h2>
     <div class="cards cards3">
@@ -280,28 +300,21 @@
   </div>
 </section>
 
-<!-- ══════════ IN ACTION (video) ══════════ -->
-<section id="action" class="action" data-section="action">
+<!-- ══════════ V1 PROTOTYPE (video) ══════════ -->
+<section id="action" class="action" data-section="prototype">
   <div class="wrap action-grid">
-    <div class="action-copy">
-      <div class="kicker">In action</div>
-      <h2>See examples of this <span class="g">in action</span></h2>
-      <p class="lede">Put the goggles on and look around: the canopy rails, the glowing HUD, the wing sliding past below you. This is what flying from inside a scale cockpit looks like.</p>
-      <ul class="action-list mono">
-        <li>Head-tracked camera in the pilot's seat</li>
-        <li>Live HUD and lit instrument panels</li>
-        <li>Real flight footage, no effects</li>
-      </ul>
-      <div class="cta-row"><a class="btn btn-s" href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">More on TikTok @longfly.shop</a></div>
-    </div>
     <figure class="action-media">
-      <div class="action-bar mono"><span class="rec"></span>COCKPIT CAM · FPV<span class="action-time" id="action-time">00:00</span></div>
       <div class="action-frame">
-        <video id="action-video" src="assets/video/in-action.mp4" poster="assets/video/in-action-poster.jpg" muted loop playsinline preload="none" controls aria-label="FPV flight from inside a scale fighter-jet cockpit"></video>
+        <video src="assets/video/v1-prototype.mp4" poster="assets/video/v1-poster.jpg" controls playsinline preload="metadata" aria-label="The working V1 Longfly F-16 cockpit prototype"></video>
         <i class="hud tl"></i><i class="hud tr"></i><i class="hud bl"></i><i class="hud br"></i>
       </div>
-      <figcaption class="action-cap">Footage: 轩_快出来飞飞机 on bilibili, a cockpit build that inspired Longfly. Not a Longfly unit. Sound is off; tap the video for controls.</figcaption>
     </figure>
+    <div class="action-copy">
+      <div class="kicker">The V1, in motion</div>
+      <h2>This is the current <span class="g">prototype.</span></h2>
+      <p class="lede">This clip is the working V1 — the current stage of development. I'm still working hard on it, adding more detail and refinement before Batch 1 ships. What you reserve is the finished Batch 1 unit, built by hand from everything the V1 has taught me.</p>
+      <div class="cta-row"><a class="btn btn-s" href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">More on TikTok @longfly.shop</a></div>
+    </div>
   </div>
 </section>
 
@@ -311,9 +324,9 @@
     <div class="kicker">The story</div>
     <h2>Built at a desk in Boston,<br>at <span class="g">3 a.m.</span>, by one student.</h2>
     <p class="lede">I'm Quinlong — lifelong FPV hobbyist, and a dude who's crazy about one day flying a real fighter jet. Every cockpit is designed, printed, wired and tested by me at my desk in Boston. Thanks for supporting my project.</p>
-    <img class="full-img" src="assets/builder.webp" alt="Building the cockpit electronics late at night" style="margin-top:26px;">
+    <figure class="real-photo real-wide" style="margin-top:26px;"><img src="assets/quinlong-field.jpg" width="1224" height="908" loading="lazy" alt="Quinlong, in glasses giving a thumbs up, at the flying field with fellow RC flyers and their aircraft"><figcaption>That's me — glasses, thumbs up — out flying with friends. This hobby isn't my side project; it's my whole thing.</figcaption></figure>
     <div class="cards">
-      <div class="card"><h3 style="margin-top:0;">Handmade, every one</h3><p>Each and every unit is handmade by me, with hours of work in every single one. Backing early does not mean sub-par quality — you get excellent, handmade quality. It's just a huge pain in my ass to make, because it's all by hand.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Handmade, every one</h3><p>Each and every unit is handmade by me, with hours of work in every single one. You get excellent, handmade quality — it's just a huge pain in my ass to make, because it's all by hand.</p></div>
       <div class="card"><h3 style="margin-top:0;">What founders fund</h3><p>Your deposit pays for the custom circuit board that replaces the hand-wiring — the step from ten handmade units to a real product. You're not buying a toy; you're starting a company with me. And honestly? You're gonna save my back and help me reclaim my social life — the boards mean I don't have to spend so many hours wiring and soldering in the future. For that, I'm deeply grateful.</p></div>
     </div>
   </div>
@@ -424,23 +437,6 @@ sticky.addEventListener("click", function (e) {
     document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
   }
 });
-
-// In-action video: plays muted while on screen, pauses when scrolled away; shows the running time.
-(function () {
-  var v = document.getElementById("action-video"), t = document.getElementById("action-time");
-  if (!v) return;
-  var fmt = function (x) { x = Math.floor(x || 0); return ("0" + Math.floor(x / 60)).slice(-2) + ":" + ("0" + x % 60).slice(-2); };
-  v.addEventListener("timeupdate", function () { t.textContent = fmt(v.currentTime); });
-  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!("IntersectionObserver" in window) || reduce) { v.preload = "metadata"; return; }
-  var userPaused = false;
-  v.addEventListener("pause", function () { if (v.dataset.auto !== "1") userPaused = true; v.dataset.auto = ""; });
-  v.addEventListener("play", function () { userPaused = false; });
-  new IntersectionObserver(function (e) {
-    if (e[0].isIntersecting) { if (!userPaused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
-    else if (!v.paused) { v.dataset.auto = "1"; v.pause(); }
-  }, { threshold: 0.35 }).observe(v);
-})();
 
 // Spots counter (real numbers only)
 (function () {
