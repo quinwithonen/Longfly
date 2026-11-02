@@ -129,6 +129,10 @@
   .hud.bl{bottom:-6px;left:-6px;border-right:0;border-top:0;border-radius:0 0 0 6px}
   .hud.br{bottom:-6px;right:-6px;border-left:0;border-top:0;border-radius:0 0 6px 0}
   @media (max-width:760px){.action-grid{grid-template-columns:1fr;gap:28px;justify-items:center}.action-copy{justify-self:stretch}}
+  .example{border-bottom:1px solid var(--line)}
+  .example-media{margin:28px 0 0;max-width:900px}
+  .example-media video{aspect-ratio:16/9 !important}
+  .example-cap{margin-top:12px;font-size:12.5px;color:var(--dim)}
   /* ── real photos ─────────────── */
   .real-photo{margin:0 auto;max-width:460px}
   .real-photo img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
@@ -318,6 +322,22 @@
   </div>
 </section>
 
+<!-- ══════════ EXAMPLE IN ACTION (reference clip) ══════════ -->
+<section id="example" class="example" data-section="action">
+  <div class="wrap">
+    <div class="kicker">In action</div>
+    <h2>See examples of this <span class="g">in action</span></h2>
+    <p class="lede">Put the goggles on and look around: the canopy rails, the glowing HUD, the wing sliding past below you. This is the flying experience — and the level of quality — Batch 1 is built to.</p>
+    <figure class="example-media">
+      <div class="action-frame">
+        <video id="example-video" src="assets/video/in-action.mp4" poster="assets/video/in-action-poster.jpg" muted loop playsinline preload="none" controls aria-label="FPV flight from inside a scale fighter-jet cockpit"></video>
+        <i class="hud tl"></i><i class="hud tr"></i><i class="hud bl"></i><i class="hud br"></i>
+      </div>
+      <figcaption class="example-cap">Reference footage by 轩_快出来飞飞机, shown as an example of the finished experience. Not a Longfly unit.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <!-- ══════════ THE STORY ══════════ -->
 <section id="story" data-section="story">
   <div class="wrap">
@@ -437,6 +457,20 @@ sticky.addEventListener("click", function (e) {
     document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
   }
 });
+
+// Example clip: plays muted while on screen, pauses when scrolled away (unless the visitor paused it).
+(function () {
+  var v = document.getElementById("example-video");
+  if (!v || !("IntersectionObserver" in window)) return;
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.preload = "metadata"; return; }
+  var userPaused = false, auto = false;
+  v.addEventListener("pause", function () { if (!auto) userPaused = true; auto = false; });
+  v.addEventListener("play", function () { userPaused = false; });
+  new IntersectionObserver(function (e) {
+    if (e[0].isIntersecting) { if (!userPaused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
+    else if (!v.paused) { auto = true; v.pause(); }
+  }, { threshold: 0.35 }).observe(v);
+})();
 
 // Spots counter (real numbers only)
 (function () {
