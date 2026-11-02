@@ -259,6 +259,16 @@
   </div>
 </section>
 
+<!-- ══════════ IN ACTION (TikTok) ══════════ -->
+<section id="action" data-section="action">
+  <div class="wrap">
+    <div class="kicker">In action</div>
+    <h2>See examples of this <span class="g">in action</span></h2>
+    <div id="tiktok-embed" style="margin-top:24px;max-width:605px;"></div>
+    <div class="cta-row"><a class="btn btn-s" href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">See more on TikTok @longfly.shop</a></div>
+  </div>
+</section>
+
 <!-- ══════════ THE STORY ══════════ -->
 <section id="story" data-section="story">
   <div class="wrap">
@@ -354,7 +364,12 @@ const CONFIG = {
   // 3) REAL number of founder deposits taken so far (0–10).
   //    Update as deposits land. Never a fake number.
   SPOTS_CLAIMED: 0,
-  SPOTS_TOTAL: 10
+  SPOTS_TOTAL: 10,
+
+  // 4) Your most popular TikTok, shown in "See examples of this in action".
+  //    Paste the full video link, e.g. "https://www.tiktok.com/@longfly.shop/video/1234567890123456789".
+  //    Leave "" to show just the "See more on TikTok" button.
+  TIKTOK_VIDEO: ""
 };
 /* ════════════════════════════════════════════════════════════════════ */
 
@@ -378,6 +393,20 @@ sticky.addEventListener("click", function (e) {
     document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
   }
 });
+
+// TikTok embed for "See examples of this in action"
+(function () {
+  var m = /tiktok\.com\/@([^\/]+)\/video\/(\d+)/.exec(CONFIG.TIKTOK_VIDEO || "");
+  if (!m) return;
+  var box = document.getElementById("tiktok-embed");
+  var q = document.createElement("blockquote");
+  q.className = "tiktok-embed"; q.setAttribute("cite", CONFIG.TIKTOK_VIDEO); q.setAttribute("data-video-id", m[2]);
+  q.style.cssText = "max-width:605px;min-width:300px;margin:0";
+  var sec = document.createElement("section"); var a = document.createElement("a");
+  a.href = CONFIG.TIKTOK_VIDEO; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Watch on TikTok";
+  sec.appendChild(a); q.appendChild(sec); box.appendChild(q);
+  var s = document.createElement("script"); s.async = true; s.src = "https://www.tiktok.com/embed.js"; document.body.appendChild(s);
+})();
 
 // Spots counter (real numbers only)
 (function () {
