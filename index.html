@@ -120,8 +120,12 @@
   /* ── product ─────────────────────── */
   /* ── V1 prototype video ─────────────── */
   .action{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(60% 90% at 22% 50%,rgba(61,255,122,.07),transparent 70%),var(--bg)}
-  .action-grid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:56px;align-items:center}
+  .action-grid{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:40px;align-items:center}
   .action-media{margin:0;width:340px;max-width:100%}
+  .model-stack{display:flex;flex-direction:column;gap:18px;width:420px;max-width:100%}
+  .model-media{margin:0}
+  .action-frame img{display:block;width:100%;border-radius:11px}
+  .media-cap{margin-top:10px;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.6px;color:var(--dim)}
   .action-frame{position:relative;border-radius:16px;padding:6px;background:linear-gradient(160deg,#1a2735,#0d141c);border:1px solid #2b3d50;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(61,255,122,.10)}
   .action-frame video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:11px;background:#000}
   .hud{position:absolute;width:22px;height:22px;border:2px solid var(--green);opacity:.8;pointer-events:none}
@@ -129,7 +133,7 @@
   .hud.tr{top:-6px;right:-6px;border-left:0;border-bottom:0;border-radius:0 6px 0 0}
   .hud.bl{bottom:-6px;left:-6px;border-right:0;border-top:0;border-radius:0 0 0 6px}
   .hud.br{bottom:-6px;right:-6px;border-left:0;border-top:0;border-radius:0 0 6px 0}
-  @media (max-width:760px){.action-grid{grid-template-columns:1fr;gap:28px;justify-items:center}.action-copy{justify-self:stretch}}
+  @media (max-width:1150px){.action-grid{grid-template-columns:1fr;gap:28px;justify-items:center}.action-copy{justify-self:stretch}}
   .example{border-bottom:1px solid var(--line)}
   .example-media{margin:28px 0 0;max-width:900px}
   .example-media video{aspect-ratio:16/9 !important}
@@ -219,6 +223,20 @@
         <i class="hud tl"></i><i class="hud tr"></i><i class="hud bl"></i><i class="hud br"></i>
       </div>
     </figure>
+    <div class="model-stack">
+    <figure class="model-media">
+      <div class="action-frame">
+        <img src="assets/model-progress.webp" alt="Work-in-progress screenshot of the full-detail F-16 cockpit 3D model in Fusion 360">
+      </div>
+      <figcaption class="media-cap">The full-detail 3D model — current progress</figcaption>
+    </figure>
+    <figure class="model-media">
+      <div class="action-frame">
+        <img src="assets/model-detail.webp" alt="Close-up of the modelled landing gear and emergency stores jettison panel detail">
+      </div>
+      <figcaption class="media-cap">The detail level — every switch and placard</figcaption>
+    </figure>
+    </div>
     <div class="action-copy">
       <div class="kicker">The V1, in motion</div>
       <h2>This is the current <span class="g">prototype.</span></h2>
