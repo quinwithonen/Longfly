@@ -22,6 +22,9 @@
   Images: assets/hero.webp and jet.webp are AI-generated background
   atmosphere only. quinlong-field.jpg is a real photo;
   assets/comments/ holds the four real comment screenshots.
+  assets/cockpit-view.webp is a real U.S. Air Force photo taken from
+  inside an F-16 cockpit (public domain, via Wikimedia Commons /
+  National Archives).
   ══════════════════════════════════════════════════════════════════════════
 -->
 <html lang="en">
@@ -157,10 +160,13 @@
   .full-img{width:100%;height:min(58vh,520px);object-fit:cover;border-radius:12px;display:block}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
   /* ── faq ─────────────────────────── */
-  .faq{max-width:820px;margin-top:26px}
-  .faq p{font-size:16px;line-height:1.55;margin-bottom:18px}
-  .faq b{color:var(--text)}
-  .faq span{color:var(--muted)}
+  .faq{max-width:820px;margin-top:26px;border-bottom:1px solid var(--line)}
+  .faq details{border-top:1px solid var(--line)}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 2px;font-size:16.5px;font-weight:700;color:var(--text)}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-family:"IBM Plex Mono",monospace;font-size:21px;font-weight:400;color:var(--green);flex:none;line-height:1}
+  .faq details[open ] summary::after{content:"–"}
+  .faq details p{font-size:16px;line-height:1.55;margin:0 0 18px;color:var(--muted)}
   /* ── footer / sticky bar ─────────── */
   footer{border-top:1px solid var(--line);padding:34px 0 90px;color:var(--dim);font-size:14px;background:var(--panel)}
   footer .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -184,7 +190,7 @@
       <a href="#cockpit">The Cockpit</a>
       <a href="#story">The Story</a>
       <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
+      <a href="contact/">Contact</a>
       <a class="btn btn-p btn-sm reserve-btn" href="#">Reserve — $100</a>
     </nav>
   </div>
@@ -397,28 +403,33 @@
     <div class="kicker">FAQ</div>
     <h2>Questions, answered straight</h2>
     <div class="faq">
-      <p><b>Is the deposit really refundable?</b><br><span>Yes. Any time until your unit ships — one email to me, refund goes back to your card. No forms, no phone call, no hard feelings.</span></p>
-      <p><b>What if it doesn't ship in time for Christmas?</b><br><span>Your choice: full deposit back, or keep your founders price and be first in Batch 2. I won't hold your money hostage to my schedule.</span></p>
-      <p><b>What exactly do I get?</b><br><span>The cockpit unit for your F-16 RC jet — displays, HUD, backlit panels, controls — ready to install. The jet and FPV goggles aren't included.</span></p>
-      <p><b>Why is Batch 1 half price?</b><br><span>As a reward for being so generous as to give my project a chance to live. That's what the Supporters discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</span></p>
-      <p><b>Waitlist vs deposit — what's the difference?</b><br><span>The waitlist is a queue for news and Batch 2. The deposit is a held unit, a locked $200 price, and a Christmas ship date. Only the deposit holds a cockpit.</span></p>
+      <details>
+        <summary>Is the deposit really refundable?</summary>
+        <p>Yes. Any time until your unit ships — one email to me, refund goes back to your card. No forms, no phone call, no hard feelings.</p>
+      </details>
+      <details>
+        <summary>What if it doesn't ship in time for Christmas?</summary>
+        <p>Your choice: full deposit back, or keep your founders price and be first in Batch 2. I won't hold your money hostage to my schedule.</p>
+      </details>
+      <details>
+        <summary>What exactly do I get?</summary>
+        <p>The cockpit unit for your F-16 RC jet — displays, HUD, backlit panels, controls — ready to install. The jet and FPV goggles aren't included.</p>
+      </details>
+      <details>
+        <summary>Why is Batch 1 half price?</summary>
+        <p>As a reward for being so generous as to give my project a chance to live. That's what the Supporters discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</p>
+      </details>
+      <details>
+        <summary>Waitlist vs deposit — what's the difference?</summary>
+        <p>The waitlist is a queue for news and Batch 2. The deposit is a held unit, a locked $200 price, and a Christmas ship date. Only the deposit holds a cockpit.</p>
+      </details>
     </div>
-  </div>
-</section>
-
-<!-- ══════════ CONTACT ══════════ -->
-<section id="contact" data-section="contact">
-  <div class="wrap">
-    <div class="kicker">Contact me</div>
-    <h2>Complaints?</h2>
-    <p class="lede">Message me on my personal insta <b style="color:var(--text);">@quin_long_</b> and I'll respond as soon as I can!</p>
-    <div class="cta-row"><a class="btn btn-s" href="https://www.instagram.com/quin_long_/" target="_blank" rel="noopener">Message @quin_long_ on Instagram</a></div>
   </div>
 </section>
 
 <!-- ══════════ CLOSING CTA ══════════ -->
 <div class="hero" style="min-height:52vh;">
-  <img class="bg" src="assets/jet.webp" alt="F-16 at golden hour">
+  <img class="bg" src="assets/cockpit-view.webp" alt="The view from inside a real F-16 cockpit">
   <div class="shade"></div>
   <div class="wrap inner" style="padding:80px 20px 40px;">
     <h2 style="font-size:clamp(26px,4vw,38px);">Ten handmade cockpits.<br>Then they're <span class="g">gone.</span></h2>
