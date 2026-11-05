@@ -574,11 +574,11 @@ document.getElementById("waitlist-form").addEventListener("submit", function (e)
     var email = document.getElementById("wl-email").value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
     var name = document.getElementById("wl-name").value.trim(), jet = document.getElementById("wl-jet").value.trim();
-    var props = { signed_up_for: "f16-cockpit", list: "waitlist" };
-    if (name) props.first_name = name;
+    var props = { signed_up_for: "f16-cockpit", list: "waitlist", $email: email };
+    if (name) { props.first_name = name; props.$name = name; }
     if (jet) props.jet = jet;
     L.identify(email, props);
-    L.track("launch_signup", { list: "waitlist", jet: jet || null });
+    L.track("launch_signup", { list: "waitlist", jet: jet || null, email: email, name: name || null });
   });
   document.querySelectorAll(".reserve-btn, #stickybar").forEach(function (b) {
     b.addEventListener("click", function () { L.track("reserve_click", { link: /^http/.test(b.getAttribute("href") || "") }); });
