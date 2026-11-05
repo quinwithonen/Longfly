@@ -125,7 +125,10 @@
   .action{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(60% 90% at 22% 50%,rgba(61,255,122,.07),transparent 70%),var(--bg)}
   .action-grid{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:40px;align-items:center}
   .action-media{margin:0;width:340px;max-width:100%}
-  .model-stack{display:flex;flex-direction:column;gap:18px;width:420px;max-width:100%}
+  .model-stack{display:flex;flex-direction:row;gap:14px;width:420px;max-width:100%;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .model-stack::-webkit-scrollbar{display:none}
+  .model-stack .model-media{flex:0 0 86%;scroll-snap-align:center}
+  .model-stack .action-frame img{height:300px;object-fit:contain;background:#0b1118}
   .model-media{margin:0}
   .action-frame img{display:block;width:100%;border-radius:11px}
   .media-cap{margin-top:10px;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.6px;color:var(--dim)}
