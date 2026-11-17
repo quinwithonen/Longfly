@@ -73,7 +73,7 @@
   .btn-sm{padding:8px 14px;font-size:13.5px}
   /* ── hero ────────────────────────── */
   .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:#000}
-  .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
+  .hero img.bg,.hero video.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
   .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,19,.42) 0%,rgba(10,14,19,.15) 30%,rgba(10,14,19,.7) 55%,rgba(10,14,19,.96) 88%)}
   section.has-bg{position:relative;overflow:hidden}
   section.has-bg .sec-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
@@ -179,6 +179,10 @@
   #topbanner{display:block;background:var(--green);color:#06130a;font-weight:800;text-align:center;padding:14px 16px 12px;font-size:18px;letter-spacing:.03em;text-decoration:none}
   #topbanner .tb-track{display:block;height:7px;background:rgba(6,19,10,.22);border-radius:4px;margin-top:9px;overflow:hidden}
   #topbanner-bar{display:block;height:100%;width:10%;background:#06130a;border-radius:4px}
+  .wing-drop{border-top:1px solid var(--line);background:var(--panel)}
+  .wing-drop>summary{cursor:pointer;list-style:none;text-align:center;padding:22px 16px;font-weight:800;letter-spacing:.04em;font-size:15px;color:#aebac7}
+  .wing-drop>summary::-webkit-details-marker{display:none}
+  .wing-drop>summary:hover{color:#fff}
   @media (max-width:760px){
     .cards,.cards3{grid-template-columns:1fr}
     .nav nav a:not(.btn){display:none}
@@ -208,7 +212,7 @@
 
 <!-- ══════════ HERO ══════════ -->
 <div class="hero" id="top">
-  <img class="bg" src="assets/jet.webp" alt="F-16 at golden hour">
+  <video class="bg" src="assets/painted-cockpit.mp4" poster="assets/painted-cockpit-poster.jpg" autoplay muted loop playsinline preload="metadata" style="object-position:center 32%" aria-label="The painted Longfly F-16 cockpit prototype with its displays and HUD lit"></video>
   <div class="shade"></div>
   <div class="wrap inner">
     <div class="kicker">Batch 1 · Handmade · 10 units only</div>
@@ -437,65 +441,6 @@
   </div>
 </section>
 
-<!-- ══════════ THE WING (Prandtl printable airframe) ══════════ -->
-<section id="wing" data-section="wing" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="kicker">The complete airplane</div>
-    <h2>No F-16? Get the <span class="g">whole airplane.</span></h2>
-    <p class="lede">The cockpit drops straight into the Motion RC F-16 — but you don't need to own one. The Longfly Prandtl wing is a 3D-printable flying wing designed around the cockpit: its centre section is shaped to fit it exactly, so the panel, displays and HUD you just read about become a complete airplane.</p>
-        <p class="lede" style="margin-top:14px;">The design is based on the <b style="color:#fff;">2015 NASA paper on Prandtl wing distributions</b> — a bell-shaped lift distribution that increases efficiency and produces proverse rather than adverse yaw, completely removing the need for a vertical stabilizer. It's heavily inspired by the <b style="color:#fff;">Horten H. IV</b>, one of the first flying wings ever to exist.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:22px 0 6px;">
-      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-cockpit.webp" alt="Concept render, close view of the cockpit in the Prandtl wing — canopy and HUD visible" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">The cockpit under its canopy, HUD lit — concept render</figcaption></figure>
-      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-rear.webp" alt="Concept render of the Prandtl flying wing from behind, pusher propeller at the rear of the centre section" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">From behind — the pusher prop and clean planform</figcaption></figure>
-      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-flight.webp" alt="Concept render of the Prandtl flying wing banking in flight at dusk" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">In flight — concept render</figcaption></figure>
-    </div>
-    <p style="font-size:13px;color:#67788a;">Concept renders — the wing is in development and flies before it ships.</p>
-    <h3 style="margin-top:26px;">Look around the <span class="g">real thing</span></h3>
-    <p style="color:#aebac7;max-width:640px;">This isn't a render — it's the actual print geometry, straight from the design file. Drag to orbit, scroll or pinch to zoom.</p>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
-    <model-viewer id="wingViewer" src="assets/wing-gear-up.glb" alt="Interactive 3D model of the Longfly Prandtl flying wing with the cockpit installed" camera-controls camera-orbit="20deg 118deg 40%" auto-rotate auto-rotate-delay="1200" rotation-per-second="16deg" shadow-intensity="0.6" exposure="1.15" style="width:100%;height:min(78vh,660px);background:radial-gradient(120% 120% at 50% 20%,#1a2432 0%,#0b0f16 70%);border:1px solid var(--line);border-radius:14px;"></model-viewer>
-    <div class="cta-row" style="margin-top:12px;">
-      <button class="btn btn-s" id="btnGearUp" type="button" style="border-color:var(--gold);color:var(--gold);">Gear up — in flight</button>
-      <button class="btn btn-s" id="btnGearDown" type="button">Gear down — on the ground</button>
-    </div>
-    <script>
-      (function(){
-        var v=document.getElementById('wingViewer'),bu=document.getElementById('btnGearUp'),bd=document.getElementById('btnGearDown');
-        function set(down){ v.src = down ? 'assets/wing-gear-down.glb' : 'assets/wing-gear-up.glb';
-          bu.style.borderColor = down ? '' : 'var(--gold)'; bu.style.color = down ? '' : 'var(--gold)';
-          bd.style.borderColor = down ? 'var(--gold)' : ''; bd.style.color = down ? 'var(--gold)' : ''; }
-        bu.addEventListener('click',function(){set(false)}); bd.addEventListener('click',function(){set(true)});
-      })();
-    </script>
-    <div class="cards" style="margin-top:20px;">
-      <div class="card">
-        <span class="tag">Print it yourself</span>
-        <h3>Files + all electronics</h3>
-        <div class="price">+$100 <small>over the cockpit</small></div>
-        <p>Every print file for the airframe, plus <b style="color:#fff;">all the electronics the wing needs</b> — shipped to you. You print the airframe on your own printer and drop the cockpit in.</p>
-        <ul>
-          <li>Full STL set + print settings + assembly guide</li>
-          <li>Centre section shaped to exactly fit the cockpit</li>
-          <li>Electronics pack included — nothing else to source</li>
-        </ul>
-      </div>
-      <div class="card">
-        <span class="tag">No printer?</span>
-        <h3>We print it for you</h3>
-        <div class="price">+$250 <small>over the cockpit</small></div>
-        <p>Same files and electronics — and the airframe printed for you, ready to assemble with the electronics pack and your cockpit.</p>
-        <ul>
-          <li>Airframe printed, checked and shipped with your order</li>
-          <li>Identical fit — printed from the same files</li>
-          <li>Just assemble, install the cockpit, and fly</li>
-        </ul>
-      </div>
-    </div>
-    <p class="lede" style="margin-top:22px;"><b style="color:#fff;">Expected flight time: 15–30 minutes — about 4× the F-16's.</b> The jet's EDF is the bottleneck — a ducted fan burns most of its battery making noise and heat. The wing's pusher prop and tailless layout sip power by comparison. This isn't a three-minute blast around the field: the wing is meant for scenic, long-distance flying — settle into the head-tracked view and cruise. That's a design estimate at this stage, not a stopwatch number — it gets proven in flight testing before the wing ships.</p>
-    <p class="fineprint">The wing launches alongside the cockpit. Reserve a cockpit above and you'll be first offered the wing add-on when it opens.</p>
-  </div>
-</section>
-
 <!-- ══════════ RECEPTION (real comments) ══════════ -->
 <section id="reception" data-section="reception">
   <div class="wrap">
@@ -606,6 +551,68 @@
     <div class="micro">100% REFUNDABLE UNTIL IT SHIPS · CHRISTMAS OR YOUR DEPOSIT BACK</div>
   </div>
 </div>
+
+<details class="wing-drop">
+<summary>THE PRANDTL FLYING WING — A SIDE PROJECT, STILL IN DEVELOPMENT ▾</summary>
+<!-- ══════════ THE WING (Prandtl printable airframe) ══════════ -->
+<section id="wing" data-section="wing" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="kicker">The complete airplane</div>
+    <h2>No F-16? Get the <span class="g">whole airplane.</span></h2>
+    <p class="lede">The cockpit drops straight into the Motion RC F-16 — but you don't need to own one. The Longfly Prandtl wing is a 3D-printable flying wing designed around the cockpit: its centre section is shaped to fit it exactly, so the panel, displays and HUD you just read about become a complete airplane.</p>
+        <p class="lede" style="margin-top:14px;">The design is based on the <b style="color:#fff;">2015 NASA paper on Prandtl wing distributions</b> — a bell-shaped lift distribution that increases efficiency and produces proverse rather than adverse yaw, completely removing the need for a vertical stabilizer. It's heavily inspired by the <b style="color:#fff;">Horten H. IV</b>, one of the first flying wings ever to exist.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:22px 0 6px;">
+      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-cockpit.webp" alt="Concept render, close view of the cockpit in the Prandtl wing — canopy and HUD visible" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">The cockpit under its canopy, HUD lit — concept render</figcaption></figure>
+      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-rear.webp" alt="Concept render of the Prandtl flying wing from behind, pusher propeller at the rear of the centre section" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">From behind — the pusher prop and clean planform</figcaption></figure>
+      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-flight.webp" alt="Concept render of the Prandtl flying wing banking in flight at dusk" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">In flight — concept render</figcaption></figure>
+    </div>
+    <p style="font-size:13px;color:#67788a;">Concept renders — the wing is in development and flies before it ships.</p>
+    <h3 style="margin-top:26px;">Look around the <span class="g">real thing</span></h3>
+    <p style="color:#aebac7;max-width:640px;">This isn't a render — it's the actual print geometry, straight from the design file. Drag to orbit, scroll or pinch to zoom.</p>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+    <model-viewer id="wingViewer" loading="lazy" src="assets/wing-gear-up.glb" alt="Interactive 3D model of the Longfly Prandtl flying wing with the cockpit installed" camera-controls camera-orbit="20deg 118deg 40%" auto-rotate auto-rotate-delay="1200" rotation-per-second="16deg" shadow-intensity="0.6" exposure="1.15" style="width:100%;height:min(78vh,660px);background:radial-gradient(120% 120% at 50% 20%,#1a2432 0%,#0b0f16 70%);border:1px solid var(--line);border-radius:14px;"></model-viewer>
+    <div class="cta-row" style="margin-top:12px;">
+      <button class="btn btn-s" id="btnGearUp" type="button" style="border-color:var(--gold);color:var(--gold);">Gear up — in flight</button>
+      <button class="btn btn-s" id="btnGearDown" type="button">Gear down — on the ground</button>
+    </div>
+    <script>
+      (function(){
+        var v=document.getElementById('wingViewer'),bu=document.getElementById('btnGearUp'),bd=document.getElementById('btnGearDown');
+        function set(down){ v.src = down ? 'assets/wing-gear-down.glb' : 'assets/wing-gear-up.glb';
+          bu.style.borderColor = down ? '' : 'var(--gold)'; bu.style.color = down ? '' : 'var(--gold)';
+          bd.style.borderColor = down ? 'var(--gold)' : ''; bd.style.color = down ? 'var(--gold)' : ''; }
+        bu.addEventListener('click',function(){set(false)}); bd.addEventListener('click',function(){set(true)});
+      })();
+    </script>
+    <div class="cards" style="margin-top:20px;">
+      <div class="card">
+        <span class="tag">Print it yourself</span>
+        <h3>Files + all electronics</h3>
+        <div class="price">+$100 <small>over the cockpit</small></div>
+        <p>Every print file for the airframe, plus <b style="color:#fff;">all the electronics the wing needs</b> — shipped to you. You print the airframe on your own printer and drop the cockpit in.</p>
+        <ul>
+          <li>Full STL set + print settings + assembly guide</li>
+          <li>Centre section shaped to exactly fit the cockpit</li>
+          <li>Electronics pack included — nothing else to source</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">No printer?</span>
+        <h3>We print it for you</h3>
+        <div class="price">+$250 <small>over the cockpit</small></div>
+        <p>Same files and electronics — and the airframe printed for you, ready to assemble with the electronics pack and your cockpit.</p>
+        <ul>
+          <li>Airframe printed, checked and shipped with your order</li>
+          <li>Identical fit — printed from the same files</li>
+          <li>Just assemble, install the cockpit, and fly</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:22px;"><b style="color:#fff;">Expected flight time: 15–30 minutes — about 4× the F-16's.</b> The jet's EDF is the bottleneck — a ducted fan burns most of its battery making noise and heat. The wing's pusher prop and tailless layout sip power by comparison. This isn't a three-minute blast around the field: the wing is meant for scenic, long-distance flying — settle into the head-tracked view and cruise. That's a design estimate at this stage, not a stopwatch number — it gets proven in flight testing before the wing ships.</p>
+    <p class="fineprint">The wing launches alongside the cockpit. Reserve a cockpit above and you'll be first offered the wing add-on when it opens.</p>
+  </div>
+</section>
+</details>
 
 <footer>
   <div class="wrap">
