@@ -1,709 +1,303 @@
 <!DOCTYPE html>
-<!--
-  ══════════════════════════════════════════════════════════════════════════
-  LONGFLY — F-16 COCKPIT PRE-ORDER PAGE  (single-file build)
-  ══════════════════════════════════════════════════════════════════════════
-  TO GO LIVE, only 3 things need wiring — all in the CONFIG block at the
-  bottom of this file (search for "CONFIG"):
-
-    1. STRIPE_LINK .......... paste Quinlong's Stripe Payment Link.
-                              Every "Reserve / Hold my spot" button uses it.
-    2. WAITLIST_ENDPOINT .... URL the waitlist form POSTs to (Formspree,
-                              ConvertKit, a Google Apps Script, etc.).
-                              Leave "" and the form shows the success
-                              message without sending (demo mode).
-    3. SPOTS_CLAIMED ........ real number of founder deposits taken.
-                              Update it as deposits land — the progress
-                              bar and "x of 10 claimed" text read from it.
-                              NEVER put a fake number here.
-
-  Deploy: upload this file + the assets/ folder as-is (GitHub Pages,
-  Netlify, the existing longfly.us host — anywhere static).
-  Images: assets/hero.webp and jet.webp are AI-generated background
-  atmosphere only. quinlong-field.jpg is a real photo;
-  assets/comments/ holds the four real comment screenshots.
-  assets/pilot-canopy.webp (the closing banner) is a photo of a real
-  F-16 pilot under the canopy, supplied by Quinlong and AI-extended
-  to 16:9; background atmosphere only, like the other AI images.
-  ══════════════════════════════════════════════════════════════════════════
--->
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Longfly — F-16 Cockpit for your RC F-16 | Batch 1 Founders Pre-Order</title>
-<meta name="description" content="A handmade, hyper-realistic F-16 cockpit for the Motion RC 70mm F-16. Live displays, working HUD. Batch 1 founders: $200 (reg. $400) — $50 fully refundable deposit holds your spot.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home | Longfly</title>
+<meta name="description" content="A detailed FPV cockpit in development for RC aviation—created to bring the view from inside the aircraft closer to the real thing.">
+<meta property="og:title" content="Longfly">
+<meta property="og:description" content="Built from the pilot's point of view. A detailed FPV cockpit in development for RC aviation.">
+<meta property="og:image" content="https://longfly.us/assets/jamie/hero-hud.jpg">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Longfly">
-<meta property="og:url" content="https://longfly.us/">
-<meta property="og:title" content="A fighter-jet cockpit for your RC F-16">
-<meta property="og:description" content="Batch 1: ten handmade founders units at $200 (regular $400). A $50 fully refundable deposit holds yours.">
-<meta property="og:image" content="https://longfly.us/projects/f16-cockpit/images/share.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://longfly.us/projects/f16-cockpit/images/share.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/jamie/logo.jpg">
 <style>
   :root{
-    --bg:#0a0e13; --panel:#0d141c; --panel2:#111922; --line:#22303f;
-    --green:#3dff7a; --amber:#ffb454; --text:#e8edf2; --muted:#aeb9c4; --dim:#8fa0b1;
+    --bg:#0a0d0f; --bg2:#10151a; --card:#12181e; --line:#232c34;
+    --text:#ffffff; --muted:#c7c7c7; --dim:#9aa4ad;
+    --blue:#0057e1; --blue2:#1d67cd;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--text);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
-  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  body{background:var(--bg);color:var(--text);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
   a{color:inherit}
-  /* ── nav ─────────────────────────── */
-  header{position:sticky;top:0;z-index:50;background:rgba(10,14,19,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;justify-content:space-between;align-items:center;padding:13px 20px}
-  .logo{font-weight:900;letter-spacing:2.5px;font-size:19px;text-decoration:none}
-  .logo span{color:var(--green)}
-  .nav nav{display:flex;gap:22px;align-items:center;font-size:14px;color:var(--muted)}
-  .nav nav a{text-decoration:none}
-  .nav nav a:hover{color:var(--text)}
-  .btn{display:inline-block;font-weight:800;font-size:15px;padding:12px 20px;border-radius:8px;text-decoration:none;cursor:pointer;border:none;text-align:center}
-  .btn-p{background:var(--green);color:#06130a}
-  .btn-p:hover{filter:brightness(1.08)}
-  .btn-s{border:1px solid #3a4c5f;color:var(--text);background:transparent}
-  .btn-s:hover{border-color:var(--dim)}
-  .btn-sm{padding:8px 14px;font-size:13.5px}
-  /* ── hero ────────────────────────── */
-  .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;background:#000}
-  .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.92}
-  .hero .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,19,.42) 0%,rgba(10,14,19,.15) 30%,rgba(10,14,19,.7) 55%,rgba(10,14,19,.96) 88%)}
-  section.has-bg{position:relative;overflow:hidden}
-  section.has-bg .sec-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
-  section.has-bg::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,14,19,.55) 0%,rgba(10,14,19,.78) 45%,rgba(10,14,19,.95) 100%)}
-  section.has-bg > .wrap{position:relative;z-index:2}
-  .hero .inner{position:relative;padding:110px 20px 44px;width:100%}
-  .kicker{font-family:"IBM Plex Mono",monospace;color:var(--amber);letter-spacing:2.5px;font-size:12px;text-transform:uppercase}
-  h1{font-size:clamp(38px,6vw,64px);line-height:1.05;font-weight:900;margin:10px 0 14px;letter-spacing:-.5px}
-  h1 .g, h2 .g{color:var(--green)}
-  .sub{color:#cdd7e0;font-size:clamp(16px,2vw,19px);max-width:640px}
-  .cta-row{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
-  .micro{margin-top:16px;font-size:11.5px;color:var(--dim);font-family:"IBM Plex Mono",monospace;letter-spacing:.3px}
-  /* ── stats ───────────────────────── */
-  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
-  .stats .wrap{display:flex}
-  .stat{flex:1;padding:20px 18px;border-right:1px solid var(--line)}
-  .stat:last-child{border-right:none}
-  .stat .n{font-size:30px;font-weight:900}
-  .stat .l{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;margin-top:3px}
-  /* ── sections ────────────────────── */
-  section{padding:72px 0}
-  #reception{padding:38px 0}
-  h2{font-size:clamp(28px,4vw,40px);font-weight:900;line-height:1.12;letter-spacing:-.3px}
-  .lede{color:var(--muted);font-size:17px;margin-top:10px;max-width:720px}
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
-  .cards3{grid-template-columns:repeat(3,1fr)}
-  .card{border:1px solid #263646;border-radius:12px;padding:22px;background:var(--panel)}
-  .card.hot{border:1.5px solid var(--green);background:linear-gradient(180deg,#0d1a12,var(--panel))}
-  .tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:1.5px;padding:4px 10px;border-radius:20px;background:#1b2836;color:var(--muted);text-transform:uppercase}
-  .tag.hot{background:var(--green);color:#06130a;font-weight:600}
-  .card h3{font-size:20px;font-weight:800;margin:12px 0 4px}
-  .card p,.card li{font-size:15px;color:var(--muted)}
-  .card ul{list-style:none;margin-top:12px}
-  .card li{padding-left:18px;position:relative;margin-bottom:6px}
-  .card li:before{content:"▸";position:absolute;left:0;color:var(--green)}
-  .price{font-size:38px;font-weight:900;margin:6px 0}
-  .price s{color:#67788a;font-size:22px;font-weight:600}
-  .price small{font-size:14px;color:var(--dim);font-weight:600}
-  .bar{height:8px;background:#1b2836;border-radius:6px;margin-top:16px;overflow:hidden}
-  .bar i{display:block;height:100%;background:var(--green);width:0%}
-  .bar-note{font-size:12px;color:var(--dim);margin-top:7px;font-family:"IBM Plex Mono",monospace}
-  .fineprint{margin-top:22px;font-size:14.5px;color:var(--dim);border-top:1px dashed #263646;padding-top:16px;max-width:820px}
-  /* ── forms ───────────────────────── */
-  label{display:block;font-size:12.5px;color:var(--dim);font-family:"IBM Plex Mono",monospace;letter-spacing:.6px;text-transform:uppercase;margin:14px 0 5px}
-  input{width:100%;background:#070b10;border:1px solid #2c3e50;border-radius:7px;color:var(--text);font-size:15px;padding:11px 12px;font-family:inherit}
-  input:focus{outline:none;border-color:var(--green)}
-  .form-ok{display:none;margin-top:14px;border:1px solid var(--green);background:#0d1a12;color:var(--text);border-radius:8px;padding:12px 14px;font-size:14.5px}
-  /* ── product ─────────────────────── */
-  /* ── V1 prototype video ─────────────── */
-  .action{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(60% 90% at 22% 50%,rgba(61,255,122,.07),transparent 70%),var(--bg)}
-  .action-grid{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:40px;align-items:center}
-  .action-media{margin:0;width:340px;max-width:100%}
-  .model-stack{display:flex;flex-direction:row;gap:14px;width:420px;max-width:100%;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .model-stack::-webkit-scrollbar{display:none}
-  .model-stack .model-media{flex:0 0 86%;scroll-snap-align:center}
-  .model-stack .action-frame img{height:300px;object-fit:contain;background:#0b1118}
-  .model-media{margin:0}
-  .action-frame img{display:block;width:100%;border-radius:11px}
-  .media-cap{margin-top:10px;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.6px;color:var(--dim)}
-  .action-frame{position:relative;border-radius:16px;padding:6px;background:linear-gradient(160deg,#1a2735,#0d141c);border:1px solid #2b3d50;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 60px rgba(61,255,122,.10)}
-  .action-frame video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:11px;background:#000}
-  .hud{position:absolute;width:22px;height:22px;border:2px solid var(--green);opacity:.8;pointer-events:none}
-  .hud.tl{top:-6px;left:-6px;border-right:0;border-bottom:0;border-radius:6px 0 0 0}
-  .hud.tr{top:-6px;right:-6px;border-left:0;border-bottom:0;border-radius:0 6px 0 0}
-  .hud.bl{bottom:-6px;left:-6px;border-right:0;border-top:0;border-radius:0 0 0 6px}
-  .hud.br{bottom:-6px;right:-6px;border-left:0;border-top:0;border-radius:0 0 6px 0}
-  @media (max-width:1150px){.action-grid{grid-template-columns:1fr;gap:28px;justify-items:center}.action-copy{justify-self:stretch}}
-  @media (max-width:760px){.model-stack{flex-direction:row;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding:4px 2px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.model-stack::-webkit-scrollbar{display:none}.model-stack .model-media{flex:0 0 74vw;scroll-snap-align:center}.model-stack .action-frame img{height:290px;object-fit:contain;background:#0b1118}}
-  .example{border-bottom:1px solid var(--line)}
-  .example-media{margin:28px 0 0;max-width:900px}
-  .example-media video{aspect-ratio:16/9 !important}
-  .example-cap{margin-top:12px;font-size:12.5px;color:var(--dim)}
-  /* ── real photos ─────────────── */
-  .real-photo{margin:0 auto;max-width:460px}
-  .real-photo img{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
-  .real-photo.real-wide{max-width:none}
-  .real-photo.real-wide img{max-height:620px;object-fit:cover}
-  .real-photo figcaption{margin-top:10px;font-size:13.5px;color:var(--muted);text-align:center}
-  .real-photo.real-wide figcaption{text-align:left}
-  /* ── reception (comment screenshots) ─────────────── */
-  .quotes{display:grid;grid-template-columns:1fr;gap:18px;margin-top:16px}
-  .quote{margin:0;display:flex;flex-direction:column}
-  .quote img{display:block;width:100%;height:auto;background:#fff;border-radius:14px;padding:8px 10px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .quote-src{order:-1;margin-bottom:8px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--green)}
-  .quote figcaption{margin-top:8px;font-size:14px;color:var(--text);line-height:1.45}
-  @media (min-width:761px){.quotes{grid-template-columns:1fr 1fr .72fr;gap:14px 16px;align-items:start}.quote img{width:auto;max-width:100%;padding:8px 10px}.quote figcaption{display:none}.quote-meme{grid-column:3;grid-row:1/span 2}.quote-meme img{width:100%}}
-  /* ── trust line under Reserve ─────────────── */
-  .trust-line{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--text)}
-  .full-img{width:100%;height:min(58vh,520px);object-fit:cover;border-radius:12px;display:block}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
-  /* ── faq ─────────────────────────── */
-  .faq{max-width:820px;margin-top:26px;border-bottom:1px solid var(--line)}
-  .faq details{border-top:1px solid var(--line)}
-  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:17px 2px;font-size:16.5px;font-weight:700;color:var(--text)}
-  .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{content:"+";font-family:"IBM Plex Mono",monospace;font-size:21px;font-weight:400;color:var(--green);flex:none;line-height:1}
-  .faq details[open ] summary::after{content:"–"}
-  .faq details p{font-size:16px;line-height:1.55;margin:0 0 18px;color:var(--muted)}
-  /* ── footer / sticky bar ─────────── */
-  footer{border-top:1px solid var(--line);padding:34px 0 90px;color:var(--dim);font-size:14px;background:var(--panel)}
-  footer .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  #stickybar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--green);color:#06130a;font-weight:800;text-align:center;padding:13px;font-size:15.5px;text-decoration:none;display:none}
-  @media (max-width:760px){
-    .cards,.cards3{grid-template-columns:1fr}
-    .nav nav a:not(.btn){display:none}
-    .stats .wrap{flex-direction:column}
-    .stat{border-right:none;border-bottom:1px solid var(--line)}
-    .stat:last-child{border-bottom:none}
-    section{padding:52px 0}
-  }
+  img{max-width:100%;display:block}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(10,13,15,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:28px;height:72px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:700;letter-spacing:.35em;font-size:18px}
+  .brand img{width:40px;height:40px;object-fit:cover;border-radius:50%}
+  .save-tag{font-size:12px;font-weight:700;letter-spacing:.08em;color:#fff;background:var(--blue);padding:5px 10px;border-radius:999px;text-decoration:none;white-space:nowrap}
+  nav{margin-left:auto;display:flex;gap:26px}
+  nav a{text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.18em;color:var(--muted)}
+  nav a:hover{color:#fff}
+  @media(max-width:820px){nav{display:none}.brand{letter-spacing:.22em}}
+
+  /* hero */
+  .hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;background:url('assets/jamie/hero-hud.jpg') center 30%/cover no-repeat}
+  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,13,15,.93) 30%,rgba(10,13,15,.55) 65%,rgba(10,13,15,.35)),linear-gradient(0deg,var(--bg),transparent 40%)}
+  .hero-inner{position:relative;z-index:2;padding:110px 0 90px}
+  .hero h1{font-size:clamp(44px,8.2vw,104px);line-height:.98;font-weight:800;letter-spacing:.01em;text-transform:uppercase}
+  .hero p{margin-top:26px;max-width:560px;font-size:clamp(16px,2vw,20px);color:var(--muted)}
+  .hero-btns{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;letter-spacing:.14em;font-size:13px;padding:16px 30px;border-radius:999px;border:1px solid #fff;color:#fff;transition:.2s}
+  .btn:hover{background:#fff;color:#0a0d0f}
+  .btn-solid{background:var(--blue);border-color:var(--blue)}
+  .btn-solid:hover{background:var(--blue2);color:#fff}
+
+  section{padding:96px 0}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.34em;color:var(--blue2);text-transform:uppercase;margin-bottom:18px}
+  h2{font-size:clamp(30px,4.6vw,52px);font-weight:800;letter-spacing:.02em;text-transform:uppercase;line-height:1.05}
+  .lead{font-size:clamp(18px,2.4vw,24px);color:#fff;max-width:820px;margin-top:26px}
+  .body-text{color:var(--muted);max-width:820px;margin-top:18px;font-size:17px}
+  .mission{color:#fff;font-weight:600;max-width:820px;margin-top:18px;font-size:17px}
+
+  /* development / video */
+  #development{background:var(--bg2)}
+  .dev-grid{display:grid;grid-template-columns:1fr 400px;gap:56px;align-items:center}
+  @media(max-width:900px){.dev-grid{grid-template-columns:1fr}}
+  .dev-video{width:100%;max-width:400px;margin:0 auto;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#000}
+  .dev-video video{width:100%;height:auto;display:block}
+
+  /* marquee strip */
+  .strip{overflow:hidden;padding:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .strip-track{display:flex;gap:0;width:max-content;animation:scrollx 46s linear infinite}
+  .strip-track img{height:300px;width:auto;object-fit:cover}
+  @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* work gallery */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+  @media(max-width:900px){.gallery{grid-template-columns:repeat(2,1fr)}}
+  .gallery img{width:100%;height:250px;object-fit:cover;border-radius:12px}
+
+  /* offers */
+  #services{background:var(--bg2) url('assets/jamie/grid-bg.png') center/cover}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:48px}
+  @media(max-width:860px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:40px 36px}
+  .card .tag{font-size:12px;font-weight:700;letter-spacing:.3em;color:var(--blue2);text-transform:uppercase}
+  .card h3{font-size:30px;font-weight:800;margin-top:14px}
+  .card .sub{color:var(--dim);margin-top:4px;font-size:15px}
+  .price{font-size:52px;font-weight:800;margin-top:20px}
+  .price s{font-size:26px;color:var(--dim);font-weight:600;margin-left:10px}
+  .card ul{list-style:none;margin-top:22px}
+  .card li{color:var(--muted);padding:7px 0;border-top:1px solid var(--line);font-size:15.5px}
+  .card li::before{content:"— "}
+  .card .btn{margin-top:28px;width:100%;text-align:center}
+  .wl-form{margin-top:26px}
+  .wl-form input[type=email]{width:100%;background:#0a0d0f;border:1px solid var(--line);border-radius:10px;color:#fff;padding:15px 16px;font-size:16px}
+  .wl-check{display:flex;gap:10px;align-items:flex-start;margin-top:16px;color:var(--muted);font-size:14.5px}
+  .wl-ok{display:none;margin-top:16px;color:#7ee2a0;font-weight:600}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:56px;margin-top:44px}
+  @media(max-width:860px){.contact-grid{grid-template-columns:1fr}}
+  .contact-info p{color:var(--muted);font-size:17px;margin-top:12px}
+  .contact-info a{color:#fff}
+  .socials{display:flex;gap:14px;margin-top:28px}
+  .socials a{border:1px solid var(--line);border-radius:999px;padding:10px 18px;text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.12em;color:var(--muted)}
+  .socials a:hover{color:#fff;border-color:#fff}
+  form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  form input,form textarea{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:10px;color:#fff;padding:14px 16px;font-size:16px;margin-top:14px;font-family:inherit}
+  form textarea{min-height:130px;resize:vertical}
+  form .btn{margin-top:20px;cursor:pointer;background:transparent}
+
+  footer{border-top:1px solid var(--line);padding:38px 0;background:#07090b}
+  .foot{display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:var(--dim);font-size:14px}
+  .foot img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+  .foot .socials{margin:0 0 0 auto}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="wrap nav">
-    <a class="logo" href="#top">LONG<span>FLY</span></a>
+  <div class="wrap bar">
+    <a class="brand" href="#top"><img src="assets/jamie/logo.jpg" alt="Longfly logo">LONGFLY</a>
+    <a class="save-tag" href="#services">Save 23%.</a>
     <nav>
-      <a href="#cockpit">The Cockpit</a>
-      <a href="#story">The Story</a>
-      <a href="#faq">FAQ</a>
-      <a href="contact/">Contact</a>
-      <a class="btn btn-p btn-sm reserve-btn" href="#">Reserve — $50</a>
+      <a href="#work">THE COCKPIT</a>
+      <a href="#services">OUR SERVICES</a>
+      <a href="#development">DEVELOPMENT</a>
+      <a href="#contact">QUESTIONS</a>
+      <a href="#contact">CONTACT</a>
     </nav>
   </div>
 </header>
 
-<!-- ══════════ HERO ══════════ -->
+<!-- HERO -->
 <div class="hero" id="top">
-  <img class="bg" src="assets/jet.webp" alt="F-16 at golden hour">
-  <div class="shade"></div>
-  <div class="wrap inner">
-    <div class="kicker">Batch 1 · Handmade · 10 units only</div>
-    <h1>A First Person View F-16 cockpit to turn any RC plane into your own <span class="g">FIGHTER JET</span></h1>
-    <p class="sub">Four live instrument displays. A working HUD. Backlit panels that glow at dusk. Drop it into your jet, put the goggles on, and every flight feels like the real thing.</p>
-    <div class="cta-row">
-      <a class="btn btn-p reserve-btn" href="#">Reserve yours now — save 50%</a>
-      <a class="btn btn-s" href="#reserve">Join the waitlist (free)</a>
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <h1>Built from the<br>Pilot’s Point<br>of View.</h1>
+    <p>A detailed FPV cockpit in development for RC aviation—created to bring the view from inside the aircraft closer to the real thing.</p>
+    <div class="hero-btns">
+      <a class="btn btn-solid" href="#work">Explore</a>
+      <a class="btn" href="#development">See Development Status ↓</a>
     </div>
-    <div class="micro">DEPOSIT 100% REFUNDABLE UNTIL YOUR UNIT SHIPS &nbsp;·&nbsp; SHIPS FOR CHRISTMAS — OR YOUR DEPOSIT BACK &nbsp;·&nbsp; BUILT IN BOSTON</div>
   </div>
 </div>
 
-<div class="stats">
-  <div class="wrap">
-    <div class="stat"><div class="n">1</div><div class="l">Builder — every unit by hand</div></div>
-    <div class="stat"><div class="n">4 + HUD</div><div class="l">Live displays, real flight data</div></div>
-    <div class="stat"><div class="n">10</div><div class="l">Handmade founder spots, ever</div></div>
-  </div>
-</div>
-
-<!-- ══════════ EXAMPLE IN ACTION (reference clip) ══════════ -->
-<section id="example" class="example" data-section="action">
-  <div class="wrap">
-    <div class="kicker">In action</div>
-    <h2>See examples of this <span class="g">in action</span></h2>
-    <p class="lede">Put the goggles on and look around: the canopy rails, the glowing HUD, the wing sliding past below you. This is the flying experience — and the level of quality — Batch 1 is built to.</p>
-    <figure class="example-media">
-      <div class="action-frame">
-        <video id="example-video" src="assets/video/in-action.mp4" poster="assets/video/in-action-poster.jpg" muted loop playsinline preload="none" controls aria-label="FPV flight from inside a scale fighter-jet cockpit"></video>
-        <i class="hud tl"></i><i class="hud tr"></i><i class="hud bl"></i><i class="hud br"></i>
+<!-- DEVELOPMENT -->
+<section id="development">
+  <div class="wrap dev-grid">
+    <div>
+      <div class="kicker">Development</div>
+      <h2>The latest build</h2>
+      <p class="body-text">The cockpit, painted — live displays, a working HUD, and head tracking, filmed on the bench. This is the current status on the prototype, it will only get better from here.</p>
+      <div class="hero-btns">
+        <a class="btn" href="#services">Reserve Yours</a>
       </div>
-      <figcaption class="example-cap">Referenced footage by 轩_快出来飞飞机</figcaption>
-    </figure>
-  </div>
-</section>
-
-<!-- ══════════ V1 PROTOTYPE (video) ══════════ -->
-<section id="action" class="action" data-section="prototype">
-  <div class="wrap action-grid">
-    <figure class="action-media">
-      <div class="action-frame">
-        <video src="assets/video/v1-prototype.mp4" poster="assets/video/v1-poster.jpg" controls playsinline preload="metadata" aria-label="The working V1 Longfly F-16 cockpit prototype"></video>
-        <i class="hud tl"></i><i class="hud tr"></i><i class="hud bl"></i><i class="hud br"></i>
-      </div>
-    </figure>
-    <div class="model-stack">
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-angle.webp" alt="Three-quarter view of the V2 F-16 cockpit model from the left, updated November 12, 2026: nose, canopy bow, head-tracker gimbal and instrument panel">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: three-quarter from the left — nose, gimbal, panel</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-rear.webp" alt="The V2 F-16 cockpit model from the rear quarter, updated November 12, 2026: canopy bow, head-tracker gimbal and spine">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: rear quarter — canopy bow, gimbal, spine</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-profile.webp" alt="Full-length profile of the V2 F-16 cockpit model, updated November 12, 2026, nose to tail with the head-tracker gimbal fitted">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: full-length profile, nose to tail</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-high.webp" alt="The V2 F-16 cockpit model from above, updated November 12, 2026: full instrument panel, both side consoles and the stick">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: from above — full panel, both consoles, stick</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-side.webp" alt="Side view of the V2 F-16 cockpit model, updated November 12, 2026: head-tracker gimbal, HUD posts and rear deck">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: side profile — gimbal, HUD posts, rear deck</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-quarter.webp" alt="Three-quarter view of the V2 F-16 cockpit model, updated November 12, 2026: instrument panel, head-tracker gimbal and canopy bow from above">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: three-quarter view — panel, gimbal, canopy bow</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-nose.webp" alt="The V2 F-16 cockpit model from the nose, updated November 12, 2026: canopy frame, instrument panel and the electronics module underneath">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: from the nose — canopy frame, panel, electronics module</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-underside.webp" alt="Underside of the V2 F-16 cockpit model, updated November 12, 2026: structure, head-tracker gimbal mount and battery boxes">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: underneath — structure, gimbal mount, battery boxes</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-console.webp" alt="Close-up of the V2 F-16 cockpit model's left console, updated November 12, 2026: emergency stores jettison, landing gear handle and wheels panel, landing lights and CMDS switches, every placard readable">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: left console close-up — gear handle, jettison, landing lights, every placard readable</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-full.webp" alt="Front view of the V2 F-16 cockpit model, updated November 12, 2026: the full instrument panel, both displays, centre pedestal and side consoles in place">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: the full panel, every console in place</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-front.webp" alt="Front view of the V2 F-16 cockpit model, updated November 12, 2026: instrument panel, displays and centre pedestal from nose to seat">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: front to back, displays and pedestal</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-pilot.webp" alt="The V2 F-16 cockpit model from the pilot's seat, updated November 12, 2026: keypad, both displays and the HUD frame">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: from the pilot's seat — keypad, displays, HUD frame</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-top.webp" alt="Top view of the V2 F-16 cockpit model, updated November 12, 2026: side consoles, seat and head-tracker fitted">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: side consoles, seat and head-tracker fitted</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-nov12-section.webp" alt="Section view of the V2 F-16 cockpit model, updated November 12, 2026, showing how the panel, seat and electronics pack inside">
-      </div>
-      <figcaption class="media-cap">V2 — updated Nov 12, 2026: section view — how it all packs inside</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-pedestal.webp" alt="Close-up of the V2 model's F-16 centre pedestal: standby instruments, AOA gauge, fuel quantity select panel and pedal adjust placard">
-      </div>
-      <figcaption class="media-cap">V2 — the centre pedestal, every gauge and placard in place</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-v2-right.webp" alt="Close-up of the V2 model's F-16 centre pedestal and right console: caution panel, hydraulic pressure gauge, clock and fuel gauges">
-      </div>
-      <figcaption class="media-cap">V2 — the centre pedestal and right console, caution panel in place</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-v2-left.webp" alt="View of the V2 model's F-16 left console with stores jettison and armament panels, beside the main instrument panel and display">
-      </div>
-      <figcaption class="media-cap">V2 — the left console, every switch and legend modelled</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-detail.webp" alt="Close-up of the modelled landing gear and emergency stores jettison panel detail">
-      </div>
-      <figcaption class="media-cap">V1 — the detail level, every switch and placard</figcaption>
-    </figure>
-    <figure class="model-media">
-      <div class="action-frame">
-        <img src="assets/model-progress.webp" alt="Work-in-progress screenshot of the full-detail F-16 cockpit 3D model in Fusion 360">
-      </div>
-      <figcaption class="media-cap">V1 — the full-detail 3D model</figcaption>
-    </figure>
     </div>
-    <div class="action-copy">
-      <div class="kicker">The V1, in motion</div>
-      <h2>This is the current <span class="g">prototype.</span></h2>
-      <p class="lede">This is the current status on the prototype, it will only get better from here. What you reserve is a finished unit from Batch 1, which will be hand painted and crafted to be plug and play. That will be the V2 or V3 model, so there's still a lot of work to be done — feel free to track this project's progress on my socials.</p>
-      <div class="cta-row"><a class="btn btn-s" href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">TikTok @longfly.shop</a><a class="btn btn-s" href="https://www.instagram.com/quin_long_" target="_blank" rel="noopener">Instagram @quin_long_</a></div>
+    <div class="dev-video">
+      <video src="assets/painted-cockpit.mp4" poster="assets/painted-cockpit-poster.jpg" autoplay muted loop playsinline controls></video>
     </div>
   </div>
 </section>
 
-<!-- ══════════ THE OFFER ══════════ -->
-<section id="reserve" class="has-bg" data-section="offer">
-  <img class="sec-bg" src="assets/hero.webp" alt="" aria-hidden="true">
+<!-- ABOUT -->
+<section id="about">
   <div class="wrap">
-    <div class="kicker">Handpainted cockpits</div>
-    <h2>Support the dream, <span class="g">get half off.</span></h2>
-    <p class="lede">Batch 1 is ten cockpits, handmade one at a time. The half price is a reward for the people generous enough to give this project a chance to live — call it the Supporters discount.</p>
+    <div class="kicker">About Longfly</div>
+    <h2>About Longfly</h2>
+    <p class="lead">LONGFLY develops realistic cockpit systems that bring the pilot's perspective to RC aviation.</p>
+    <p class="body-text">Using head-tracking technology and live FPV video, our cockpits create an immersive flying experience. Our current F-16 design features functional flight instruments, moving controls, and compatibility with the Motion RC V3 70mm F-16 and other RC aircraft with wingspans over three feet.</p>
+    <p class="mission">Our mission is simple: Bring the pilot's perspective to RC aviation.</p>
+    <div class="hero-btns">
+      <a class="btn" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+</section>
 
+<!-- IMAGE STRIP -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <img src="assets/jamie/strip-1.webp" alt=""><img src="assets/jamie/strip-2.webp" alt=""><img src="assets/jamie/strip-3.webp" alt=""><img src="assets/jamie/strip-4.webp" alt=""><img src="assets/jamie/strip-5.webp" alt=""><img src="assets/jamie/strip-6.webp" alt=""><img src="assets/jamie/strip-7.webp" alt=""><img src="assets/jamie/strip-8.webp" alt="">
+    <img src="assets/jamie/strip-1.webp" alt=""><img src="assets/jamie/strip-2.webp" alt=""><img src="assets/jamie/strip-3.webp" alt=""><img src="assets/jamie/strip-4.webp" alt=""><img src="assets/jamie/strip-5.webp" alt=""><img src="assets/jamie/strip-6.webp" alt=""><img src="assets/jamie/strip-7.webp" alt=""><img src="assets/jamie/strip-8.webp" alt="">
+  </div>
+</div>
+
+<!-- OUR WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="kicker">Our Work</div>
+    <h2>Our Work</h2>
+    <div class="gallery">
+      <img src="assets/jamie/strip-1.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-2.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-3.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-4.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-5.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-6.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-7.webp" alt="F-16 cockpit build">
+      <img src="assets/jamie/strip-8.webp" alt="F-16 cockpit build">
+    </div>
+  </div>
+</section>
+
+<!-- OUR SERVICES / OFFERS -->
+<section id="services">
+  <div class="wrap">
+    <div class="kicker">Our Services</div>
+    <h2>Our Services</h2>
     <div class="cards">
-      <!-- Waitlist -->
+
       <div class="card">
-        <span class="tag">Waitlist · Free</span>
+        <div class="tag">Waitlist · Free</div>
         <h3>Keep me posted</h3>
         <div class="price">$0</div>
-        <p>Not ready to commit? Leave an email and you're in line behind the founders.</p>
+        <p class="body-text" style="margin-top:10px">Leave your email for LONGFLY cockpit development updates and ordering news.</p>
         <ul>
-          <li>First access when Batch 2 opens (regular $400)</li>
-          <li>First claim if a founder spot opens up</li>
-          <li>Build updates — the real ones, failures included</li>
+          <li>Cockpit development updates</li>
+          <li>News about future availability</li>
         </ul>
-        <form id="waitlist-form" novalidate>
-          <label for="wl-email">Email address *</label>
-          <input id="wl-email" name="email" type="email" required placeholder="you@email.com" autocomplete="email">
-          <label for="wl-name">First name (optional)</label>
-          <input id="wl-name" name="name" type="text" placeholder="First name" autocomplete="given-name">
-          <label for="wl-jet">Your jet (optional)</label>
-          <input id="wl-jet" name="jet" type="text" placeholder="e.g. Motion RC / Freewing F-16 70mm">
-          <button class="btn btn-s" type="submit" style="width:100%;margin-top:18px;">Join the waitlist</button>
-          <div class="form-ok" id="waitlist-ok">You're on the list. Build update #1 lands in your inbox this week — cockpit footage included.</div>
-          <p id="waitlist-err" style="display:none;color:#ff7a7a;font-size:13.5px;margin-top:10px;">Please enter a valid email address.</p>
+        <form class="wl-form" id="waitlist-form">
+          <input type="email" id="wl-email" placeholder="Enter your email here" required>
+          <label class="wl-check"><input type="checkbox" id="wl-news" checked> <span>Yes, subscribe me to your newsletter.</span></label>
+          <button class="btn" type="submit" style="width:100%">Subscribe</button>
+          <div class="wl-ok" id="waitlist-ok">You're on the list ✓</div>
         </form>
-        <p style="margin-top:12px;font-size:13px;color:#67788a;">No payment. No spam — build emails only.</p>
       </div>
 
-      <!-- Founders -->
-      <div class="card hot">
-        <span class="tag hot">Batch 1 · Founders</span>
-        <h3>The "Supporters" edition</h3>
-        <div class="price"><s>$400</s> $200 <small>total</small></div>
-        <p><b style="color:#fff;">$50 today</b> holds your spot. <b style="color:#fff;">$150 more</b> only when your unit is ready to ship. That's it.</p>
-        <ul>
-          <li>Handmade by the builder — numbered Batch-1 unit</li>
-          <li>Founder price locked: $200 vs $400 regular</li>
-          <li>Fully refundable until your unit ships — one email, no forms, every cent back</li>
-          <li>Ships in time for Christmas, or your deposit back</li>
-        </ul>
-        <div class="bar"><i id="spots-bar"></i></div>
-        <div class="bar-note" id="spots-note">10 FOUNDER SPOTS</div>
-        <a class="btn btn-p reserve-btn" href="#" style="display:block;margin-top:16px;">Hold my spot — $50</a>
-        <p class="trust-line">Secure checkout by Stripe. Your $50 is fully refundable until your unit ships — every cent back to your card — and if it can't ship in time for Christmas, you get it back. — Quinlong</p>
-      </div>
-    </div>
-
-    <p class="fineprint">Why cheaper? Batch 1 is the first run — handmade, with hours of work in every unit — and the feedback from these ten owners designs Batch 2. The discount is the thank-you for the faith. Later batches are $400 and worth it; founders just never pay it.</p>
-  </div>
-</section>
-
-<!-- ══════════ THE WING (Prandtl printable airframe) ══════════ -->
-<section id="wing" data-section="wing" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="kicker">The complete airplane</div>
-    <h2>No F-16? Get the <span class="g">whole airplane.</span></h2>
-    <p class="lede">The cockpit drops straight into the Motion RC F-16 — but you don't need to own one. The Longfly Prandtl wing is a 3D-printable flying wing designed around the cockpit: its centre section is shaped to fit it exactly, so the panel, displays and HUD you just read about become a complete airplane.</p>
-        <p class="lede" style="margin-top:14px;">The design is based on the <b style="color:#fff;">2015 NASA paper on Prandtl wing distributions</b> — a bell-shaped lift distribution that increases efficiency and produces proverse rather than adverse yaw, completely removing the need for a vertical stabilizer. It's heavily inspired by the <b style="color:#fff;">Horten H. IV</b>, one of the first flying wings ever to exist.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:22px 0 6px;">
-      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-cockpit.webp" alt="Concept render, close view of the cockpit in the Prandtl wing — canopy and HUD visible" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">The cockpit under its canopy, HUD lit — concept render</figcaption></figure>
-      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-rear.webp" alt="Concept render of the Prandtl flying wing from behind, pusher propeller at the rear of the centre section" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">From behind — the pusher prop and clean planform</figcaption></figure>
-      <figure class="model-media" style="margin:0;"><div class="action-frame"><img src="assets/wing-flight.webp" alt="Concept render of the Prandtl flying wing banking in flight at dusk" style="width:100%;height:100%;object-fit:cover;"></div><figcaption class="media-cap">In flight — concept render</figcaption></figure>
-    </div>
-    <p style="font-size:13px;color:#67788a;">Concept renders — the wing is in development and flies before it ships.</p>
-    <h3 style="margin-top:26px;">Look around the <span class="g">real thing</span></h3>
-    <p style="color:#aebac7;max-width:640px;">This isn't a render — it's the actual print geometry, straight from the design file. Drag to orbit, scroll or pinch to zoom.</p>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
-    <model-viewer id="wingViewer" src="assets/wing-gear-up.glb" alt="Interactive 3D model of the Longfly Prandtl flying wing with the cockpit installed" camera-controls camera-orbit="20deg 118deg 40%" auto-rotate auto-rotate-delay="1200" rotation-per-second="16deg" shadow-intensity="0.6" exposure="1.15" style="width:100%;height:min(78vh,660px);background:radial-gradient(120% 120% at 50% 20%,#1a2432 0%,#0b0f16 70%);border:1px solid var(--line);border-radius:14px;"></model-viewer>
-    <div class="cta-row" style="margin-top:12px;">
-      <button class="btn btn-s" id="btnGearUp" type="button" style="border-color:var(--gold);color:var(--gold);">Gear up — in flight</button>
-      <button class="btn btn-s" id="btnGearDown" type="button">Gear down — on the ground</button>
-    </div>
-    <script>
-      (function(){
-        var v=document.getElementById('wingViewer'),bu=document.getElementById('btnGearUp'),bd=document.getElementById('btnGearDown');
-        function set(down){ v.src = down ? 'assets/wing-gear-down.glb' : 'assets/wing-gear-up.glb';
-          bu.style.borderColor = down ? '' : 'var(--gold)'; bu.style.color = down ? '' : 'var(--gold)';
-          bd.style.borderColor = down ? 'var(--gold)' : ''; bd.style.color = down ? 'var(--gold)' : ''; }
-        bu.addEventListener('click',function(){set(false)}); bd.addEventListener('click',function(){set(true)});
-      })();
-    </script>
-    <div class="cards" style="margin-top:20px;">
       <div class="card">
-        <span class="tag">Print it yourself</span>
-        <h3>Files + all electronics</h3>
-        <div class="price">+$100 <small>over the cockpit</small></div>
-        <p>Every print file for the airframe, plus <b style="color:#fff;">all the electronics the wing needs</b> — shipped to you. You print the airframe on your own printer and drop the cockpit in.</p>
+        <div class="tag">✦ Christmas Offer ✦</div>
+        <h3>F-16 FPV Cockpit kit</h3>
+        <div class="sub">Handmade cockpit</div>
+        <div class="price">$229<s>$299</s></div>
         <ul>
-          <li>Full STL set + print settings + assembly guide</li>
-          <li>Centre section shaped to exactly fit the cockpit</li>
-          <li>Electronics pack included — nothing else to source</li>
+          <li>Handmade by Quinlong · 10 units</li>
+          <li>Founder price: $229 USD · Save $70</li>
+          <li>Fully refundable until your unit ships</li>
+          <li>A Christmas gift for FPV pilots</li>
         </ul>
+        <a class="btn btn-solid reserve-btn" href="https://buy.stripe.com/00w5kD2Vp9TV9is3LF0gw02">Continue to save 23% — $229</a>
       </div>
-      <div class="card">
-        <span class="tag">No printer?</span>
-        <h3>We print it for you</h3>
-        <div class="price">+$250 <small>over the cockpit</small></div>
-        <p>Same files and electronics — and the airframe printed for you, ready to assemble with the electronics pack and your cockpit.</p>
-        <ul>
-          <li>Airframe printed, checked and shipped with your order</li>
-          <li>Identical fit — printed from the same files</li>
-          <li>Just assemble, install the cockpit, and fly</li>
-        </ul>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="kicker">Contact</div>
+    <h2>Contact Us</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>Email: <a href="mailto:longfly.co@gmail.com">longflyco@gmail.com</a></p>
+        <p>Tel: <a href="tel:+16179928071">617-992-8071</a></p>
+        <p>Feel free to reach out using the form below:</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/longfly.us" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://youtube.com/@thedeepblu2" target="_blank" rel="noopener">YouTube</a>
+        </div>
       </div>
-    </div>
-    <p class="lede" style="margin-top:22px;"><b style="color:#fff;">Expected flight time: 15–30 minutes — about 4× the F-16's.</b> The jet's EDF is the bottleneck — a ducted fan burns most of its battery making noise and heat. The wing's pusher prop and tailless layout sip power by comparison. This isn't a three-minute blast around the field: the wing is meant for scenic, long-distance flying — settle into the head-tracked view and cruise. That's a design estimate at this stage, not a stopwatch number — it gets proven in flight testing before the wing ships.</p>
-    <p class="fineprint">The wing launches alongside the cockpit. Reserve a cockpit above and you'll be first offered the wing add-on when it opens.</p>
-  </div>
-</section>
-
-<!-- ══════════ RECEPTION (real comments) ══════════ -->
-<section id="reception" data-section="reception">
-  <div class="wrap">
-    <div class="kicker">Reception</div>
-    <h2>People are noticing.</h2>
-    <div class="quotes" role="list">
-      <figure class="quote" role="listitem"><img src="assets/comments/comment-1-howlingwolven-reddit.png" width="517" height="139" loading="lazy" alt="Reddit r/rcplanes comment by HowlingWolven: &quot;Working hud? Holy shit.&quot;"><span class="quote-src">Reddit · r/rcplanes</span><figcaption aria-hidden="true">“Working hud? Holy shit.” — HowlingWolven</figcaption></figure>
-      <figure class="quote" role="listitem"><img src="assets/comments/comment-2-erde555-reddit.png" width="611" height="103" loading="lazy" alt="Reddit r/fpv comment by Erde555: &quot;imagine attaching this in front of the fpv camera on a drone 🤯&quot;"><span class="quote-src">Reddit · r/fpv</span><figcaption aria-hidden="true">“imagine attaching this in front of the fpv camera on a drone 🤯” — Erde555</figcaption></figure>
-      <figure class="quote" role="listitem"><img src="assets/comments/comment-3-iamelectrichead-reddit.png" width="678" height="98" loading="lazy" alt="Reddit r/rcplanes comment by IAmElectricHead: &quot;Beautifully done.&quot;"><span class="quote-src">Reddit · r/rcplanes</span><figcaption aria-hidden="true">“Beautifully done.” — IAmElectricHead</figcaption></figure>
-      <figure class="quote" role="listitem"><img src="assets/comments/comment-4-slimez-tiktok.png" width="918" height="126" loading="lazy" alt="TikTok comment by Slimez Fishing: &quot;bro, this is so fucking cool, I hope you get your bag for this&quot;"><span class="quote-src">TikTok</span><figcaption aria-hidden="true">“bro, this is so fucking cool, I hope you get your bag for this” — Slimez Fishing</figcaption></figure>
-      <figure class="quote quote-meme" role="listitem"><img src="assets/comments/comment-5-aim9x-instagram.png" width="676" height="548" loading="lazy" alt="Instagram comment by mr.aim9x — a meme image asking &quot;WHY IS IT SO PEAK?&quot;"><span class="quote-src">Instagram</span><figcaption aria-hidden="true">“WHY IS IT SO PEAK?” — mr.aim9x</figcaption></figure>
+      <form id="contact-form">
+        <div class="row">
+          <input type="text" id="cf-first" placeholder="First name">
+          <input type="text" id="cf-last" placeholder="Last name">
+        </div>
+        <input type="email" id="cf-email" placeholder="Email">
+        <input type="text" id="cf-subject" placeholder="Subject">
+        <textarea id="cf-msg" placeholder="Leave us a message..."></textarea>
+        <button class="btn" type="submit">Submit</button>
+      </form>
     </div>
   </div>
 </section>
-
-
-
-<!-- ══════════ THE PRODUCT ══════════ -->
-<section id="cockpit" data-section="product" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
-  <div class="wrap">
-    <div class="kicker">Inside the cockpit</div>
-    <h2>Not a sticker. <span class="g">A cockpit.</span></h2>
-    <div class="cards cards3">
-      <div class="card"><h3 style="margin-top:0;">Live instruments</h3><p>Four real colour displays — airspeed, altitude, heading, engine and GPS — driven by live flight data, not a looping video.</p></div>
-      <div class="card"><h3 style="margin-top:0;">Working HUD</h3><p>A real heads-up display floating flight symbology in front of you, the way the jet was meant to be flown.</p></div>
-      <div class="card"><h3 style="margin-top:0;">The dusk glow</h3><p>Warm backlit panels and indicator lights. At golden hour it stops looking like a model and starts looking like a jet.</p></div>
-      <div class="card"><h3 style="margin-top:0;">Controls that move</h3><p>Stick and throttle move with your inputs as you fly — the cockpit is alive, not a photograph.</p></div>
-      <div class="card"><h3 style="margin-top:0;">Head-tracked view</h3><p>The camera lives in the pilot's seat and follows your head through your FPV goggles. Look left, see the wing.</p></div>
-      <div class="card"><h3 style="margin-top:0;">Plug and play</h3><p>Built to be seamlessly integrated into any jet. No wiring, no soldering — just plug and play.</p></div>
-    </div>
-    <div class="chips">
-      <span class="tag">4× IPS displays</span>
-      <span class="tag">HUD with symbology</span>
-      <span class="tag">Warm-white backlight</span>
-      <span class="tag">For the Motion RC 70mm F-16</span>
-      <span class="tag">Batch 1: handmade</span>
-    </div>
-    <p class="fineprint">Fit note: please make sure your jet can hold a cockpit of this size. Designed to fit the Motion RC 70mm F-16 ($249); it might require some physical modification to fit other platforms. Questions — DM @longfly.us.</p>
-  </div>
-</section>
-
-<!-- ══════════ THE STORY ══════════ -->
-<section id="story" data-section="story">
-  <div class="wrap">
-    <div class="kicker">The story</div>
-    <h2>Built at a desk in Boston,<br>at <span class="g">3 a.m.</span>, by one student.</h2>
-    <p class="lede">I'm Quinlong — lifelong FPV hobbyist, and a dude who's crazy about one day flying a real fighter jet. Every cockpit is designed, printed, wired and tested by me at my desk in Boston. Thanks for supporting my project.</p>
-    <figure class="real-photo real-wide" style="margin-top:26px;"><img src="assets/quinlong-field.jpg" width="1224" height="908" loading="lazy" alt="Quinlong, in glasses giving a thumbs up, at the flying field with fellow RC flyers and their aircraft"></figure>
-    <div class="cards">
-      <div class="card"><h3 style="margin-top:0;">Handmade, every one</h3><p>Each and every unit is handmade by me, with hours of work in every single one. You get excellent, handmade quality — it's just a huge pain in my ass to make, because it's all by hand.</p></div>
-      <div class="card"><h3 style="margin-top:0;">What founders fund</h3><p>Your deposit pays for the custom circuit board that replaces the hand-wiring — the step from ten handmade units to a real product. You're not buying a toy; you're starting a company with me. And honestly? You're gonna save my back and help me reclaim my social life — the boards mean I don't have to spend so many hours wiring and soldering in the future. For that, I'm deeply grateful.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ HOW IT WORKS ══════════ -->
-<section data-section="how" style="padding-top:0;">
-  <div class="wrap">
-    <div class="kicker">How it works</div>
-    <div class="cards cards3">
-      <div class="card"><span class="tag">Step 1</span><h3>Reserve or join</h3><p>$50 fully refundable deposit holds a founder unit. Free waitlist if you're still deciding.</p></div>
-      <div class="card"><span class="tag">Step 2</span><h3>Watch it get built</h3><p>Build updates by email and TikTok — your unit taking shape, tests, the first flight.</p></div>
-      <div class="card"><span class="tag">Step 3</span><h3>Balance &amp; ship</h3><p>$150 balance only when your unit is ready. It ships tracked — in time for Christmas.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ FAQ ══════════ -->
-<section id="faq" data-section="faq" style="background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-top:56px;">
-  <div class="wrap">
-    <div class="kicker">FAQ</div>
-    <h2>Questions, answered straight</h2>
-    <div class="faq">
-      <details>
-        <summary>Is the deposit really refundable?</summary>
-        <p>Yes — fully. Any time until your unit ships, one email to me and the full $50 goes back to your card. No forms, no phone call, no hard feelings.</p>
-      </details>
-      <details>
-        <summary>What if it doesn't ship in time for Christmas?</summary>
-        <p>Your choice: full deposit back, or keep your founders price and be first in Batch 2. I won't hold your money hostage to my schedule.</p>
-      </details>
-      <details>
-        <summary>What exactly do I get?</summary>
-        <p>The cockpit unit for your F-16 RC jet — displays, HUD, backlit panels, controls — ready to install. The jet and FPV goggles aren't included.</p>
-      </details>
-      <details>
-        <summary>Why is Batch 1 half price?</summary>
-        <p>As a reward for being so generous as to give my project a chance to live. That's what the Supporters discount is: $200 instead of $400, handmade, numbered. When these ten are gone, they're gone.</p>
-      </details>
-      <details>
-        <summary>Waitlist vs deposit — what's the difference?</summary>
-        <p>The waitlist is a queue for news and Batch 2. The deposit is a held unit, a locked $200 price, and a Christmas ship date. Only the deposit holds a cockpit.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ CLOSING CTA ══════════ -->
-<div class="hero" style="min-height:52vh;">
-  <img class="bg" src="assets/pilot-canopy.webp" alt="An F-16 pilot in the cockpit, seen from above through the canopy">
-  <div class="shade"></div>
-  <div class="wrap inner" style="padding:80px 20px 40px;">
-    <h2 style="font-size:clamp(26px,4vw,38px);">Ten handmade cockpits.<br>Then they're <span class="g">gone.</span></h2>
-    <div class="cta-row">
-      <a class="btn btn-p reserve-btn" href="#">Hold my spot — $50</a>
-      <a class="btn btn-s" href="#reserve">Join the waitlist (free)</a>
-    </div>
-    <div class="micro">100% REFUNDABLE UNTIL IT SHIPS · CHRISTMAS OR YOUR DEPOSIT BACK</div>
-  </div>
-</div>
 
 <footer>
-  <div class="wrap">
-    <div class="row">
-      <div><span class="logo" style="font-size:16px;">LONG<span>FLY</span></span><br>
-      <span style="font-size:13px;">Handmade RC cockpits · Boston, MA</span></div>
-      <div>TikTok <b style="color:var(--muted);">@longfly.shop</b> &nbsp;·&nbsp; Instagram <b style="color:var(--muted);">@quin_long_</b> &nbsp;·&nbsp; DM <b style="color:var(--muted);">@longfly.us</b></div>
+  <div class="wrap foot">
+    <img src="assets/jamie/logo.jpg" alt="Longfly logo">
+    <span>© 2026 LONGFLY. All rights reserved.</span>
+    <div class="socials">
+      <a href="https://www.instagram.com/longfly.us" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@longfly.shop" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://youtube.com/@thedeepblu2" target="_blank" rel="noopener">YouTube</a>
     </div>
-    <p style="margin-top:18px;font-size:12.5px;">Batch 1 deposit terms: $50 deposit, fully refundable until your unit ships. $150 balance due when your unit is ready to ship. Ships in time for Christmas — if it slips, your choice of a full refund or first spot in Batch 2 at the founders price.</p>
   </div>
 </footer>
 
-<a id="stickybar" href="#reserve">Reserve yours now — save 50%</a>
-
 <script>
-/* ════════════════════════════════════════════════════════════════════
-   CONFIG — the only block that needs editing to go live.
-   ════════════════════════════════════════════════════════════════════ */
-const CONFIG = {
-  // 1) Quinlong's Stripe Payment Link for the $50 deposit.
-  //    Create it in Stripe: product name exactly
-  //    "$50 refundable deposit — Longfly F-16 Cockpit, Batch 1 Founders"
-  STRIPE_LINK: "https://buy.stripe.com/00w5kD2Vp9TV9is3LF0gw02",
-
-  // 2) Waitlist form endpoint (Formspree / ConvertKit / Apps Script URL).
-  //    Leave "" for demo mode: the success message shows, nothing is sent.
-  WAITLIST_ENDPOINT: "",
-
-  // 3) REAL number of founder deposits taken so far (0–10).
-  //    Update as deposits land. Never a fake number.
-  SPOTS_CLAIMED: 0,
-  SPOTS_TOTAL: 10
-};
-/* ════════════════════════════════════════════════════════════════════ */
-
-// Reserve buttons → Stripe
-document.querySelectorAll(".reserve-btn").forEach(function (b) {
-  b.setAttribute("href", CONFIG.STRIPE_LINK);
-  b.addEventListener("click", function (e) {
-    if (CONFIG.STRIPE_LINK.indexOf("http") !== 0) {
-      e.preventDefault();
-      alert("Deposits open the moment the payment link is live — join the free waitlist below and you'll be first to know.");
-      document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
-    }
-  });
-});
-// Sticky bar → Stripe too
-var sticky = document.getElementById("stickybar");
-sticky.setAttribute("href", CONFIG.STRIPE_LINK);
-sticky.addEventListener("click", function (e) {
-  if (CONFIG.STRIPE_LINK.indexOf("http") !== 0) {
+  // Contact form: no backend on a static page — compose an email instead.
+  document.getElementById("contact-form").addEventListener("submit", function (e) {
     e.preventDefault();
-    document.getElementById("reserve").scrollIntoView({ behavior: "smooth" });
-  }
-});
-
-// Example clip: plays muted while on screen, pauses when scrolled away (unless the visitor paused it).
-(function () {
-  var v = document.getElementById("example-video");
-  if (!v || !("IntersectionObserver" in window)) return;
-  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.preload = "metadata"; return; }
-  var userPaused = false, auto = false;
-  v.addEventListener("pause", function () { if (!auto) userPaused = true; auto = false; });
-  v.addEventListener("play", function () { userPaused = false; });
-  new IntersectionObserver(function (e) {
-    if (e[0].isIntersecting) { if (!userPaused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
-    else if (!v.paused) { auto = true; v.pause(); }
-  }, { threshold: 0.35 }).observe(v);
-})();
-
-// Spots counter (real numbers only)
-(function () {
-  var pct = Math.max(0, Math.min(100, (CONFIG.SPOTS_CLAIMED / CONFIG.SPOTS_TOTAL) * 100));
-  document.getElementById("spots-bar").style.width = pct + "%";
-  document.getElementById("spots-note").textContent =
-    CONFIG.SPOTS_TOTAL + " FOUNDER SPOTS · " + CONFIG.SPOTS_CLAIMED + " CLAIMED";
-})();
-
-// Waitlist form
-document.getElementById("waitlist-form").addEventListener("submit", function (e) {
-  e.preventDefault();
-  var email = document.getElementById("wl-email").value.trim();
-  var err = document.getElementById("waitlist-err");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.style.display = "block"; return; }
-  err.style.display = "none";
-  var done = function () {
+    var name = (document.getElementById("cf-first").value + " " + document.getElementById("cf-last").value).trim();
+    var subject = document.getElementById("cf-subject").value.trim() || "Longfly website contact";
+    var body = document.getElementById("cf-msg").value.trim()
+      + "\n\n— " + name + " (" + document.getElementById("cf-email").value.trim() + ")";
+    window.location.href = "mailto:longfly.co@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+  });
+  // Waitlist: show the confirmation state (sign-up is recorded by the analytics block below).
+  document.getElementById("waitlist-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("wl-email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
     document.getElementById("waitlist-ok").style.display = "block";
     e.target.querySelector("button[type=submit]").textContent = "You're on the list ✓";
-  };
-  if (CONFIG.WAITLIST_ENDPOINT) {
-    var data = new FormData(e.target);
-    fetch(CONFIG.WAITLIST_ENDPOINT, { method: "POST", body: data, headers: { "Accept": "application/json" } })
-      .then(done).catch(done);
-  } else { done(); }
-});
-
-// Sticky bar appears once the hero scrolls off (mobile especially)
-(function () {
-  var hero = document.getElementById("top");
-  if (!("IntersectionObserver" in window) || !hero) return;
-  new IntersectionObserver(function (entries) {
-    sticky.style.display = entries[0].isIntersecting ? "none" : "block";
-  }, { threshold: 0.15 }).observe(hero);
-})();
+  });
 </script>
 <!-- Longfly: PostHog analytics (same project as every earlier version of the site) -->
 <script>window.Longfly = window.Longfly || {};</script>
@@ -713,18 +307,15 @@ document.getElementById("waitlist-form").addEventListener("submit", function (e)
   var L = window.Longfly;
   L.startAnalytics({ key: "phc_xrZjfCAjjvQzvMbFLXzftnwFym4GxyMGmz77iXghikPd", host: "https://us.i.posthog.com" });
   L.onRoute("home");
-  // Waitlist sign-ups are saved in PostHog People (email, first_name, jet) with a launch_signup event.
+  // Waitlist sign-ups are saved in PostHog People (email) with a launch_signup event.
   document.getElementById("waitlist-form").addEventListener("submit", function () {
     var email = document.getElementById("wl-email").value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
-    var name = document.getElementById("wl-name").value.trim(), jet = document.getElementById("wl-jet").value.trim();
     var props = { signed_up_for: "f16-cockpit", list: "waitlist", $email: email };
-    if (name) { props.first_name = name; props.$name = name; }
-    if (jet) props.jet = jet;
     L.identify(email, props);
-    L.track("launch_signup", { list: "waitlist", jet: jet || null, email: email, name: name || null });
+    L.track("launch_signup", { list: "waitlist", jet: null, email: email, name: null });
   });
-  document.querySelectorAll(".reserve-btn, #stickybar").forEach(function (b) {
+  document.querySelectorAll(".reserve-btn").forEach(function (b) {
     b.addEventListener("click", function () { L.track("reserve_click", { link: /^http/.test(b.getAttribute("href") || "") }); });
   });
   if (/[?&]paid=1\b/.test(location.search)) L.track("deposit_paid", {});
