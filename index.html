@@ -13,8 +13,9 @@
                               Leave "" and the form shows the success
                               message without sending (demo mode).
     3. SPOTS_CLAIMED ........ real number of founder deposits taken.
-                              Update it as deposits land — the progress
-                              bar and "x of 10 claimed" text read from it.
+                              Update it as deposits land — the top banner
+                              ("x of 10 spots left"), the progress bar and
+                              the "x of 10 claimed" text read from it.
                               NEVER put a fake number here.
 
   Deploy: upload this file + the assets/ folder as-is (GitHub Pages,
@@ -175,6 +176,7 @@
   footer{border-top:1px solid var(--line);padding:34px 0 90px;color:var(--dim);font-size:14px;background:var(--panel)}
   footer .row{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   #stickybar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--green);color:#06130a;font-weight:800;text-align:center;padding:13px;font-size:15.5px;text-decoration:none;display:none}
+  #topbanner{display:block;background:var(--green);color:#06130a;font-weight:800;text-align:center;padding:9px 12px;font-size:14px;letter-spacing:.03em;text-decoration:none}
   @media (max-width:760px){
     .cards,.cards3{grid-template-columns:1fr}
     .nav nav a:not(.btn){display:none}
@@ -186,6 +188,8 @@
 </style>
 </head>
 <body>
+
+<a id="topbanner" href="#reserve">BATCH 1 — 9 OF 10 FOUNDER SPOTS LEFT · $50 REFUNDABLE DEPOSIT HOLDS YOURS</a>
 
 <header>
   <div class="wrap nav">
@@ -630,7 +634,7 @@ const CONFIG = {
 
   // 3) REAL number of founder deposits taken so far (0–10).
   //    Update as deposits land. Never a fake number.
-  SPOTS_CLAIMED: 0,
+  SPOTS_CLAIMED: 1,
   SPOTS_TOTAL: 10
 };
 /* ════════════════════════════════════════════════════════════════════ */
@@ -676,6 +680,9 @@ sticky.addEventListener("click", function (e) {
   document.getElementById("spots-bar").style.width = pct + "%";
   document.getElementById("spots-note").textContent =
     CONFIG.SPOTS_TOTAL + " FOUNDER SPOTS · " + CONFIG.SPOTS_CLAIMED + " CLAIMED";
+  var left = CONFIG.SPOTS_TOTAL - CONFIG.SPOTS_CLAIMED;
+  document.getElementById("topbanner").textContent =
+    "BATCH 1 — " + left + " OF " + CONFIG.SPOTS_TOTAL + " FOUNDER SPOTS LEFT · $50 REFUNDABLE DEPOSIT HOLDS YOURS";
 })();
 
 // Waitlist form
