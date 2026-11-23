@@ -162,6 +162,11 @@
   @media (min-width:761px){.quotes{grid-template-columns:1fr 1fr .72fr;gap:14px 16px;align-items:start}.quote img{width:auto;max-width:100%;padding:8px 10px}.quote figcaption{display:none}.quote-meme{grid-column:3;grid-row:1/span 2}.quote-meme img{width:100%}}
   /* ── trust line under Reserve ─────────────── */
   .trust-line{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--text)}
+  /* ── christmas guarantee banner ─────────────── */
+  .guarantee{margin:28px 0 4px;padding:24px 20px;border:2px solid var(--green);border-radius:14px;text-align:center;background:rgba(0,0,0,.38)}
+  .guarantee .g-big{display:block;font-size:clamp(26px,5.4vw,46px);font-weight:900;letter-spacing:.4px;line-height:1.12;color:#fff;text-transform:uppercase}
+  .guarantee .g-math{margin:14px 0 0;font-size:clamp(16px,2.6vw,21px);font-weight:700;line-height:1.5;color:var(--text)}
+  .guarantee .g-math b{color:#fff}
   .full-img{width:100%;height:min(58vh,520px);object-fit:cover;border-radius:12px;display:block}
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
   /* ── faq ─────────────────────────── */
@@ -392,6 +397,16 @@
     <h2>Support the dream, <span class="g">get half off.</span></h2>
     <p class="lede">Batch 1 is ten cockpits, handmade one at a time. The half price is a reward for the people generous enough to give this project a chance to live — call it the Supporters discount.</p>
 
+    <div class="guarantee">
+      <span class="g-big">Arrives by Christmas — <span class="g">or your money back</span></span>
+      <p class="g-math"><b>$50 today</b> holds your spot · <b>$150 when it ships</b> · <b>$200 total</b> — founder price, regular $400. Fully refundable until your unit ships.</p>
+    </div>
+
+    <figure class="real-photo real-wide" style="margin-top:26px">
+      <video src="assets/prototype-v3.mp4" poster="assets/prototype-v3-poster.jpg" autoplay muted loop playsinline preload="metadata" style="width:100%;height:auto;display:block;border-radius:12px" aria-label="The latest Longfly prototype — painted, with every display lit and the HUD glowing"></video>
+      <figcaption>The most finished prototype yet — painted, every display lit, HUD up. Your Batch 1 unit is handmade to this standard.</figcaption>
+    </figure>
+
     <div class="cards">
       <!-- Waitlist -->
       <div class="card">
@@ -428,18 +443,20 @@
           <li>Handmade by the builder — numbered Batch-1 unit</li>
           <li>Founder price locked: $200 vs $400 regular</li>
           <li>Fully refundable until your unit ships — one email, no forms, every cent back</li>
-          <li>Ships in time for Christmas, or your deposit back</li>
+          <li>Arrives by Christmas, or your money back — every cent of it</li>
         </ul>
         <div class="bar"><i id="spots-bar"></i></div>
         <div class="bar-note" id="spots-note">10 FOUNDER SPOTS</div>
         <a class="btn btn-p reserve-btn" href="#" style="display:block;margin-top:16px;">Hold my spot — $50</a>
-        <p class="trust-line">Secure checkout by Stripe. Your $50 is fully refundable until your unit ships — every cent back to your card — and if it can't ship in time for Christmas, you get it back. — Quinlong</p>
+        <p class="trust-line">Secure checkout by Stripe. <b>$50 today, $150 only when your unit ships — $200 total.</b> Fully refundable until it ships, and if it doesn't arrive by Christmas, you get your money back. — Quinlong</p>
       </div>
     </div>
 
     <p class="fineprint">Why cheaper? Batch 1 is the first run — handmade, with hours of work in every unit — and the feedback from these ten owners designs Batch 2. The discount is the thank-you for the faith. Later batches are $400 and worth it; founders just never pay it.</p>
   </div>
 </section>
+
+
 
 <!-- ══════════ RECEPTION (real comments) ══════════ -->
 <section id="reception" data-section="reception">
@@ -548,7 +565,7 @@
       <a class="btn btn-p reserve-btn" href="#">Hold my spot — $50</a>
       <a class="btn btn-s" href="#reserve">Join the waitlist (free)</a>
     </div>
-    <div class="micro">100% REFUNDABLE UNTIL IT SHIPS · CHRISTMAS OR YOUR DEPOSIT BACK</div>
+    <div class="micro">ARRIVES BY CHRISTMAS OR YOUR MONEY BACK · $50 NOW, $150 WHEN IT SHIPS</div>
   </div>
 </div>
 
